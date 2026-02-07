@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista Zattera — Elezioni Studentesche Ca' Foscari 2030</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --rosso: #C0392B;
+    --rosso-chiaro: #E74C3C;
+    --giallo: #F1C40F;
+    --giallo-chiaro: #FEF9E7;
+    --nero: #1A1A1A;
+    --grigio: #4A4A4A;
+    --grigio-chiaro: #F5F5F5;
+    --bianco: #FFFFFF;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bianco);
+    color: var(--nero);
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === FUTURE ARTIFACT LABEL === */
+  .artifact-label {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 430px;
+    margin: 0 auto;
+    background: rgba(26, 26, 26, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--bianco);
+    text-align: center;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    z-index: 1000;
+  }
+  .artifact-label span { opacity: 0.85; }
+
+  /* === HEADER === */
+  .header {
+    background: var(--rosso);
+    padding: 52px 24px 28px;
+    color: var(--bianco);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -10px;
+    right: -10px;
+    height: 40px;
+    background: var(--bianco);
+    border-radius: 50% 50% 0 0;
+  }
+
+  .election-badge {
+    display: inline-block;
+    background: var(--giallo);
+    color: var(--nero);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+
+  .lista-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+    letter-spacing: -1px;
+  }
+
+  .lista-subtitle {
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .lista-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    background: var(--giallo);
+    color: var(--nero);
+    display: inline-block;
+    padding: 6px 14px;
+    transform: rotate(-1deg);
+    margin-top: 4px;
+  }
+
+  /* === INTRO === */
+  .intro {
+    padding: 20px 24px 12px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--grigio);
+  }
+
+  .intro strong {
+    color: var(--nero);
+  }
+
+  /* === PUNTI PROGRAMMA === */
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rosso);
+    padding: 20px 24px 8px;
+  }
+
+  .punto {
+    padding: 14px 24px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+
+  .punto:last-child {
+    border-bottom: none;
+  }
+
+  .punto-numero {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--rosso);
+    opacity: 0.2;
+    float: left;
+    margin-right: 14px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .punto-content {
+    overflow: hidden;
+  }
+
+  .punto-titolo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--nero);
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .punto-testo {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--grigio);
+  }
+
+  .punto-testo em {
+    font-style: italic;
+    color: var(--nero);
+  }
+
+  .highlight-box {
+    background: var(--giallo-chiaro);
+    border-left: 3px solid var(--giallo);
+    padding: 12px 16px;
+    margin: 8px 0 4px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--grigio);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .highlight-box strong {
+    color: var(--nero);
+  }
+
+  /* === CITAZIONE === */
+  .quote-section {
+    background: var(--grigio-chiaro);
+    padding: 24px;
+    margin: 16px 24px;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 48px;
+    color: var(--rosso);
+    opacity: 0.15;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--grigio);
+    padding-left: 4px;
+  }
+
+  .quote-author {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--nero);
+    margin-top: 10px;
+    padding-left: 4px;
+  }
+
+  /* === ADESIONI === */
+  .endorsements {
+    padding: 16px 24px 8px;
+  }
+
+  .endorsement-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #AAA;
+    margin-bottom: 10px;
+  }
+
+  .endorsement-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .endorsement-tag {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: var(--grigio-chiaro);
+    color: var(--grigio);
+    font-weight: 500;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    background: var(--nero);
+    color: var(--bianco);
+    padding: 24px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .footer-lista {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .footer-date {
+    font-size: 13px;
+    opacity: 0.6;
+    margin-bottom: 16px;
+  }
+
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 12px;
+  }
+
+  .footer-social span {
+    font-size: 12px;
+    opacity: 0.5;
+    padding: 4px 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+  }
+
+  .footer-disclaimer {
+    font-size: 10px;
+    opacity: 0.35;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+
+  /* === CTA STICKER === */
+  .sticker {
+    background: var(--rosso);
+    color: var(--bianco);
+    text-align: center;
+    padding: 20px 24px;
+    margin: 0 24px;
+    border-radius: 12px;
+    transform: rotate(-0.5deg);
+  }
+
+  .sticker-main {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .sticker-sub {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+</style>
+</head>
+<body>
+
+<div class="artifact-label">
+  <span>⚡ Artefatto dal futuro · Febbraio 2030</span>
+</div>
+
+<div class="header">
+  <div class="election-badge">Elezioni studentesche 2030</div>
+  <div class="lista-name">Lista Zattera</div>
+  <div class="lista-subtitle">Consiglio degli Studenti · Università Ca' Foscari Venezia</div>
+  <div class="lista-tagline">L'università è nostra. Tutta.</div>
+</div>
+
+<div class="intro">
+  <strong>Negli ultimi tre anni Ca' Foscari ha cambiato tutto:</strong> percorsi modulari, micro-credenziali, tutor algoritmici, crediti per esperienze lavorative. Ci hanno detto che era il futuro. Noi diciamo che <strong>il futuro non si subisce — si governa</strong>. E che chi studia ha diritto di decidere <em>come</em> si studia.
+</div>
+
+<div class="section-title">Il nostro programma</div>
+
+<div class="punto">
+  <div class="punto-numero">01</div>
+  <div class="punto-content">
+    <div class="punto-titolo">Diritto alla lentezza</div>
+    <div class="punto-testo">
+      I percorsi modulari dovevano essere una libertà. Sono diventati una corsa. Chi lavora, chi ha responsabilità familiari, chi sceglie un percorso non lineare <em>non è uno studente di serie B</em>. Chiediamo l'abolizione della penalizzazione economica per chi supera la durata standard del percorso, e il riconoscimento pieno dei CFU acquisiti nei programmi di reskilling per adulti.
+    </div>
+    <div class="highlight-box">
+      <strong>Lo sapevi?</strong> Il 34% degli iscritti a Ca' Foscari ha più di 28 anni. Il regolamento attuale li tratta come "fuori corso".
+    </div>
+  </div>
+</div>
+
+<div class="punto">
+  <div class="punto-numero">02</div>
+  <div class="punto-content">
+    <div class="punto-titolo">Tetto ai crediti esterni: sì, ma equo</div>
+    <div class="punto-testo">
+      Il Senato Accademico ha fissato un massimo di 30 CFU da micro-credential esterne. La motivazione era proteggere la qualità dei corsi interni. Ma il risultato è che chi non può permettersi di frequentare in presenza tutti i corsi Ca' Foscari resta penalizzato. Proponiamo un <em>sistema flessibile</em>: il tetto va calcolato sul profilo individuale, non imposto a taglia unica. E le piattaforme europee certificate — EUNICE, EUniWell — vanno equiparate ai corsi interni.
+    </div>
+  </div>
+</div>
+
+<div class="punto">
+  <div class="punto-numero">03</div>
+  <div class="punto-content">
+    <div class="punto-titolo">Presenza e distanza: basta con il 60/40</div>
+    <div class="punto-testo">
+      La soglia del 60% di crediti in modalità sincrona per accedere alle borse ESU è una regola pensata per un'università che non esiste più. Uno studente che segue un laboratorio in remoto dalla sede di Mestre non sta "frequentando meno" di chi si siede in aula a Ca' Dolfin. Chiediamo una revisione del regolamento con ESU Venezia, distinguendo tra <em>apprendimento attivo</em> e semplice presenza fisica.
+    </div>
+    <div class="highlight-box">
+      <strong>Dato:</strong> Il 72% degli studenti con borsa ESU dichiara di aver rinunciato ad almeno un modulo asincrono per non perdere il requisito di presenza. Questo non è merito — è burocrazia.
+    </div>
+  </div>
+</div>
+
+<div class="punto">
+  <div class="punto-numero">04</div>
+  <div class="punto-content">
+    <div class="punto-titolo">CaFoscariAdvisor: trasparenza, non profilazione</div>
+    <div class="punto-testo">
+      Il tutor algoritmico è utile, non lo neghiamo. Ma vogliamo sapere <em>come</em> funziona. Oggi CaFoscariAdvisor ci suggerisce corsi, ci segnala "carenze nel profilo competenze" e ci assegna un punteggio di coerenza del piano di studi. Sulla base di quali dati? Con quale modello? Chiediamo: pubblicazione dell'algoritmo di raccomandazione, diritto di opt-out senza penalità, e garanzia che i dati di navigazione nella piattaforma didattica non alimentino il profilo.
+    </div>
+  </div>
+</div>
+
+<div class="punto">
+  <div class="punto-numero">05</div>
+  <div class="punto-content">
+    <div class="punto-titolo">Zone AI-free: il pensiero ha bisogno di silenzio</div>
+    <div class="punto-testo">
+      Oggi ogni spazio studio è "assistito": suggerimenti di approfondimento, notifiche dell'advisor, sintesi automatiche. Chiediamo la creazione di <em>spazi studio non assistiti</em> a Ca' Dolfin e nella sede di via Torino, dove sia possibile studiare, ragionare e scrivere senza supporto algoritmico. Non siamo luddisti — vogliamo scegliere quando pensare da soli.
+    </div>
+  </div>
+</div>
+
+<div class="punto">
+  <div class="punto-numero">06</div>
+  <div class="punto-content">
+    <div class="punto-titolo">Esperienze che contano, crediti che pesano</div>
+    <div class="punto-testo">
+      Ca' Foscari riconosce crediti per tirocini aziendali ma non per esperienze di impatto sociale: volontariato con Cooperativa Olivotti, progetti con Fondazione di Venezia, laboratori nelle scuole con Cooperativa Caracol. Proponiamo un registro delle <em>esperienze validate</em> che dia pari dignità a chi sceglie l'impatto sociale e a chi sceglie il percorso aziendale. I Contamination Lab vanno inseriti nel libretto — non come "attività extra" ma come crediti curricolari.
+    </div>
+  </div>
+</div>
+
+<div class="punto">
+  <div class="punto-numero">07</div>
+  <div class="punto-content">
+    <div class="punto-titolo">Mentoring tra generazioni, non tra algoritmi</div>
+    <div class="punto-testo">
+      A Ca' Foscari oggi studiano fianco a fianco ventenni e quarantenni. È una ricchezza, non un problema. Chiediamo un programma strutturato di <em>peer mentoring intergenerazionale</em>: studenti tradizionali che aiutano gli adulti in reskilling a orientarsi nella piattaforma, adulti che portano esperienza professionale nei progetti di gruppo. Supportato dall'ateneo, non delegato alla buona volontà.
+    </div>
+  </div>
+</div>
+
+<div class="quote-section">
+  <div class="quote-mark">"</div>
+  <div class="quote-text">
+    Mi sono iscritta a 41 anni, dopo vent'anni in amministrazione. Il sistema modulare mi ha permesso di costruire un percorso su misura, ma nessuno mi ha spiegato come funziona il tutor digitale e in aula mi sento invisibile. Se l'università vuole davvero la formazione continua, deve pensare anche a chi arriva da un'altra vita.
+  </div>
+  <div class="quote-author">— Alessandra, 43 anni, percorso in Economia della Sostenibilità</div>
+</div>
+
+<div class="sticker">
+  <div class="sticker-main">Vota Lista Zattera · Seggio 2</div>
+  <div class="sticker-sub">14–15 maggio 2030 · Tutte le sedi</div>
+</div>
+
+<div class="endorsements">
+  <div class="endorsement-label">Ci sostengono</div>
+  <div class="endorsement-list">
+    <span class="endorsement-tag">Collettivo Mestre Studia</span>
+    <span class="endorsement-tag">Rete Studenti Adulti Veneto</span>
+    <span class="endorsement-tag">Ass. Dottorandi Ca' Foscari</span>
+    <span class="endorsement-tag">CSV Venezia</span>
+    <span class="endorsement-tag">Gruppo Studi Aperti</span>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-lista">Lista Zattera</div>
+  <div class="footer-date">Elezioni Consiglio degli Studenti · 14–15 maggio 2030</div>
+  <div class="footer-social">
+    <span>@listazattera</span>
+    <span>t.me/listazattera</span>
+  </div>
+  <div class="footer-disclaimer">
+    Materiale elettorale ai sensi del Regolamento Elettorale di Ateneo art. 14 comma 3.<br>
+    Stampato in proprio. Responsabile: Marco Vianello, mat. 896014.
+  </div>
+</div>
+
+</body>
+</html>

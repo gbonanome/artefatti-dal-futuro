@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CaFoscariAdvisor — Messaggio per Sara</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cf-blue: #003D73;
+    --cf-blue-light: #E8F0F8;
+    --cf-accent: #0066CC;
+    --cf-green: #2D8B4E;
+    --cf-amber: #D4850A;
+    --cf-red: #C0392B;
+    --text-primary: #1A1A2E;
+    --text-secondary: #5A5A72;
+    --text-muted: #8E8EA0;
+    --bg-page: #F2F2F7;
+    --bg-card: #FFFFFF;
+    --border: #E5E5EA;
+  }
+
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === ARTIFACT LABEL === */
+  .artifact-label {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 430px;
+    margin: 0 auto;
+    background: rgba(26, 26, 46, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    text-align: center;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    z-index: 1000;
+  }
+
+  /* === EMAIL APP CHROME === */
+  .email-chrome {
+    background: var(--bg-card);
+    padding: 42px 0 0;
+  }
+
+  .email-nav {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .email-nav-back {
+    color: var(--cf-accent);
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .email-nav-back svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .email-nav-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 16px;
+  }
+
+  .email-nav-actions svg {
+    width: 20px;
+    height: 20px;
+    color: var(--cf-accent);
+  }
+
+  /* === EMAIL HEADER === */
+  .email-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .email-subject {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+    margin-bottom: 14px;
+  }
+
+  .email-from-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .email-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cf-blue), var(--cf-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .email-avatar svg {
+    width: 18px;
+    height: 18px;
+    color: white;
+  }
+
+  .email-from-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .email-from-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .email-from-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: var(--cf-blue-light);
+    color: var(--cf-blue);
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .email-from-address {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .email-to {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .email-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* === EMAIL BODY === */
+  .email-body {
+    padding: 20px 20px 8px;
+  }
+
+  .email-body p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+
+  .email-body .greeting {
+    margin-bottom: 16px;
+  }
+
+  /* === RIEPILOGO CARD === */
+  .summary-card {
+    background: var(--bg-page);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+
+  .summary-card-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+
+  .summary-label {
+    color: var(--text-secondary);
+  }
+
+  .summary-value {
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+
+  .summary-value.green { color: var(--cf-green); }
+  .summary-value.amber { color: var(--cf-amber); }
+  .summary-value.blue { color: var(--cf-accent); }
+
+  /* === PROGRESS BAR === */
+  .progress-section {
+    margin: 6px 0 2px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+
+  .progress-fill.green { background: var(--cf-green); }
+  .progress-fill.amber { background: var(--cf-amber); }
+  .progress-fill.blue { background: var(--cf-accent); }
+
+  /* === RADAR CHART === */
+  .radar-section {
+    background: var(--bg-page);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+
+  .radar-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .radar-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .radar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .radar-container svg {
+    width: 260px;
+    height: 260px;
+  }
+
+  .radar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .radar-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    color: var(--text-secondary);
+  }
+
+  .radar-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* === ALERT BOX === */
+  .alert-box {
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 16px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .alert-box.amber {
+    background: #FEF7EC;
+    border: 1px solid #F5DEB3;
+    color: #8B6914;
+  }
+
+  .alert-box.info {
+    background: var(--cf-blue-light);
+    border: 1px solid #C5D9EC;
+    color: var(--cf-blue);
+  }
+
+  .alert-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .alert-text strong {
+    font-weight: 600;
+  }
+
+  /* === SUGGERIMENTO === */
+  .suggestion-card {
+    background: var(--bg-page);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    border-left: 3px solid var(--cf-accent);
+  }
+
+  .suggestion-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cf-accent);
+    margin-bottom: 6px;
+  }
+
+  .suggestion-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .suggestion-text strong {
+    color: var(--text-primary);
+  }
+
+  /* === FIRMA === */
+  .email-signature {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .email-signature p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  /* === DISCLAIMER === */
+  .disclaimer {
+    background: var(--bg-page);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 20px 0 8px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .disclaimer a {
+    color: var(--cf-accent);
+    text-decoration: none;
+  }
+
+  .disclaimer-icon {
+    display: inline-block;
+    margin-right: 4px;
+  }
+
+  /* === FOOTER LOGOS === */
+  .email-footer {
+    padding: 16px 20px 32px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-logo-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cf-blue);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-logo-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .footer-links {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .footer-links a {
+    font-size: 11px;
+    color: var(--cf-accent);
+    text-decoration: none;
+  }
+
+  .unsubscribe {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    padding: 8px 20px 24px;
+  }
+
+  .unsubscribe a {
+    color: var(--text-muted);
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="artifact-label">
+  <span>⚡ Artefatto dal futuro · Febbraio 2030</span>
+</div>
+
+<div class="email-chrome">
+
+  <!-- Email app nav -->
+  <div class="email-nav">
+    <div class="email-nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Inbox
+    </div>
+    <div class="email-nav-actions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+    </div>
+  </div>
+
+  <!-- Email header -->
+  <div class="email-header">
+    <div class="email-subject">Il tuo piano formativo: aggiornamento semestrale e suggerimenti per il II semestre</div>
+    <div class="email-from-row">
+      <div class="email-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6V2m0 4a4 4 0 100 8 4 4 0 000-8zm-7.75 9.25A7.5 7.5 0 0112 14a7.5 7.5 0 017.75 3.25"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="email-from-details">
+        <div class="email-from-name">
+          CaFoscariAdvisor
+          <span class="email-from-tag">Assistente IA</span>
+        </div>
+        <div class="email-from-address">advisor-noreply@unive.it</div>
+        <div class="email-to">a: sara.menegazzo.02@stud.unive.it</div>
+      </div>
+      <div class="email-date">10 feb<br>09:14</div>
+    </div>
+  </div>
+
+  <!-- Email body -->
+  <div class="email-body">
+    <p class="greeting">Ciao Sara,</p>
+
+    <p>
+      il tuo primo semestre nel percorso modulare in <strong>Sostenibilità e Trasformazione Digitale</strong> è stato molto intenso — complimenti. Questo messaggio è un riepilogo di come sta procedendo il tuo piano formativo, con alcune osservazioni che potrebbero esserti utili nella pianificazione del prossimo semestre.
+    </p>
+
+    <!-- Riepilogo CFU -->
+    <div class="summary-card">
+      <div class="summary-card-title">Riepilogo crediti · A.A. 2029/30</div>
+
+      <div class="summary-row">
+        <span class="summary-label">CFU tradizionali Ca' Foscari</span>
+        <span class="summary-value blue">42</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">CFU da micro-credential esterne</span>
+        <span class="summary-value blue">18</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">CFU da esperienze validate</span>
+        <span class="summary-value green">6</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Totale acquisiti</span>
+        <span class="summary-value" style="font-size:15px;">66 / 120</span>
+      </div>
+
+      <div class="progress-section" style="margin-top: 10px;">
+        <div class="progress-label">
+          <span>Avanzamento percorso</span>
+          <span>55%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill blue" style="width: 55%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Il tuo percorso è coerente con la media degli studenti modulari al secondo semestre. Ho notato che hai acquisito i 6 CFU di esperienze validate dal tirocinio presso <strong>Cooperativa Olivotti</strong> a Mestre — è un bel risultato, anche considerando che solo il 23% degli studenti del tuo corso completa un'esperienza validata entro il primo anno.
+    </p>
+
+    <!-- Alert modalità -->
+    <div class="alert-box amber">
+      <span class="alert-icon">⚠️</span>
+      <div class="alert-text">
+        <strong>Soglia modalità sincrona.</strong> Attualmente il 43% dei tuoi CFU è stato acquisito in modalità asincrona o remota. Il regolamento vigente richiede un minimo del 60% di crediti in modalità sincrona per l'accesso alla borsa ESU. Ti mancano <strong>almeno 8 CFU in presenza</strong> entro giugno per mantenere l'idoneità.
+      </div>
+    </div>
+
+    <p>
+      Ho aggiornato il tuo <strong>profilo competenze</strong> sulla base dei risultati del primo semestre. Ecco una sintesi del tuo radar attuale:
+    </p>
+
+    <!-- RADAR CHART -->
+    <div class="radar-section">
+      <div class="radar-title">Radar competenze</div>
+      <div class="radar-subtitle">Aggiornato al 10 febbraio 2030 · basato su esami, esperienze e auto-valutazioni</div>
+
+      <div class="radar-container">
+        <svg viewBox="0 0 300 300">
+          <!-- Background grid -->
+          <g opacity="0.15" fill="none" stroke="#003D73" stroke-width="0.5">
+            <!-- Pentagons for grid levels: 5 levels -->
+            <!-- Level 1 (20%) -->
+            <polygon points="150,126 172,141 164,166 136,166 128,141"/>
+            <!-- Level 2 (40%) -->
+            <polygon points="150,102 194,132 179,183 121,183 106,132"/>
+            <!-- Level 3 (60%) -->
+            <polygon points="150,78 216,123 193,199 107,199 84,123"/>
+            <!-- Level 4 (80%) -->
+            <polygon points="150,54 238,114 207,216 93,216 62,114"/>
+            <!-- Level 5 (100%) -->
+            <polygon points="150,30 260,105 222,232 78,232 40,105"/>
+          </g>
+
+          <!-- Axes -->
+          <g stroke="#003D73" stroke-width="0.5" opacity="0.2">
+            <line x1="150" y1="150" x2="150" y2="30"/>
+            <line x1="150" y1="150" x2="260" y2="105"/>
+            <line x1="150" y1="150" x2="222" y2="232"/>
+            <line x1="150" y1="150" x2="78" y2="232"/>
+            <line x1="150" y1="150" x2="40" y2="105"/>
+          </g>
+
+          <!-- Data polygon - Sara's competences -->
+          <!-- Analisi dati: 85%, Sostenibilità: 72%, Collaborazione: 55%, Negoziazione interculturale: 35%, IA Applicata: 78% -->
+          <!-- Calculating points on each axis: -->
+          <!-- Axis 1 (top): 85% → 150, 150-102=48 → 150, 48 -->
+          <!-- Axis 2 (right): 72% → 150+79, 150-32 → 229, 118 -->
+          <!-- Axis 3 (bottom-right): 55% → 150+40, 150+45 → 190, 195 -->
+          <!-- Axis 4 (bottom-left): 35% → 150-25, 150+29 → 125, 179 -->
+          <!-- Axis 5 (left): 78% → 150-86, 150-35 → 64, 115 -->
+          <polygon
+            points="150,48 229,118 190,195 125,179 64,115"
+            fill="rgba(0,102,204,0.12)"
+            stroke="#0066CC"
+            stroke-width="2"
+          />
+
+          <!-- Data points -->
+          <circle cx="150" cy="48" r="4" fill="#0066CC"/>
+          <circle cx="229" cy="118" r="4" fill="#0066CC"/>
+          <circle cx="190" cy="195" r="4" fill="#0066CC"/>
+          <circle cx="125" cy="179" r="4" fill="#D4850A"/>
+          <circle cx="64" cy="115" r="4" fill="#0066CC"/>
+
+          <!-- Labels -->
+          <text x="150" y="20" text-anchor="middle" font-size="10" font-family="IBM Plex Sans" fill="#1A1A2E" font-weight="600">Analisi dati</text>
+          <text x="258" y="108" text-anchor="end" font-size="10" font-family="IBM Plex Sans" fill="#1A1A2E" font-weight="600">Sostenibilità</text>
+          <text x="233" y="245" text-anchor="middle" font-size="10" font-family="IBM Plex Sans" fill="#1A1A2E" font-weight="600">Collaborazione</text>
+          <text x="67" y="250" text-anchor="middle" font-size="10" font-family="IBM Plex Sans" fill="#D4850A" font-weight="600">Negoziazione</text>
+          <text x="60" y="262" text-anchor="middle" font-size="9" font-family="IBM Plex Sans" fill="#D4850A">interculturale</text>
+          <text x="42" y="108" text-anchor="start" font-size="10" font-family="IBM Plex Sans" fill="#1A1A2E" font-weight="600">IA applicata</text>
+
+          <!-- Percentages near points -->
+          <text x="158" y="42" font-size="9" font-family="IBM Plex Mono" fill="#0066CC" font-weight="500">85%</text>
+          <text x="235" y="130" font-size="9" font-family="IBM Plex Mono" fill="#0066CC" font-weight="500">72%</text>
+          <text x="196" y="205" font-size="9" font-family="IBM Plex Mono" fill="#0066CC" font-weight="500">55%</text>
+          <text x="108" y="190" font-size="9" font-family="IBM Plex Mono" fill="#D4850A" font-weight="500">35%</text>
+          <text x="50" y="128" font-size="9" font-family="IBM Plex Mono" fill="#0066CC" font-weight="500">78%</text>
+        </svg>
+      </div>
+
+      <div class="radar-legend">
+        <div class="radar-legend-item">
+          <span class="radar-legend-dot" style="background:#0066CC;"></span>
+          Nella media o sopra
+        </div>
+        <div class="radar-legend-item">
+          <span class="radar-legend-dot" style="background:#D4850A;"></span>
+          Sotto soglia consigliata
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Come puoi vedere, il tuo profilo è forte nell'analisi dati e nell'IA applicata — coerente con il background che hai dichiarato all'immatricolazione e con i risultati dei moduli scelti. L'area di <strong>negoziazione interculturale</strong> risulta sotto la soglia consigliata per il tuo profilo di uscita. È un indicatore che vale la pena considerare, soprattutto se il tuo prossimo tirocinio sarà in un contesto internazionale come quello indicato nel tuo piano.
+    </p>
+
+    <!-- Suggerimento -->
+    <div class="suggestion-card">
+      <div class="suggestion-label">Suggerimento personalizzato</div>
+      <div class="suggestion-text">
+        Il modulo <strong>"Comunicazione e mediazione nei contesti multiculturali"</strong> (6 CFU, prof.ssa Ferraro, sede San Giobbe) si tiene in presenza il giovedì pomeriggio. Potrebbe integrare sia la competenza carente sia i crediti in modalità sincrona che ti servono per la borsa ESU. Ho verificato che non si sovrappone con i tuoi altri moduli.
+      </div>
+    </div>
+
+    <div class="alert-box info">
+      <span class="alert-icon">📋</span>
+      <div class="alert-text">
+        <strong>Micro-credential in scadenza.</strong> La certificazione "Data Ethics Fundamentals" acquisita sulla piattaforma EUNICE ha validità 24 mesi. Scade il <strong>18 settembre 2030</strong>. Se vuoi che resti nel tuo profilo permanente, devi superare la prova di convalida interna entro quella data.
+      </div>
+    </div>
+
+    <p>
+      Un'ultima nota. Ho rilevato che nelle ultime tre settimane hai consultato la piattaforma didattica prevalentemente tra le 23:00 e le 2:00. Non è un dato che incide sulla valutazione, ma gli studi sulla cronobiologia dell'apprendimento suggeriscono che la ritenzione è significativamente migliore nelle ore diurne. Se le tue abitudini di studio sono legate a vincoli lavorativi, potresti valutare l'accesso al programma <strong>"Flessibilità oraria per studenti lavoratori"</strong> di ESU Venezia, che prevede la registrazione integrale delle lezioni sincrone.
+    </p>
+
+    <!-- Firma -->
+    <div class="email-signature">
+      <p>
+        Un buon semestre,
+      </p>
+      <p>
+        <strong>CaFoscariAdvisor 3.2</strong><br>
+        Sistema di orientamento formativo personalizzato<br>
+        Università Ca' Foscari Venezia
+      </p>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <span class="disclaimer-icon">🤖</span>
+      Questo messaggio è stato generato automaticamente dal sistema CaFoscariAdvisor sulla base del tuo profilo formativo, delle tue interazioni con la piattaforma didattica e dei risultati accademici registrati. Il radar competenze è calcolato con un modello predittivo e non costituisce una valutazione ufficiale. Per parlare con un tutor umano, <a href="#">prenota un appuntamento</a>. Per informazioni sul trattamento dei tuoi dati: <a href="#">Informativa privacy CaFoscariAdvisor</a>.
+    </div>
+  </div>
+
+  <!-- Email footer -->
+  <div class="email-footer">
+    <div class="footer-logo-text">Università Ca' Foscari Venezia</div>
+    <div class="footer-logo-sub">Dorsoduro 3246 · 30123 Venezia</div>
+    <div class="footer-links">
+      <a href="#">MyUnive</a>
+      <a href="#">Moodle</a>
+      <a href="#">Supporto</a>
+    </div>
+  </div>
+
+  <div class="unsubscribe">
+    Ricevi questa email perché sei iscritta a Ca' Foscari con CaFoscariAdvisor attivo.<br>
+    <a href="#">Modifica frequenza notifiche</a> · <a href="#">Disattiva l'Advisor</a>
+  </div>
+
+</div>
+
+</body>
+</html>

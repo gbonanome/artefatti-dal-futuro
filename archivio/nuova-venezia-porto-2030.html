@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Porto Marghera, primo attracco dalla rotta Artica — La Nuova Venezia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-dark: #1a2a4a;
+    --blue-brand: #1e3a6e;
+    --blue-accent: #2a5aa0;
+    --red-accent: #c0392b;
+    --red-light: #e74c3c;
+    --gray-100: #f7f7f5;
+    --gray-200: #ededeb;
+    --gray-300: #d5d5d0;
+    --gray-400: #a0a09a;
+    --gray-500: #6b6b65;
+    --gray-600: #4a4a45;
+    --gray-700: #2d2d2a;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-ui: 'Source Sans 3', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === TOP BAR === */
+  .topbar {
+    background: var(--blue-dark);
+    color: white;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    padding: 6px 0;
+    letter-spacing: 0.03em;
+  }
+  .topbar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topbar a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  .topbar a:hover { color: white; }
+  .topbar-links { display: flex; gap: 18px; }
+
+  /* === HEADER === */
+  .header {
+    background: white;
+    border-bottom: 3px solid var(--blue-brand);
+    padding: 14px 0 12px;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--blue-brand);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .logo span { color: var(--red-accent); }
+  .logo-sub {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-nav {
+    display: flex;
+    gap: 24px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .header-nav a {
+    color: var(--gray-600);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .header-nav a:hover { color: var(--blue-accent); }
+  .header-nav a.active { color: var(--red-accent); border-bottom: 2px solid var(--red-accent); padding-bottom: 2px; }
+
+  /* === NAV SECTION LABELS === */
+  .section-bar {
+    background: var(--gray-200);
+    border-bottom: 1px solid var(--gray-300);
+    padding: 8px 0;
+    font-family: var(--font-ui);
+    font-size: 12px;
+  }
+  .section-bar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 6px;
+    color: var(--gray-500);
+  }
+  .section-bar a { color: var(--blue-accent); text-decoration: none; }
+  .section-bar a:hover { text-decoration: underline; }
+
+  /* === ARTICLE CONTAINER === */
+  .article-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+  }
+  @media (max-width: 850px) {
+    .article-container { grid-template-columns: 1fr; }
+    .sidebar { order: 2; }
+  }
+
+  /* === ARTICLE MAIN === */
+  .article-main { min-width: 0; }
+
+  .article-kicker {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .article-title {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--gray-700);
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .article-subtitle {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--gray-500);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .article-meta {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--gray-400);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-300);
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .article-meta .author { color: var(--gray-600); font-weight: 600; }
+  .article-meta .share-links { display: flex; gap: 12px; }
+  .article-meta .share-links a {
+    color: var(--gray-400);
+    text-decoration: none;
+    font-size: 12px;
+    border: 1px solid var(--gray-300);
+    padding: 3px 10px;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .article-meta .share-links a:hover { background: var(--gray-200); color: var(--gray-600); }
+
+  /* Photo */
+  .article-photo {
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .article-photo-img {
+    width: 100%;
+    height: 340px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 40%, #4a6a8a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .article-photo-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(255,255,255,0.02) 4px, rgba(255,255,255,0.02) 5px),
+      repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(255,255,255,0.02) 4px, rgba(255,255,255,0.02) 5px);
+  }
+  .photo-overlay {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+  .photo-overlay .crane-icon { font-size: 60px; margin-bottom: 8px; display: block; opacity: 0.3; }
+  .article-photo-caption {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--gray-500);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-200);
+    line-height: 1.5;
+  }
+  .article-photo-caption .credit { color: var(--gray-400); }
+
+  /* Article body */
+  .article-body p {
+    margin-bottom: 18px;
+  }
+  .article-body p.lead {
+    font-size: 19px;
+    line-height: 1.65;
+    font-weight: 400;
+    color: var(--gray-600);
+  }
+  .article-body strong {
+    font-weight: 600;
+  }
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 32px 0 14px;
+    color: var(--gray-700);
+  }
+
+  /* Pull quote */
+  .pullquote {
+    border-left: 4px solid var(--red-accent);
+    margin: 30px 0;
+    padding: 16px 24px;
+    background: rgba(192,57,43,0.04);
+  }
+  .pullquote p {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--gray-600);
+    margin-bottom: 8px !important;
+  }
+  .pullquote cite {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-style: normal;
+    color: var(--gray-400);
+  }
+
+  /* Inline box */
+  .info-box {
+    background: var(--blue-dark);
+    color: white;
+    padding: 24px 28px;
+    margin: 30px 0;
+    border-radius: 2px;
+  }
+  .info-box-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 12px;
+  }
+  .info-box h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .info-box .route {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .info-box .route .arrow { color: rgba(255,255,255,0.3); }
+  .info-box .route-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 10px;
+    font-family: var(--font-ui);
+  }
+  .info-box .comparison {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .info-box .comparison .num { font-size: 28px; font-weight: 700; color: var(--red-light); }
+
+  /* === SIDEBAR === */
+  .sidebar {}
+  .sidebar-block {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--gray-300);
+  }
+  .sidebar-block:last-child { border-bottom: none; }
+  .sidebar-heading {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--red-accent);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--red-accent);
+  }
+  .sidebar-item {
+    margin-bottom: 14px;
+  }
+  .sidebar-item a {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-700);
+    text-decoration: none;
+    line-height: 1.35;
+    display: block;
+  }
+  .sidebar-item a:hover { color: var(--blue-accent); }
+  .sidebar-item .sidebar-meta {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 3px;
+  }
+
+  /* Sidebar ad box */
+  .sidebar-ad {
+    background: var(--gray-200);
+    padding: 20px;
+    text-align: center;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-bottom: 28px;
+    border: 1px dashed var(--gray-300);
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .sidebar-ad .ad-label { text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; }
+  .sidebar-ad .ad-content {
+    font-size: 14px;
+    color: var(--gray-500);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .sidebar-ad .ad-cta {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 5px 14px;
+    background: var(--blue-accent);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 3px;
+    text-decoration: none;
+  }
+
+  /* === COMMENTS === */
+  .comments-section {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+  .comments-heading {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--gray-700);
+  }
+  .comment {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .comment-author {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-600);
+  }
+  .comment-date {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--gray-400);
+  }
+  .comment-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--gray-600);
+  }
+  .comment-actions {
+    margin-top: 8px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--gray-400);
+    display: flex;
+    gap: 16px;
+  }
+  .comment-actions a { color: var(--gray-400); text-decoration: none; }
+  .comment-actions a:hover { color: var(--blue-accent); }
+
+  .comment-reply {
+    margin-left: 28px;
+    padding-left: 16px;
+    border-left: 2px solid var(--gray-200);
+  }
+
+  /* === FOOTER LABEL === */
+  .artifact-label {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 58, 110, 0.95);
+    backdrop-filter: blur(10px);
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    z-index: 1000;
+  }
+
+  /* Print tweaks */
+  @media print {
+    .artifact-label { display: none; }
+    .topbar, .header-nav, .sidebar-ad { display: none; }
+    .article-container { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div>Mercoledì 18 marzo 2030 · Aggiornato alle 14:32</div>
+    <div class="topbar-links">
+      <a href="#">Accedi</a>
+      <a href="#">Abbonati</a>
+      <a href="#">Newsletter</a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo">La Nuova <span>Venezia</span></div>
+      <div class="logo-sub">Gruppo GEDI · Quotidiano di Venezia e provincia</div>
+    </div>
+    <nav class="header-nav">
+      <a href="#">Venezia</a>
+      <a href="#">Mestre</a>
+      <a href="#" class="active">Economia</a>
+      <a href="#">Cronaca</a>
+      <a href="#">Cultura</a>
+      <a href="#">Sport</a>
+    </nav>
+  </div>
+</div>
+
+<!-- SECTION BAR -->
+<div class="section-bar">
+  <div class="section-bar-inner">
+    <a href="#">Home</a> <span>›</span> <a href="#">Economia</a> <span>›</span> <a href="#">Porto e logistica</a>
+  </div>
+</div>
+
+<!-- ARTICLE + SIDEBAR -->
+<div class="article-container">
+  <article class="article-main">
+
+    <div class="article-kicker">Esclusiva · Porto &amp; nuove rotte</div>
+
+    <h1 class="article-title">Porto Marghera, primo attracco dalla rotta Artica: container cinesi via Murmansk. «È l'inizio di una nuova era»</h1>
+
+    <p class="article-subtitle">La nave cargo Tian Jing ha completato la tratta Shanghai–Murmansk–Venezia in 19 giorni. L'Autorità Portuale esulta, i sindacati chiedono garanzie. A Marghera i residenti si dividono</p>
+
+    <div class="article-meta">
+      <div>
+        di <span class="author">Silvia Zanetti</span> · 18 marzo 2030, 11:45
+      </div>
+      <div class="share-links">
+        <a href="#">Condividi</a>
+        <a href="#">Salva</a>
+        <a href="#">Stampa</a>
+      </div>
+    </div>
+
+    <!-- PHOTO -->
+    <div class="article-photo">
+      <div class="article-photo-img">
+        <div class="photo-overlay">
+          <span class="crane-icon">⚓</span>
+          FOTO · La Tian Jing ormeggiata al Terminal Montesyndial
+        </div>
+      </div>
+      <div class="article-photo-caption">
+        La <em>Tian Jing</em> ormeggiata stamattina al terminal Montesyndial di Porto Marghera. È la prima nave cargo ad aver completato la rotta artica Shanghai–Murmansk–Venezia. <span class="credit">Foto: Andrea Pattaro / La Nuova Venezia</span>
+      </div>
+    </div>
+
+    <!-- ARTICLE BODY -->
+    <div class="article-body">
+
+      <p class="lead">VENEZIA — La <em>Tian Jing</em> è arrivata alle 6:14 di stamattina, silenziosa come solo le portacontainer di nuova generazione a propulsione GNL sanno essere. Diciannove giorni di navigazione dalla banchina 7 di Shanghai al terminal Montesyndial di Porto Marghera, passando per il Mare del Nord-Est — quella che fino a cinque anni fa chiamavamo «la rotta impossibile» e che il collasso dei ghiacci artici ha trasformato nella via più breve tra la Cina e il Mediterraneo.</p>
+
+      <p>A bordo: 4.200 container di componentistica elettronica, pannelli fotovoltaici e — particolare che non è sfuggito a nessuno — trecento tonnellate di terre rare destinate al polo di Marghera Innovazione, il distretto tecnologico nato sulle ceneri della chimica di base che occupa oggi circa 1.800 persone tra ingegneri, tecnici e operai specializzati.</p>
+
+      <p>«Questo attracco cambia la geografia del commercio europeo» ha detto <strong>Marco Duò</strong>, presidente dell'Autorità di Sistema Portuale del Mare Adriatico Settentrionale, visibilmente commosso. «Per quarant'anni ci hanno detto che Venezia come porto commerciale era finita. Oggi ricominciamo. E ricominciamo dalla rotta che nessuno aveva previsto.»</p>
+
+      <h2>Il nuovo asse e il «disimpegno atlantico»</h2>
+
+      <p>La rotta artica non è nata nel vuoto. È il frutto dell'accordo trilaterale Cina-Russia-UE firmato nel novembre 2028 a Samarcanda — quello che i commentatori hanno ribattezzato «il memorandum della necessità», per distinguerlo dai precedenti protocolli d'intenti rimasti sulla carta. L'Italia è stata tra i primi firmatari, forte dell'esperienza (controversa) del Memorandum Belt and Road del 2019, poi abbandonato nel 2023 e poi, in una delle giravolte della politica estera italiana, rinegoziato nel 2027 con clausole più stringenti su lavoro e ambiente.</p>
+
+      <p>Il contesto è noto: il progressivo disimpegno degli Stati Uniti dalla NATO — accelerato dopo le elezioni del 2028 — ha spinto l'Unione Europea a cercare autonomia strategica anche nelle rotte commerciali. Il risultato è una politica estera a due velocità: il «blocco nordico» (Scandinavia, Paesi Baltici) mantiene rapporti privilegiati con Washington; il «blocco mediterraneo» (Italia, Grecia, Spagna) guarda a est. Venezia, in questo schema, è diventata il punto d'ingresso naturale.</p>
+
+      <!-- INFO BOX: ROUTE -->
+      <div class="info-box">
+        <div class="info-box-title">La nuova mappa</div>
+        <h3>Rotta Artica vs Rotta di Suez: il confronto</h3>
+        <div class="route">
+          <span>Shanghai</span> <span class="arrow">→</span> <span>Mare di Ohotsk</span> <span class="arrow">→</span> <span>Stretto di Bering</span> <span class="arrow">→</span> <span>Mare del Nord-Est</span> <span class="arrow">→</span> <span>Murmansk</span> <span class="arrow">→</span> <span>Venezia</span>
+        </div>
+        <div class="route-label">Rotta Artica (operativa marzo–novembre) — 19 giorni</div>
+        <div class="comparison">
+          <div>Rotta tradizionale via Suez: <strong>32–35 giorni</strong></div>
+          <div style="margin-top: 8px;">Risparmio medio: <span class="num">–42%</span> sui tempi, <span class="num">–28%</span> sui costi carburante</div>
+          <div style="margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.5);">Fonte: Autorità di Sistema Portuale del Mare Adriatico Settentrionale, febbraio 2030</div>
+        </div>
+      </div>
+
+      <h2>«Servono competenze che non abbiamo»</h2>
+
+      <p>Non tutti brindano. <strong>Teresa Miani</strong>, segretaria provinciale della CGIL di Venezia, ha chiesto un incontro urgente con l'Autorità Portuale. «Parliamo chiaro: questi posti di lavoro di cui si parla — operatori di gru a controllo remoto, tecnici di logistica integrata, traduttori commerciali cinese-italiano — sono profili che oggi a Venezia non esistono. Chi li formerà? E nel frattempo, gli attuali lavoratori portuali che fine fanno?»</p>
+
+      <p>Il nodo della formazione è reale. L'Autorità Portuale ha annunciato a gennaio un protocollo con <strong>Ca' Foscari</strong> e il <strong>Dipartimento di Studi sull'Asia e sull'Africa Mediterranea</strong> per un corso intensivo di «cinese per la logistica portuale», ma il bando non è ancora uscito. La Camera di Commercio Venezia Rovigo, dal canto suo, ha attivato uno sportello per le PMI interessate all'import-export sulla rotta artica — «ma ci sono venute tre aziende in due mesi» ammette un funzionario che preferisce restare anonimo.</p>
+
+      <div class="pullquote">
+        <p>«Mio padre lavorava alla Montefibre. Io lavoro al ristorante. Mio figlio magari lavorerà al porto. Ma ogni volta ci dicono che è la svolta, e ogni volta la svolta è per qualcun altro.»</p>
+        <cite>Wei Jun Chen, ristoratore, via Piave, Mestre</cite>
+      </div>
+
+      <p><strong>Wei Jun Chen</strong> gestisce «Da Wei», ristorante su via Piave a Mestre, dal 2014. Suo padre era arrivato a Marghera nel 1992, aveva lavorato negli ultimi anni della chimica. Wei Jun ha visto la comunità cinese di Mestre crescere, cambiare, stratificarsi. «Ora arrivano manager, interpreti, gente con i soldi. Il consolato onorario a Mestre l'hanno aperto l'anno scorso. Ma la maggior parte di noi è qui da trent'anni e gestisce negozi. Non è che se arrivano le navi cambia qualcosa per il mio ristorante.»</p>
+
+      <p>Eppure qualcosa si muove. L'apertura del <strong>Centro per il Commercio Euroasiatico</strong> nell'ex capannone Alumix di Marghera — 3.200 metri quadri di uffici, sale conferenze e spazi di co-working inaugurati a settembre 2029 — ha portato una trentina di aziende, per lo più trading company e studi di consulenza doganale. Il direttore, <strong>Alessio Mura</strong>, non nasconde l'ambizione: «Trieste ha il porto franco. Genova ha la storia. Noi abbiamo la posizione e la rotta. In cinque anni Marghera sarà il principale hub artico del Mediterraneo.»</p>
+
+      <h2>A Marghera non tutti sono d'accordo</h2>
+
+      <p>In via Fratelli Bandiera, a trecento metri dal terminal, <strong>Paola Bertazzo</strong> innaffia le piante sul balcone. Ha 67 anni, è in pensione, vive a Marghera da sempre. «Il parco di Forte Marghera l'hanno ampliato, quello sì. Ma qui? Qui ci avevano promesso la bonifica, la pista ciclabile fino a Malcontenta, il parco lineare. Invece arrivano i container.»</p>
+
+      <p>Il traffico, dice, è già cambiato. I camion per il terminal Montesyndial passano da via dell'Elettricità, che costeggia il quartiere residenziale. «Di notte senti i beep delle retromarce. E l'aria — l'aria non lo so, dicono che il GNL è pulito, ma io mi fido poco.»</p>
+
+      <p>Il Comune di Venezia, attraverso l'assessorato allo Sviluppo Economico, ha istituito un «tavolo di convivenza porto-residenti» che si riunisce una volta al mese. L'ultimo verbale, di febbraio, registra la richiesta dei residenti di una barriera fonoassorbente e di un monitoraggio indipendente della qualità dell'aria. La risposta dell'Autorità Portuale: «In fase di valutazione.»</p>
+
+      <div class="pullquote">
+        <p>«Ci avevano promesso il parco. Invece arrivano i container.»</p>
+        <cite>Paola Bertazzo, residente, via Fratelli Bandiera, Marghera</cite>
+      </div>
+
+      <h2>La partita vera: chi governa la transizione?</h2>
+
+      <p>Al di là delle celebrazioni di oggi — il presidente della Regione ha mandato un videomessaggio, il sindaco era in banchina con la fascia tricolore — resta aperta la domanda che nessuno dei comunicati stampa affronta: chi decide cosa diventa Marghera nei prossimi dieci anni?</p>
+
+      <p>Il Piano Regolatore Portuale, aggiornato nel 2028, prevede l'ampliamento del terminal container e la costruzione di un nuovo molo dedicato alla rotta artica. Ma il piano urbanistico del Comune, approvato nello stesso anno, classifica l'area adiacente come «zona di rigenerazione urbana a vocazione residenziale e verde pubblico». I due documenti, notano gli urbanisti, sono incompatibili.</p>
+
+      <p>«La verità è che Marghera è sempre stata il luogo dove Venezia scarica le contraddizioni» dice <strong>Francesca Ferraro</strong>, ricercatrice allo IUAV e autrice di <em>Margini. Marghera oltre la chimica</em> (Marsilio, 2029). «Prima l'industria, poi il degrado, poi la bonifica, ora il porto globale. Ogni volta si decide altrove — a Roma, a Bruxelles, ora a Samarcanda — e Marghera si adegua.»</p>
+
+      <p>I lavori per il nuovo molo artico dovrebbero iniziare a settembre, secondo il cronoprogramma dell'Autorità Portuale. Ma il Comitato Residenti Marghera ha annunciato un ricorso al TAR del Veneto contro la variante urbanistica che li renderebbe possibili. L'udienza è fissata per giugno.</p>
+
+      <p>La <em>Tian Jing</em>, intanto, sarà in banchina fino a venerdì. Poi riparte. Direzione Murmansk, e da lì Shanghai. La prossima nave è attesa per il 2 aprile. E poi un'altra. E un'altra ancora.</p>
+
+    </div>
+  </article>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- AD -->
+    <div class="sidebar-ad">
+      <div class="ad-label">Spazio sponsorizzato</div>
+      <div class="ad-content">Corsi di lingua cinese per professionisti<br>Centro Confucio · Ca' Foscari</div>
+      <a href="#" class="ad-cta">Scopri i corsi 2030–31</a>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-heading">Correlati</div>
+      <div class="sidebar-item">
+        <a href="#">Marghera Innovazione: le terre rare e il distretto che non ti aspetti</a>
+        <div class="sidebar-meta">12 marzo 2030 · Economia</div>
+      </div>
+      <div class="sidebar-item">
+        <a href="#">Rotta artica, l'Ue firma l'accordo: «Navigabile 9 mesi l'anno». Ambientalisti divisi</a>
+        <div class="sidebar-meta">14 febbraio 2030 · Esteri</div>
+      </div>
+      <div class="sidebar-item">
+        <a href="#">Il consolato cinese di Mestre compie un anno: «Qui la comunità più grande del Triveneto»</a>
+        <div class="sidebar-meta">8 marzo 2030 · Mestre</div>
+      </div>
+      <div class="sidebar-item">
+        <a href="#">Porto, la CGIL: «Mancano 200 figure specializzate. Servono corsi, non spot»</a>
+        <div class="sidebar-meta">5 marzo 2030 · Economia</div>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-heading">Da leggere</div>
+      <div class="sidebar-item">
+        <a href="#">MOSE, il bilancio 2029: 47 attivazioni. «Ormai è routine, ma il costo pesa»</a>
+        <div class="sidebar-meta">2 marzo 2030 · Venezia</div>
+      </div>
+      <div class="sidebar-item">
+        <a href="#">Ca' Foscari, boom di iscritti ai corsi di lingue asiatiche: +35% in tre anni</a>
+        <div class="sidebar-meta">28 febbraio 2030 · Università</div>
+      </div>
+      <div class="sidebar-item">
+        <a href="#">Mestre, via Piave: il volto nuovo del quartiere tra negozi etnici e residenze universitarie</a>
+        <div class="sidebar-meta">20 febbraio 2030 · Mestre</div>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-heading">I numeri</div>
+      <div style="font-family: var(--font-ui); font-size: 14px; color: var(--gray-600); line-height: 1.8;">
+        <div><strong style="font-size: 26px; color: var(--blue-brand);">19</strong> giorni di navigazione</div>
+        <div><strong style="font-size: 26px; color: var(--blue-brand);">4.200</strong> container a bordo</div>
+        <div><strong style="font-size: 26px; color: var(--blue-brand);">1.800</strong> addetti a Marghera Innovazione</div>
+        <div><strong style="font-size: 26px; color: var(--blue-brand);">300</strong> t. di terre rare in arrivo</div>
+        <div><strong style="font-size: 26px; color: var(--blue-brand);">3</strong> aziende allo sportello CamCom</div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- COMMENTS -->
+<section class="comments-section">
+  <h2 class="comments-heading">Commenti (47)</h2>
+
+  <div class="comment">
+    <div class="comment-header">
+      <span class="comment-author">MargheraViva</span>
+      <span class="comment-date">18 mar 2030, 12:03</span>
+    </div>
+    <div class="comment-text">Io abito in via dell'Elettricità. I camion passano GIÀ alle 5 di mattina. Il "tavolo di convivenza" è una barzelletta, ci vanno sempre gli stessi tre del comitato e il funzionario del Comune prende appunti che nessuno rilegge. Adesso arrivano pure le navi dalla Cina. Bene. Benissimo. Basta che non vengano a dirci che è per il bene di Marghera.</div>
+    <div class="comment-actions">
+      <a href="#">↑ 34</a>
+      <a href="#">Rispondi</a>
+      <a href="#">Segnala</a>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-header">
+      <span class="comment-author">porto_oggi</span>
+      <span class="comment-date">18 mar 2030, 12:18</span>
+    </div>
+    <div class="comment-text">Ma vi rendete conto che Trieste e Genova ci stanno mangiando da anni e finalmente abbiamo una chance? La rotta artica è il futuro, lo dice qualsiasi analista. Invece di lamentarci dovremmo essere contenti che qualcuno investe qui invece che altrove.</div>
+    <div class="comment-actions">
+      <a href="#">↑ 22</a>
+      <a href="#">Rispondi</a>
+      <a href="#">Segnala</a>
+    </div>
+
+    <div class="comment comment-reply">
+      <div class="comment-header">
+        <span class="comment-author">MargheraViva</span>
+        <span class="comment-date">18 mar 2030, 12:24</span>
+      </div>
+      <div class="comment-text">Sì certo, "qualcuno investe". Tipo quando investivano nel petrolchimico? Come è andata? I miei genitori ci hanno rimesso la salute per quegli investimenti. Scusa se non salto di gioia.</div>
+      <div class="comment-actions">
+        <a href="#">↑ 41</a>
+        <a href="#">Rispondi</a>
+        <a href="#">Segnala</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-header">
+      <span class="comment-author">la_prof</span>
+      <span class="comment-date">18 mar 2030, 12:30</span>
+    </div>
+    <div class="comment-text">Insegno cinese a Ca' Foscari da 12 anni. Il protocollo con l'Autorità Portuale per il "cinese logistico" è fermo da gennaio perché non si mettono d'accordo sui fondi. Intanto i miei studenti migliori vanno a Trieste dove li assumono subito. Questa città ha il talento di annunciare le cose e poi non farle.</div>
+    <div class="comment-actions">
+      <a href="#">↑ 56</a>
+      <a href="#">Rispondi</a>
+      <a href="#">Segnala</a>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-header">
+      <span class="comment-author">WeiJun_DaWei</span>
+      <span class="comment-date">18 mar 2030, 13:02</span>
+    </div>
+    <div class="comment-text">Sono il Wei Jun dell'articolo 😂 Zanetti ha scritto bene ma ha tagliato la parte dove dicevo che la comunità cinese qui non è un blocco unico. C'è chi è arrivato negli anni 90 come mio padre e fa ristorazione o commercio. C'è chi è arrivato 2-3 anni fa con la trading company e vive in centro a Venezia. Non ci parliamo neanche, siamo mondi diversi. Quando dicono "la comunità cinese di Mestre" fanno un pacco unico che non esiste.</div>
+    <div class="comment-actions">
+      <a href="#">↑ 89</a>
+      <a href="#">Rispondi</a>
+      <a href="#">Segnala</a>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-header">
+      <span class="comment-author">arch_ferraro</span>
+      <span class="comment-date">18 mar 2030, 13:41</span>
+    </div>
+    <div class="comment-text">Grazie a Zanetti per aver citato il mio libro. Aggiungo un dato che nell'articolo non c'è: il Piano Regolatore Portuale e il Piano Urbanistico non solo sono incompatibili, ma sono stati approvati dallo STESSO consiglio comunale a distanza di tre mesi. Nessuno se n'è accorto. O forse nessuno voleva accorgersene.</div>
+    <div class="comment-actions">
+      <a href="#">↑ 67</a>
+      <a href="#">Rispondi</a>
+      <a href="#">Segnala</a>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-header">
+      <span class="comment-author">terminal_worker_88</span>
+      <span class="comment-date">18 mar 2030, 14:05</span>
+    </div>
+    <div class="comment-text">Lavoro al terminal dal 2019. Le "gru a controllo remoto" di cui parla la Miani le abbiamo già, le hanno messe nel 2027. Indovinate quanti di noi sono stati formati per usarle? Zero. Hanno portato gente da Amburgo. Noi facciamo ancora il lavoro di prima, solo che adesso ci guardano i droni.</div>
+    <div class="comment-actions">
+      <a href="#">↑ 73</a>
+      <a href="#">Rispondi</a>
+      <a href="#">Segnala</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ARTIFACT LABEL -->
+<div class="artifact-label">
+  ⚡ Artefatto dal futuro · Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+</div>
+
+</body>
+</html>

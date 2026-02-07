@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notera AI — Meeting Intelligence</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8f9fb;
+    --surface: #ffffff;
+    --text: #1a1d23;
+    --text-secondary: #5f6570;
+    --text-tertiary: #8b909a;
+    --border: #e5e7ec;
+    --accent: #2563eb;
+    --accent-light: #eff4ff;
+    --ai-purple: #7c3aed;
+    --ai-purple-light: #f3f0ff;
+    --ai-purple-border: #ddd6fe;
+    --warning: #d97706;
+    --warning-light: #fffbeb;
+    --warning-border: #fde68a;
+    --success: #059669;
+    --success-light: #ecfdf5;
+    --danger: #dc2626;
+    --chat-bg: #dcfce7;
+    --chat-border: #86efac;
+    --quote-bg: #f9fafb;
+    --quote-border: #d1d5db;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER / TOOL CHROME ===== */
+  .tool-header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    color: white;
+    padding: 16px 20px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .tool-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+
+  .tool-logo {
+    width: 22px;
+    height: 22px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  .tool-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0.95;
+  }
+
+  .tool-subtitle {
+    font-size: 12px;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* ===== ARTEFATTO LABEL ===== */
+  .artefatto-label {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== MEETING META ===== */
+  .meeting-meta {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px;
+  }
+
+  .meeting-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .meta-grid {
+    display: grid;
+    gap: 8px;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: #4a4e57;
+  }
+
+  .meta-icon {
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .meta-row strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .participant-tag {
+    display: inline;
+    font-size: 14px;
+  }
+
+  .participant-role {
+    color: #6b7080;
+    font-size: 13px;
+  }
+
+  .recording-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #fef2f2;
+    color: var(--danger);
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .rec-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--danger);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .content {
+    padding: 16px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ===== AI SUMMARY CARD ===== */
+  .ai-summary {
+    background: var(--ai-purple-light);
+    border: 1px solid var(--ai-purple-border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ai-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .ai-badge .dot {
+    width: 7px;
+    height: 7px;
+    background: var(--ai-purple);
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+
+  .ai-summary p {
+    font-size: 14.5px;
+    color: #3b0f7a;
+    line-height: 1.65;
+  }
+
+  /* ===== TOPIC SECTIONS ===== */
+  .topic {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .topic-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topic-number {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7080;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .topic-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+  }
+
+  .topic-timestamp {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: #6b7080;
+    margin-top: 4px;
+  }
+
+  .topic-body {
+    padding: 16px;
+  }
+
+  .topic-ai-summary {
+    font-size: 14.5px;
+    color: #3d4150;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topic-ai-summary::before {
+    content: '🤖 ';
+    font-size: 12px;
+  }
+
+  /* ===== QUOTES ===== */
+  .quote {
+    background: var(--quote-bg);
+    border-left: 3px solid var(--quote-border);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+
+  .quote-speaker {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .quote-speaker .role {
+    font-weight: 400;
+    color: #6b7080;
+    font-size: 13px;
+  }
+
+  .quote-text {
+    font-size: 14.5px;
+    color: #3d4150;
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .quote-text .ellipsis {
+    color: var(--text-tertiary);
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== ELLIPSIS BREAK ===== */
+  .transcript-cut {
+    text-align: center;
+    padding: 8px 0;
+    margin: 4px 0 12px;
+  }
+
+  .transcript-cut span {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #6b7080;
+    letter-spacing: 0.15em;
+  }
+
+  /* ===== AI INSIGHT BOXES ===== */
+  .ai-insight {
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .ai-insight.alert {
+    background: var(--warning-light);
+    border: 1px solid var(--warning-border);
+    color: #92400e;
+  }
+
+  .ai-insight.info {
+    background: var(--ai-purple-light);
+    border: 1px solid var(--ai-purple-border);
+    color: #4c1d95;
+  }
+
+  .ai-insight.stat {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    color: #0c4a6e;
+  }
+
+  .ai-insight.positive {
+    background: var(--success-light);
+    border: 1px solid #a7f3d0;
+    color: #064e3b;
+  }
+
+  .ai-insight-icon {
+    flex-shrink: 0;
+    font-size: 14px;
+    margin-top: 1px;
+  }
+
+  .ai-insight-label {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ===== CHAT MESSAGE (Giulia) ===== */
+  .chat-message {
+    background: var(--chat-bg);
+    border: 1px solid var(--chat-border);
+    border-radius: 12px;
+    padding: 14px;
+    margin: 14px 0 4px;
+    position: relative;
+  }
+
+  .chat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #166534;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .chat-sender {
+    font-size: 14px;
+    font-weight: 600;
+    color: #14532d;
+    margin-bottom: 2px;
+  }
+
+  .chat-sender .junior-tag {
+    font-weight: 400;
+    font-size: 12.5px;
+    color: #166534;
+    opacity: 0.8;
+  }
+
+  .chat-text {
+    font-size: 14.5px;
+    color: #0f6b2e;
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .chat-time {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #166534;
+    opacity: 0.65;
+    margin-top: 6px;
+    text-align: right;
+  }
+
+  /* ===== SENTIMENT TABLE ===== */
+  .sentiment-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .sentiment-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sentiment-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .sentiment-table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .sentiment-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 4px;
+  }
+
+  .sentiment-row:last-child {
+    border-bottom: none;
+  }
+
+  .sentiment-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .sentiment-role-small {
+    font-size: 12.5px;
+    color: #6b7080;
+    grid-column: 1 / -1;
+    margin-top: -2px;
+  }
+
+  .sentiment-mood {
+    text-align: right;
+    color: #4a4e57;
+    font-size: 13px;
+  }
+
+  .sentiment-detail {
+    font-size: 12px;
+    color: #6b7080;
+    grid-column: 1 / -1;
+    font-family: var(--mono);
+    margin-top: 2px;
+  }
+
+  .sentiment-row.muted {
+    opacity: 0.65;
+  }
+
+  /* ===== ACTION ITEMS ===== */
+  .actions-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .actions-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .actions-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .action-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .action-item:last-child {
+    border-bottom: none;
+  }
+
+  .action-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .action-content {
+    flex: 1;
+  }
+
+  .action-assignee {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+
+  .action-text {
+    font-size: 14.5px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .action-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #6b7080;
+    margin-top: 4px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .action-item.system-action {
+    background: var(--warning-light);
+  }
+
+  .action-item.system-action .action-assignee {
+    color: var(--warning);
+  }
+
+  .priority-high {
+    color: var(--danger);
+    font-weight: 600;
+  }
+
+  /* ===== KPI DASHBOARD ===== */
+  .kpi-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .kpi-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kpi-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .kpi-header p {
+    font-size: 13px;
+    color: #6b7080;
+    margin-top: 2px;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    padding: 14px 16px;
+  }
+
+  .kpi-label {
+    font-size: 12.5px;
+    color: #5a5f6b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .kpi-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .kpi-delta {
+    font-size: 12.5px;
+    font-family: var(--mono);
+    margin-top: 2px;
+  }
+
+  .kpi-delta.positive { color: var(--success); }
+  .kpi-delta.negative { color: var(--danger); }
+  .kpi-delta.neutral { color: var(--text-tertiary); }
+
+  .kpi-subtext {
+    font-size: 12px;
+    color: #6b7080;
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* ===== BAR CHART (simple CSS) ===== */
+  .bar-chart-section {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .bar-chart-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .bar-label {
+    width: 90px;
+    flex-shrink: 0;
+    color: #4a4e57;
+    text-align: right;
+    font-size: 13px;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 18px;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: white;
+    min-width: 30px;
+  }
+
+  .bar-fill.blue { background: var(--accent); }
+  .bar-fill.purple { background: var(--ai-purple); }
+  .bar-fill.amber { background: var(--warning); }
+  .bar-fill.teal { background: #0d9488; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    padding: 20px;
+    text-align: center;
+    color: #6b7080;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  .footer-logo {
+    font-weight: 600;
+    color: #4a4e57;
+  }
+
+  .confidential-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fef2f2;
+    color: #991b1b;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ===== ARTEFATTO FOOTER ===== */
+  .artefatto-footer {
+    text-align: center;
+    padding: 24px 20px;
+    background: #1e1b4b;
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .artefatto-footer .label {
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOOL HEADER ===== -->
+<div class="tool-header">
+  <div class="tool-brand">
+    <div class="tool-logo">◉</div>
+    <div>
+      <div class="tool-name">Notera</div>
+      <div class="tool-subtitle">Meeting Intelligence</div>
+    </div>
+  </div>
+  <div class="artefatto-label">⚡ Artefatto dal futuro · 2030</div>
+</div>
+
+<!-- ===== MEETING META ===== -->
+<div class="meeting-meta">
+  <h1 class="meeting-title">People & Organization Review — Q3 2030</h1>
+  <div class="meta-grid">
+    <div class="meta-row">
+      <span class="meta-icon">📅</span>
+      <span>Mercoledì 18 settembre 2030, 10:00–11:45</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-icon">📍</span>
+      <span>Microsoft Teams · Sala Cadore (Longarone) + 2 da remoto</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-icon">🏢</span>
+      <span><strong>Pellegrini Eyewear S.r.l.</strong> · Longarone (BL)</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-icon">👥</span>
+      <div>
+        <span class="participant-tag"><strong>Marco Pellegrini</strong></span> <span class="participant-role">· Amministratore Delegato</span><br>
+        <span class="participant-tag"><strong>Silvia Bortoluzzi</strong></span> <span class="participant-role">· People & Organization</span><br>
+        <span class="participant-tag"><strong>Andrea Cadorin</strong></span> <span class="participant-role">· Resp. Operations</span><br>
+        <span class="participant-tag"><strong>Elena Zangrando</strong></span> <span class="participant-role">· RSU</span><br>
+        <span class="participant-tag" style="color: var(--text-tertiary);">+ 3 in ascolto</span>
+      </div>
+    </div>
+  </div>
+  <div class="recording-badge">
+    <span class="rec-dot"></span>
+    Trascrizione automatica · Consenso registrato
+  </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="content">
+
+  <!-- AI SUMMARY -->
+  <div class="ai-summary">
+    <div class="ai-badge"><span class="dot"></span> Riepilogo generato da Notera AI</div>
+    <p>La riunione ha affrontato quattro temi: i risultati del primo anno di coordinamento algoritmico nella unit Operations, l'aggiornamento sulla certificazione di parità di genere, lo stato del programma di reskilling con Ca' Foscari e Certottica, e le difficoltà nell'attrarre profili junior. Il tono generale è stato costruttivo con momenti di tensione moderata sul ruolo dell'AI nella gestione del personale. Durata effettiva: 1h 38min. Tasso di partecipazione vocale: 78%.</p>
+  </div>
+
+  <!-- ===== TOPIC 1 ===== -->
+  <div class="topic">
+    <div class="topic-header">
+      <div class="topic-number">Argomento 01 / 04</div>
+      <div class="topic-title">Sperimentazione coordinamento algoritmico — Unit Operations</div>
+      <div class="topic-timestamp">⏱ 10:04 – 10:38 · 34 min</div>
+    </div>
+    <div class="topic-body">
+      <div class="topic-ai-summary">
+        Il responsabile Operations ha presentato i KPI del primo anno della unit sotto coordinamento algoritmico (piattaforma Athena HR). Produttività +12%, assenteismo -8%, distribuzione turni valutata "equa" dal 73% dei dipendenti nella survey interna. Discussione articolata sulla percezione qualitativa dei dipendenti.
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Andrea Cadorin <span class="role">· Resp. Operations</span></div>
+        <div class="quote-text">"I numeri non li scelgo io, li genera il sistema. Dodici percento in più di produttività, con meno straordinari. I turni li assegna l'algoritmo e nessuno può dire che il capo favorisce qualcuno. <span class="ellipsis">[...]</span> Il punto è questo: quando togli il fattore umano dalla pianificazione, togli anche i favoritismi. E a Longarone lo sappiamo bene quanto pesavano."</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Elena Zangrando <span class="role">· RSU</span></div>
+        <div class="quote-text">"Andrea, il fattore umano non è solo favoritismo. Ho tre persone che mi hanno detto testualmente: 'non so più a chi rivolgermi quando ho un problema vero'. Non un problema di turno — un problema umano. <span class="ellipsis">[...]</span> L'algoritmo gli manda un messaggio: 'Rivolgiti al supporto People & Organization'. Non è la stessa cosa che bussare alla porta di un responsabile."</div>
+      </div>
+
+      <div class="transcript-cut"><span>[...]</span></div>
+
+      <div class="quote">
+        <div class="quote-speaker">Marco Pellegrini <span class="role">· AD</span></div>
+        <div class="quote-text">"Io guardo i risultati, ma guardo anche i curricula che ci arrivano. E vi dico che se fuori si viene a sapere che alla Pellegrini i dipendenti li 'gestisce un algoritmo', tra virgolette, rischiamo di non assumere più nessuno sotto i trent'anni. <span class="ellipsis">[...]</span> Già facciamo fatica adesso."</div>
+      </div>
+
+      <div class="ai-insight alert">
+        <span class="ai-insight-icon">⚠️</span>
+        <div>
+          <span class="ai-insight-label">Notera Insight</span>
+          Rilevata divergenza significativa tra KPI oggettivi (in miglioramento) e percezione qualitativa (mista). Consigliata indagine sulla correlazione tra coordinamento algoritmico e senso di appartenenza al team. Pattern simile riscontrato nel 34% delle aziende manifatturiere del campione Notera.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOPIC 2 ===== -->
+  <div class="topic">
+    <div class="topic-header">
+      <div class="topic-number">Argomento 02 / 04</div>
+      <div class="topic-title">Certificazione parità di genere — Aggiornamento annuale</div>
+      <div class="topic-timestamp">⏱ 10:41 – 11:05 · 24 min</div>
+    </div>
+    <div class="topic-body">
+      <div class="topic-ai-summary">
+        La responsabile P&O ha presentato il report annuale sulla certificazione parità di genere (framework europeo, evoluzione della UNI/PdR 125). Il gender pay gap medio aziendale è al 2,1%, sotto la soglia UE del 5%. Emergono criticità sulla distribuzione del carico di mentoring informale e sull'interazione tra algoritmo di valutazione e congedo parentale.
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Silvia Bortoluzzi <span class="role">· People & Organization</span></div>
+        <div class="quote-text">"Sulla carta siamo a posto — e non lo dico con cinismo, ci abbiamo lavorato davvero. Il gap retributivo base è quasi azzerato. Il problema è quello che non si misura, o che si misura male. <span class="ellipsis">[...]</span> Le colleghe nei ruoli tecnici — e parlo delle responsabili di linea, delle team leader — fanno il doppio del mentoring informale. Formano i nuovi, mediano i conflitti, tengono insieme i gruppi. E questo non compare in nessun KPI. L'algoritmo di Operations non lo vede."</div>
+      </div>
+
+      <div class="transcript-cut"><span>[...]</span></div>
+
+      <div class="quote">
+        <div class="quote-speaker">Elena Zangrando <span class="role">· RSU</span></div>
+        <div class="quote-text">"Aggiungo una cosa sul congedo parentale. L'abbiamo introdotto paritario, ed è stato un passo importante. Ma dei quattordici padri che ne avevano diritto quest'anno, l'hanno usato in cinque. E non perché non vogliano — perché il sistema di valutazione, quello algoritmico, registra l'assenza come 'riduzione di disponibilità'. Non distingue un congedo da un calo di rendimento."</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Andrea Cadorin <span class="role">· Resp. Operations</span></div>
+        <div class="quote-text">"Questo però è un bug, non un difetto del modello. Si può correggere. Il fornitore della piattaforma l'ha già in roadmap per il Q1."</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Elena Zangrando <span class="role">· RSU</span></div>
+        <div class="quote-text">"Andrea, intanto sono nove mesi che è attivo e nove mesi che penalizza chi prende il congedo. Non è un bug — è una scelta di chi ha impostato i parametri."</div>
+      </div>
+
+      <div class="ai-insight stat">
+        <span class="ai-insight-icon">📊</span>
+        <div>
+          <span class="ai-insight-label">Notera Insight — Correlazione</span>
+          Gender pay gap unit Operations (coordinamento algoritmico): 0,8%. Unit con management tradizionale: 3,4%. Correlazione positiva da verificare. Nota: il dato Operations non include bonus variabili e straordinari, dove il gap sale al 6,2%.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOPIC 3 ===== -->
+  <div class="topic">
+    <div class="topic-header">
+      <div class="topic-number">Argomento 03 / 04</div>
+      <div class="topic-title">Programma di reskilling "Futuro Prossimo" — Stato avanzamento</div>
+      <div class="topic-timestamp">⏱ 11:07 – 11:26 · 19 min</div>
+    </div>
+    <div class="topic-body">
+      <div class="topic-ai-summary">
+        Aggiornamento sul programma di reskilling in partnership con Università Ca' Foscari e Certottica (Istituto Italiano di Tecnologia e Design dell'Occhiale, Longarone). 34 dipendenti coinvolti nel primo ciclo su 131 totali. Focus: competenze digitali avanzate, interazione con sistemi AI, sostenibilità dei materiali. Il tasso di completamento mostra una significativa forbice generazionale.
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Silvia Bortoluzzi <span class="role">· People & Organization</span></div>
+        <div class="quote-text">"Il programma con Ca' Foscari funziona, e Certottica ci ha dato una mano enorme sulla parte materiali — il bio-acetato, le leghe riciclate, tutta la filiera. Ma abbiamo un problema di fondo: il sistema di reskilling assegna priorità e percorsi in base a un 'readiness score'. E lo score penalizza chi ha meno familiarità digitale. <span class="ellipsis">[...]</span> In pratica chi ha più bisogno di formazione è quello che l'algoritmo mette in fondo alla lista."</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Marco Pellegrini <span class="role">· AD</span></div>
+        <div class="quote-text">"Ecco, e poi ci chiediamo perché i cinquantenni si sentono messi da parte. Silvia, questo lo dobbiamo risolvere — subito. Quelli sono i nostri artigiani migliori. Sono quelli che sanno ancora montare una cerniera a mano quando la linea automatica si blocca. <span class="ellipsis">[...]</span> La settimana scorsa il braccio robotico sul reparto montaggio si è fermato per tre ore. Chi ha portato avanti la produzione? Renato. Con le mani. A sessantadue anni."</div>
+      </div>
+
+      <div class="transcript-cut"><span>[...]</span></div>
+
+      <div class="quote">
+        <div class="quote-speaker">Silvia Bortoluzzi <span class="role">· People & Organization</span></div>
+        <div class="quote-text">"Ho chiesto a Ca' Foscari se possiamo ridisegnare lo score. Loro sono disponibili, ma il modello è della piattaforma — è lo stesso usato da Confindustria Belluno per tutto il distretto. Cambiarlo solo per noi non è banale."</div>
+      </div>
+
+      <div class="ai-insight info">
+        <span class="ai-insight-icon">🧠</span>
+        <div>
+          <span class="ai-insight-label">Notera Insight — Formazione</span>
+          Tasso completamento moduli per fascia d'età: under 35 → 91%, 35-50 → 74%, over 50 → 41%. Suggerimento: integrare nel readiness score un fattore "competenza artigianale" per bilanciare il bias verso le competenze digitali. Modello disponibile in Notera Labs (beta).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOPIC 4 ===== -->
+  <div class="topic">
+    <div class="topic-header">
+      <div class="topic-number">Argomento 04 / 04</div>
+      <div class="topic-title">Attrazione talenti junior e politiche di retention</div>
+      <div class="topic-timestamp">⏱ 11:27 – 11:43 · 16 min</div>
+    </div>
+    <div class="topic-body">
+      <div class="topic-ai-summary">
+        Discussione sulle difficoltà di recruiting. 3 posizioni aperte da oltre 6 mesi: Product Designer, Tecnico automazione linea, Supply Chain Analyst. I candidati under-30 richiedono sistematicamente trasparenza retributiva completa (obbligo Direttiva UE dal 2026), settimana corta o flessibilità oraria strutturale, e policy ESG verificabile. Tasso di accettazione offerte negli ultimi 12 mesi: 38% (benchmark distretto: 52%).
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Marco Pellegrini <span class="role">· AD</span></div>
+        <div class="quote-text">"L'ultimo candidato — bravo, laurea allo IUAV, portfolio interessante — sapete cosa mi ha chiesto prima ancora di parlare di contratto? 'Mi manda il link alla vostra dashboard ESG?' <span class="ellipsis">[...]</span> Non il RAL, non i benefit — la dashboard ESG. Io alla sua età chiedevo se c'era la mensa."</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-speaker">Andrea Cadorin <span class="role">· Resp. Operations</span></div>
+        <div class="quote-text">"In Operations il problema è diverso. Io i tecnici li trovo, ma non li tengo. L'ultimo che se n'è andato, formazione nostra, ventisette anni, mi ha detto che preferiva una cooperativa a Treviso con mille euro in meno al mese perché — testuali parole — 'almeno là ho un capo umano'."</div>
+      </div>
+
+      <div class="transcript-cut"><span>[...]</span></div>
+
+      <div class="quote">
+        <div class="quote-speaker">Silvia Bortoluzzi <span class="role">· People & Organization</span></div>
+        <div class="quote-text">"C'è anche un tema demografico che non possiamo ignorare. In provincia di Belluno i residenti tra i 25 e i 34 anni sono calati del 18% in dieci anni. Non stiamo competendo solo con le altre aziende del distretto — stiamo competendo con Barcellona, con Berlino, con il remote working da Lisbona. <span class="ellipsis">[...]</span> La settimana corta non è un capriccio generazionale. Per questi ragazzi è una condizione di base."</div>
+      </div>
+
+      <!-- CHAT MESSAGE — GIULIA -->
+      <div class="chat-message">
+        <div class="chat-label">💬 Messaggio in chat del meeting · non verbalizzato</div>
+        <div class="chat-sender">Giulia De Martin <span class="junior-tag">· Junior Product Designer · assunta 06/2030</span></div>
+        <div class="chat-text">"Scusate se scrivo in chat e non parlo, ma volevo dire una cosa. La dashboard ESG non è un capriccio — è l'unico modo che abbiamo per capire se un'azienda dice sul serio o fa storytelling. E sulla settimana corta: non è che non vogliamo lavorare. È che vogliamo avere il tempo per fare anche altro. Io per esempio sto facendo un micro-master serale in design rigenerativo. Se facessi 45 ore a settimana non potrei."</div>
+        <div class="chat-time">11:36</div>
+      </div>
+
+      <div class="ai-insight alert">
+        <span class="ai-insight-icon">💡</span>
+        <div>
+          <span class="ai-insight-label">Notera Insight — Retention</span>
+          Analisi predittiva turnover prossimi 12 mesi: unit Operations (coord. algoritmico) → 22% · unit Design (management tradizionale) → 15% · unit Commerciale → 18%. Fattore di rischio principale trasversale: "percezione di mancanza di ascolto" (survey anonima, n=97).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SENTIMENT ANALYSIS ===== -->
+  <div class="sentiment-section">
+    <div class="sentiment-header">
+      <span>🎭</span>
+      <h3>Sentiment Analysis — Partecipanti</h3>
+    </div>
+    <div class="sentiment-table">
+      <div class="sentiment-row">
+        <span class="sentiment-name">Marco Pellegrini</span>
+        <span class="sentiment-mood">Pragmatico · Preoccupato</span>
+        <span class="sentiment-role-small">AD</span>
+        <span class="sentiment-detail">14 interventi · 2 interruzioni · engagement alto</span>
+      </div>
+      <div class="sentiment-row">
+        <span class="sentiment-name">Silvia Bortoluzzi</span>
+        <span class="sentiment-mood">Costruttiva · Critica</span>
+        <span class="sentiment-role-small">People & Organization</span>
+        <span class="sentiment-detail">18 interventi · 0 interruzioni · engagement molto alto</span>
+      </div>
+      <div class="sentiment-row">
+        <span class="sentiment-name">Andrea Cadorin</span>
+        <span class="sentiment-mood">Difensivo · Propositivo</span>
+        <span class="sentiment-role-small">Resp. Operations</span>
+        <span class="sentiment-detail">11 interventi · 3 interruzioni · engagement alto</span>
+      </div>
+      <div class="sentiment-row">
+        <span class="sentiment-name">Elena Zangrando</span>
+        <span class="sentiment-mood">Critica · Collaborativa</span>
+        <span class="sentiment-role-small">RSU</span>
+        <span class="sentiment-detail">9 interventi · 0 interruzioni · engagement alto</span>
+      </div>
+      <div class="sentiment-row muted">
+        <span class="sentiment-name">Giulia De Martin</span>
+        <span class="sentiment-mood">N/D (solo chat)</span>
+        <span class="sentiment-role-small">Junior Product Designer</span>
+        <span class="sentiment-detail">0 interventi vocali · 1 messaggio chat · engagement basso</span>
+      </div>
+      <div class="sentiment-row muted">
+        <span class="sentiment-name">+ 2 partecipanti</span>
+        <span class="sentiment-mood">Silenziosi</span>
+        <span class="sentiment-role-small">&nbsp;</span>
+        <span class="sentiment-detail">Nessun intervento registrato</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ACTION ITEMS ===== -->
+  <div class="actions-section">
+    <div class="actions-header">
+      <span>✅</span>
+      <h3>Action Items — generati automaticamente</h3>
+    </div>
+
+    <div class="action-item">
+      <div class="action-checkbox">☐</div>
+      <div class="action-content">
+        <div class="action-assignee">→ Silvia Bortoluzzi</div>
+        <div class="action-text">Commissionare indagine qualitativa su percezione del coordinamento algoritmico nella unit Operations</div>
+        <div class="action-meta">
+          <span>📅 Scad. 15/10/2030</span>
+          <span>Priorità: media</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-checkbox">☐</div>
+      <div class="action-content">
+        <div class="action-assignee">→ Andrea Cadorin</div>
+        <div class="action-text">Definire protocollo di "escalation umana" per richieste non-operative dei dipendenti sotto coordinamento AI</div>
+        <div class="action-meta">
+          <span>📅 Scad. 30/10/2030</span>
+          <span>Priorità: alta</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-checkbox">☐</div>
+      <div class="action-content">
+        <div class="action-assignee">→ Silvia Bortoluzzi + Ca' Foscari / Certottica</div>
+        <div class="action-text">Rivedere parametri del readiness score reskilling: integrare "esperienza artigianale" come fattore positivo di bilanciamento</div>
+        <div class="action-meta">
+          <span>📅 Scad. 01/11/2030</span>
+          <span>Priorità: alta</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-checkbox">☐</div>
+      <div class="action-content">
+        <div class="action-assignee">→ Marco Pellegrini</div>
+        <div class="action-text">Preparare proposta di settimana corta sperimentale (32h/4gg) per unit Design a partire da Q1 2031</div>
+        <div class="action-meta">
+          <span>📅 Scad. 15/12/2030</span>
+          <span>Priorità: media</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-item system-action">
+      <div class="action-checkbox" style="border-color: var(--warning);">⚠</div>
+      <div class="action-content">
+        <div class="action-assignee">→ Sistema · Fornitore piattaforma Athena HR</div>
+        <div class="action-text">Aggiornare algoritmo di valutazione: il congedo parentale non deve essere classificato come "riduzione di disponibilità operativa"</div>
+        <div class="action-meta">
+          <span>📅 Scad. ASAP</span>
+          <span class="priority-high">Priorità: CRITICA</span>
+          <span>Ticket #4721 aperto automaticamente</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-checkbox">☐</div>
+      <div class="action-content">
+        <div class="action-assignee">→ Silvia Bortoluzzi</div>
+        <div class="action-text">Valutare con Confindustria Belluno Dolomiti la possibilità di un'iniziativa di distretto sull'employer branding per attrarre talenti under-30 nella filiera dell'occhiale</div>
+        <div class="action-meta">
+          <span>📅 Scad. 30/11/2030</span>
+          <span>Priorità: bassa</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== KPI DASHBOARD ===== -->
+  <div class="kpi-section">
+    <div class="kpi-header">
+      <h3>📎 Allegato — People Dashboard Q3 2030</h3>
+      <p>Generato automaticamente da Notera · Dati aggiornati al 15/09/2030</p>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Organico totale</div>
+        <div class="kpi-value">131</div>
+        <div class="kpi-delta negative">-3 vs Q2</div>
+        <div class="kpi-subtext">3 uscite, 0 ingressi</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Età media</div>
+        <div class="kpi-value">47,2</div>
+        <div class="kpi-delta negative">+0,8 vs 2029</div>
+        <div class="kpi-subtext">Benchmark distretto: 44,1</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Gender pay gap</div>
+        <div class="kpi-value">2,1%</div>
+        <div class="kpi-delta positive">-1,2pp vs 2029</div>
+        <div class="kpi-subtext">Soglia UE: 5%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Donne in ruoli apicali</div>
+        <div class="kpi-value">31%</div>
+        <div class="kpi-delta positive">+4pp vs 2029</div>
+        <div class="kpi-subtext">Target 2031: 35%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Turnover annuo</div>
+        <div class="kpi-value">19%</div>
+        <div class="kpi-delta negative">+3pp vs 2029</div>
+        <div class="kpi-subtext">Benchmark: 14%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Posizioni aperte</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-delta neutral">da >6 mesi</div>
+        <div class="kpi-subtext">Tasso accettazione: 38%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Reskilling — avanzamento</div>
+        <div class="kpi-value">34</div>
+        <div class="kpi-delta neutral">su 131 (26%)</div>
+        <div class="kpi-subtext">Target annuo: 60%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Congedo parentale (uomini)</div>
+        <div class="kpi-value">36%</div>
+        <div class="kpi-delta negative">5 su 14 aventi diritto</div>
+        <div class="kpi-subtext">Media naz.: 42%</div>
+      </div>
+    </div>
+
+    <!-- BAR CHART — Completamento reskilling per fascia d'età -->
+    <div class="bar-chart-section">
+      <div class="bar-chart-title">Completamento moduli reskilling per fascia d'età</div>
+      <div class="bar-row">
+        <span class="bar-label">Under 35</span>
+        <div class="bar-track">
+          <div class="bar-fill blue" style="width: 91%;">91%</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">35–50</span>
+        <div class="bar-track">
+          <div class="bar-fill teal" style="width: 74%;">74%</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Over 50</span>
+        <div class="bar-track">
+          <div class="bar-fill amber" style="width: 41%;">41%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">Notera · Meeting Intelligence</div>
+    <div>Verbale generato automaticamente. Verificare accuratezza delle citazioni.</div>
+    <div style="margin-top: 4px;">Pellegrini Eyewear S.r.l. · Via dell'Industria 14, Longarone (BL)</div>
+    <div class="confidential-badge">🔒 Uso interno — Riservato</div>
+  </div>
+
+</div>
+
+<!-- ARTEFATTO FOOTER -->
+<div class="artefatto-footer">
+  <span class="label">⚡ Artefatto dal futuro</span><br>
+  Questo documento è un oggetto di finzione ambientato nel 2030.<br>
+  Pellegrini Eyewear S.r.l. non esiste. I dati e le persone sono immaginari.<br>
+  Creato per il CLab Ca' Foscari · Febbraio 2026
+</div>
+
+</body>
+</html>
