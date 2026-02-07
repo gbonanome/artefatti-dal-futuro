@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sommersi · Festival della memoria orale · Venezia 2030</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --surface: #ece6db;
+    --surface-2: #e3dbd0;
+    --text: #1a1714;
+    --text-dim: #4a4440;
+    --text-faint: #7a7470;
+    --accent: #8a5a30;
+    --accent-light: #a06a3a;
+    --accent-glow: rgba(138,90,48,0.10);
+    --water: #2a5a6a;
+    --water-light: #1a5060;
+    --serif: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+    --sans: 'Outfit', -apple-system, 'Helvetica Neue', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 80%, rgba(42,74,90,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 20%, rgba(138,90,48,0.06) 0%, transparent 50%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--bg), transparent);
+  }
+  .hero-wave {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    opacity: 0.08;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      var(--water) 40px,
+      var(--water) 41px
+    );
+    animation: waveShift 20s linear infinite;
+  }
+  @keyframes waveShift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-82px); }
+  }
+  .hero-date {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(56px, 10vw, 110px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.95;
+    color: var(--text);
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.02em;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-family: var(--sans);
+    font-size: clamp(16px, 2.2vw, 19px);
+    font-weight: 300;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-meta-item {
+    text-align: center;
+  }
+  .hero-meta-item .hm-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+  .hero-meta-item .hm-value {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+  .section-text {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text-dim);
+    max-width: 640px;
+  }
+  .section-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .divider {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.08), transparent);
+  }
+
+  /* PROGRAMMA */
+  .programma-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    margin-top: 40px;
+  }
+  .giorno-header {
+    padding: 20px 0 10px;
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(196,149,106,0.2);
+    margin-bottom: 4px;
+  }
+  .evento {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    align-items: start;
+  }
+  @media (max-width: 600px) {
+    .evento { grid-template-columns: 70px 1fr; gap: 12px; }
+    .evento-tag { grid-column: 1 / -1; }
+  }
+  .evento-ora {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dim);
+    padding-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .evento-info {}
+  .evento-titolo {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .evento-desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
+  .evento-desc .ev-person {
+    color: var(--text);
+    font-weight: 400;
+  }
+  .evento-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 3px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    align-self: start;
+    margin-top: 3px;
+  }
+  .evento-tag.tag-walk { color: #1a5060; background: rgba(42,90,106,0.10); }
+  .evento-tag.tag-live { color: #8a3030; background: rgba(160,60,60,0.08); }
+  .evento-tag.tag-archive { color: #4a6a30; background: rgba(90,120,50,0.08); }
+  .evento-tag.tag-panel { color: #5a4a8a; background: rgba(100,80,160,0.08); }
+
+  /* HIGHLIGHT BOX — Medieval section */
+  .highlight-section {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    padding: 36px 32px;
+    margin-top: 40px;
+    position: relative;
+  }
+  .highlight-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 0% 50%, var(--accent-glow), transparent 60%);
+    pointer-events: none;
+  }
+  .hl-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hl-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.3;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .hl-text {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-dim);
+    position: relative;
+  }
+
+  /* PARTNERS */
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 30px;
+  }
+  .partner-card {
+    background: var(--surface);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .partner-card .pc-role {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+  }
+  .partner-card .pc-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .partner-card .pc-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* QUOTE */
+  .quote-section {
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .quote-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(42,74,90,0.05) 0%, transparent 60%);
+  }
+  .quote-mark {
+    font-family: var(--serif);
+    font-size: 72px;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 0.5;
+    position: relative;
+  }
+  .quote-text {
+    font-family: var(--serif);
+    font-size: clamp(22px, 3.5vw, 32px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    max-width: 680px;
+    margin: 20px auto;
+    position: relative;
+  }
+  .quote-attr {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-dim);
+    position: relative;
+  }
+
+  /* CALL TO ACTION */
+  .cta-section {
+    text-align: center;
+    padding: 60px 24px 80px;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 14px 40px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .cta-btn:hover {
+    background: var(--accent-light);
+    box-shadow: 0 4px 30px var(--accent-glow);
+  }
+  .cta-note {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+
+  /* FOOTER */
+  .site-footer {
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .footer-logos {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .footer-legal {
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height: 1.6;
+  }
+  .workshop-footer {
+    background: var(--surface);
+    color: var(--text-faint);
+    text-align: center;
+    padding: 20px 16px;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-wave"></div>
+  <div class="hero-date">18 — 23 marzo 2030 · Venezia</div>
+  <h1 class="hero-title"><em>Sommersi</em></h1>
+  <p class="hero-sub">
+    Festival della memoria orale. Sei giorni di podcast, camminate sonore, archivi viventi e voci che scompaiono. Perché ogni città che affonda porta con sé le storie di chi l'ha abitata.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hm-label">Edizione</div>
+      <div class="hm-value">III</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hm-label">Eventi</div>
+      <div class="hm-value">42</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hm-label">Lingue</div>
+      <div class="hm-value">9</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hm-label">Luoghi</div>
+      <div class="hm-value">14</div>
+    </div>
+  </div>
+</section>
+
+<!-- IL PROGETTO -->
+<section class="section" id="progetto">
+  <div class="section-label">Il progetto</div>
+  <h2 class="section-title">Le voci non galleggiano.<br>Bisogna andare a prenderle.</h2>
+  <div class="section-text">
+    <p style="margin-bottom:18px;">
+      Venezia perde circa <strong>900 residenti l'anno</strong>. Con ogni persona che se ne va, scompare una rete di storie, un lessico, un modo di nominare le cose. Il vetro di Murano non si descrive allo stesso modo in italiano e in dialetto muranese. Il <em>bàcaro</em> non è un bar. L'<em>acqua alta</em> del 2019 non è quella del 1966, e nessuna delle due è quella che tua nonna chiamava <em>aqua granda</em>.
+    </p>
+    <p style="margin-bottom:18px;">
+      <strong>Sommersi</strong> è nato nel 2028 da un'intuizione semplice: <strong>il podcast è il medium naturale della memoria orale</strong>. Non servono telecamere. Non serve la faccia. Serve solo la voce — e qualcuno disposto ad ascoltare.
+    </p>
+    <p>
+      La terza edizione allarga lo sguardo: dalle voci dei veneziani di oggi a quelle dei veneziani di sempre. Quest'anno il festival scende nel tempo, fino alle cronache medievali, ai mercanti che dettavano lettere, ai testamenti orali, alle <em>voces</em> che attraversano i secoli negli archivi. Perché Venezia è una città che ha sempre parlato prima di scrivere.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROGRAMMA -->
+<section class="section" id="programma">
+  <div class="section-label">Programma 2030</div>
+  <h2 class="section-title">Sei giorni, quattordici luoghi</h2>
+
+  <div class="programma-grid">
+
+    <div class="giorno-header">Mercoledì 18 marzo</div>
+
+    <div class="evento">
+      <div class="evento-ora">18:00</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Inaugurazione · Il suono dell'acqua che sale</div>
+        <div class="evento-desc">
+          Ascolto collettivo dell'episodio pilota di <em>Sommersi Podcast S3</em>: le registrazioni ambientali dell'acqua alta del novembre 2029 montate con le testimonianze dei residenti di Sant'Elena. A cura di <span class="ev-person">Radio Papesse</span> e <span class="ev-person">Fondazione Querini Stampalia</span>. Palazzo Querini Stampalia, Campo Santa Maria Formosa.
+        </div>
+      </div>
+      <div class="evento-tag">Podcast</div>
+    </div>
+
+    <div class="evento">
+      <div class="evento-ora">21:00</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Le ultime parole di Murano</div>
+        <div class="evento-desc">
+          Podcast dal vivo: <span class="ev-person">Giorgia Masi</span> intervista gli ultimi tre maestri vetrai attivi nella fornace Barovier. Un lessico tecnico di 700 anni che non è mai stato scritto — e che morirà con loro. Con registrazioni originali dell'archivio sonoro di <span class="ev-person">IVESER</span>. Museo del Vetro, Murano.
+        </div>
+      </div>
+      <div class="evento-tag tag-live">Live</div>
+    </div>
+
+    <div class="giorno-header">Giovedì 19 marzo</div>
+
+    <div class="evento">
+      <div class="evento-ora">09:30</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Voces Venetiarum · La città prima della stampa</div>
+        <div class="evento-desc">
+          Panel accademico: come suonava Venezia nel XIII secolo? Le cronache di <span class="ev-person">Martino da Canal</span> scritte in franco-veneziano, i testamenti orali dell'Archivio di Stato, le grida dei banditori in Piazza San Marco. Con <span class="ev-person">Prof. Elisa Ferraro</span> (Dip. di Studi Umanistici, Ca' Foscari), <span class="ev-person">Prof. Antonio Musarra</span> (Sapienza — storia del Mediterraneo medievale) e <span class="ev-person">Dr. Luca Mölà</span> (Warwick — cultura materiale veneziana). Aula Baratto, Ca' Foscari.
+        </div>
+      </div>
+      <div class="evento-tag tag-panel">Panel</div>
+    </div>
+
+    <div class="evento">
+      <div class="evento-ora">14:00</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Camminata sonora · Cannaregio sommerso</div>
+        <div class="evento-desc">
+          Percorso audio-guidato tra i luoghi che non ci sono più: il macello ebraico, la tipografia armena, le botteghe dei tessitori greci. E tra i luoghi che <em>presto</em> non ci saranno più: le fondamenta di Rio Terà San Leonardo (livello critico dal 2027), il sottoportego dei Morti (chiuso per infiltrazioni), la riva del Ghetto Vecchio (Piano di Adattamento Climatico 2028-35). In cuffia: le voci dei discendenti e le proiezioni acustiche dell'<strong>ISPRA Lab Venezia</strong> su come suonerà la città tra 20 anni. Partenza: Ponte delle Guglie. Durata: 90 min. Max 25 persone.
+        </div>
+      </div>
+      <div class="evento-tag tag-walk">Camminata</div>
+    </div>
+
+    <div class="evento">
+      <div class="evento-ora">17:30</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Il notaio e la voce · Workshop</div>
+        <div class="evento-desc">
+          Laboratorio con l'<span class="ev-person">Archivio di Stato di Venezia</span>: come si leggono i testamenti dettati a voce nel Trecento? Cosa dicono le formule notarili sulla lingua parlata? Un ponte tra paleografia e podcasting. Con <span class="ev-person">Prof.ssa Alessandra Rizzi</span> (Ca' Foscari) e <span class="ev-person">Giulia Delogu</span> (archivista). Archivio di Stato, Campo dei Frari.
+        </div>
+      </div>
+      <div class="evento-tag tag-archive">Archivio</div>
+    </div>
+
+    <div class="giorno-header">Venerdì 20 marzo</div>
+
+    <div class="evento">
+      <div class="evento-ora">10:00</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Podcast masterclass · Registrare chi non vuole essere registrato</div>
+        <div class="evento-desc">
+          Etica e tecnica della raccolta di testimonianze orali. Come si registra una persona anziana? Cosa succede quando il testimone si contraddice? Quando una storia privata diventa archivio pubblico? E soprattutto: <strong>come si certifica che una voce è autentica?</strong> Dal 2028 ogni archivio orale deve includere una "impronta biometrica vocale" per prevenire manipolazioni future. Ne discutiamo con <span class="ev-person">Jonathan Zenti</span> (Arkiviu, podcast di memorie familiari), <span class="ev-person">Sara Ferraioli</span> (Mémoire Migrante, Marsiglia) e <span class="ev-person">Dr. Chiara Sist</span> (Garante Privacy — Commissione Autenticità Fonti Orali).
+        </div>
+      </div>
+      <div class="evento-tag">Podcast</div>
+    </div>
+
+    <div class="evento">
+      <div class="evento-ora">15:00</div>
+      <div class="evento-info">
+        <div class="evento-titolo">I bambini raccontano i nonni</div>
+        <div class="evento-desc">
+          Restituzione del progetto nelle scuole primarie di Mestre e Marghera: 120 bambini hanno intervistato i propri nonni con registratori forniti dal festival. Ascolto delle registrazioni più sorprendenti e discussione con le famiglie. A cura di <span class="ev-person">M9 — Museo del '900</span> e <span class="ev-person">IC Colombo, Mestre</span>. M9, via Poerio, Mestre.
+        </div>
+      </div>
+      <div class="evento-tag tag-live">Live</div>
+    </div>
+
+    <div class="evento">
+      <div class="evento-ora">21:00</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Il mercante che parlava tre lingue · Spettacolo</div>
+        <div class="evento-desc">
+          Performance di storytelling e musica: la voce <em>sintetizzata</em> di un mercante veneziano del XV secolo che trattava in arabo, greco e veneziano nei porti di Alessandria, Costantinopoli e Candia. Il sistema di ricostruzione vocale AI sviluppato da <strong>Ca' Foscari Digital Humanities Lab</strong> ha analizzato 300 lettere dell'archivio Datini per ricreare prosodia, accento e cadenza del veneziano mercantile. La voce sintetica dialoga dal vivo con l'<span class="ev-person">Ensemble Mare Nostrum</span> (musica). Liberamente ispirato ai <em>viaggi</em> di <span class="ev-person">Giosafat Barbaro</span>. Teatro alle Tese, Arsenale.
+        </div>
+      </div>
+      <div class="evento-tag tag-live">Live</div>
+    </div>
+
+    <div class="giorno-header">Sabato 21 — Domenica 23 marzo</div>
+
+    <div class="evento">
+      <div class="evento-ora">tutto il giorno</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Archivio aperto · Cabine di registrazione</div>
+        <div class="evento-desc">
+          Tre cabine insonorizzate installate a Campo Santa Margherita, Piazzale Roma e Piazza Ferretto (Mestre). Chiunque può entrare, sedersi e registrare un ricordo di Venezia: un luogo che non c'è più, un suono che non si sente più, una parola che non si usa più. <strong>Prima della registrazione, la cabina richiede consenso biometrico vocale</strong> (normativa UE 2029 sulla tutela degli archivi orali): l'impronta vocale garantisce che solo tu, in futuro, possa autorizzare usi della tua testimonianza. Le registrazioni entreranno nell'<span class="ev-person">Archivio della Memoria Orale Veneziana</span>, gestito dalla Fondazione Querini Stampalia e consultabile online con sistema di attribuzione permanente.
+        </div>
+      </div>
+      <div class="evento-tag tag-archive">Archivio</div>
+    </div>
+
+    <div class="evento">
+      <div class="evento-ora">dom 18:00</div>
+      <div class="evento-info">
+        <div class="evento-titolo">Chiusura · Le voci raccolte</div>
+        <div class="evento-desc">
+          Montaggio dal vivo delle migliori registrazioni raccolte nelle cabine durante il weekend. Il sound designer <span class="ev-person">Simone Bosco</span> assembla in tempo reale un episodio speciale del podcast Sommersi. Fondazione Querini Stampalia.
+        </div>
+      </div>
+      <div class="evento-tag tag-live">Live</div>
+    </div>
+  </div>
+
+  <!-- Medieval highlight -->
+  <div class="highlight-section">
+    <div class="hl-label">Focus 2030 · Studi medievali</div>
+    <div class="hl-title">Voces Venetiarum: il progetto che ascolta il Medioevo</div>
+    <div class="hl-text">
+      Quest'anno Sommersi collabora con il <strong style="color:var(--text);">Dipartimento di Studi Umanistici di Ca' Foscari</strong> e l'<strong style="color:var(--text);">Archivio di Stato di Venezia</strong> per un progetto unico: ricostruire il paesaggio sonoro della Venezia medievale a partire dai documenti scritti. I testamenti dettati oralmente ai notai nel XIII e XIV secolo conservano tracce della lingua parlata — inflessioni, formule, ripetizioni — che nessun testo letterario restituisce. Le <em>cridate</em> (bandi pubblici letti ad alta voce in piazza) rivelano come suonava il potere. Le lettere dei mercanti, dettate a scrivani in porti lontani, mescolano veneziano, latino, arabo e greco in uno stesso paragrafo.
+      <br><br>
+      Il risultato è una serie podcast in quattro episodi, <strong style="color:var(--text);"><em>Voces Venetiarum</em></strong>, prodotta con <strong style="color:var(--text);">Radio Papesse</strong>, che debutta al festival e sarà distribuita su tutte le piattaforme da aprile 2030.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="quote-mark">"</div>
+  <div class="quote-text">
+    Nessuno ha mai registrato la voce della Repubblica di Venezia. Ma qualcuno l'ha scritta mentre la ascoltava. Noi partiamo da lì.
+  </div>
+  <div class="quote-attr">— Prof. Elisa Ferraro, direttrice scientifica di <em>Voces Venetiarum</em></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PARTNER -->
+<section class="section" id="partner">
+  <div class="section-label">Partner e istituzioni</div>
+  <h2 class="section-title">Chi rende possibile Sommersi</h2>
+  <div class="partners-grid">
+    <div class="partner-card">
+      <div class="pc-role">Organizzazione</div>
+      <div class="pc-name">Fondazione Querini Stampalia</div>
+      <div class="pc-desc">Sede principale, archivio della memoria orale, coordinamento festival</div>
+    </div>
+    <div class="partner-card">
+      <div class="pc-role">Partner accademico</div>
+      <div class="pc-name">Università Ca' Foscari Venezia</div>
+      <div class="pc-desc">Dip. di Studi Umanistici, progetto Voces Venetiarum, borse di ricerca</div>
+    </div>
+    <div class="partner-card">
+      <div class="pc-role">Produzione podcast</div>
+      <div class="pc-name">Radio Papesse</div>
+      <div class="pc-desc">Produzione e distribuzione della serie Voces Venetiarum e degli episodi live</div>
+    </div>
+    <div class="partner-card">
+      <div class="pc-role">Sedi e archivi</div>
+      <div class="pc-name">Archivio di Stato di Venezia</div>
+      <div class="pc-desc">Accesso ai fondi notarili e mercantili medievali, workshop paleografici</div>
+    </div>
+    <div class="partner-card">
+      <div class="pc-role">Terraferma</div>
+      <div class="pc-name">M9 — Museo del '900</div>
+      <div class="pc-desc">Sede Mestre, progetto scuole, cabina di registrazione Piazza Ferretto</div>
+    </div>
+    <div class="partner-card">
+      <div class="pc-role">Memoria locale</div>
+      <div class="pc-name">IVESER</div>
+      <div class="pc-desc">Istituto veneziano per la storia della Resistenza. Archivio sonoro, fonti orali del '900</div>
+    </div>
+    <div class="partner-card">
+      <div class="pc-role">Patrimonio immateriale</div>
+      <div class="pc-name">UNESCO Venezia</div>
+      <div class="pc-desc">Patrocinio per il progetto di salvaguardia della memoria orale lagunare</div>
+    </div>
+    <div class="partner-card">
+      <div class="pc-role">Sostegno</div>
+      <div class="pc-name">Fondazione di Venezia</div>
+      <div class="pc-desc">Co-finanziamento III edizione, bando cultura e innovazione 2030</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BIGLIETTI -->
+<section class="cta-section" id="biglietti">
+  <div class="section-label" style="margin-bottom:16px;">Biglietti</div>
+  <h2 class="section-title" style="max-width:500px;margin:0 auto 12px;">Le cabine di registrazione sono libere.<br>Tutto il resto è a ingresso gratuito<br>fino a esaurimento posti.</h2>
+  <p class="section-text" style="max-width:440px;margin:0 auto 30px;text-align:center;">
+    Prenotazione obbligatoria per camminate sonore e workshop. Registrati per ricevere il programma completo e le notifiche dei posti disponibili.
+  </p>
+  <a href="#" class="cta-btn">Prenota il tuo posto</a>
+  <div class="cta-note">Gratuito · Prenotazione su Eventbrite</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-logos">
+    <span>Querini Stampalia</span>
+    <span>·</span>
+    <span>Ca' Foscari</span>
+    <span>·</span>
+    <span>Radio Papesse</span>
+    <span>·</span>
+    <span>Archivio di Stato</span>
+    <span>·</span>
+    <span>M9</span>
+  </div>
+  <div class="footer-legal">
+    Sommersi · Festival della memoria orale · III edizione<br>
+    18—23 marzo 2030 · Venezia e Mestre<br>
+    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5a33343c351a293537373f28293374332e">[email&#160;protected]</a> · sommersi.it
+  </div>
+</footer>
+
+<div class="workshop-footer">
+  

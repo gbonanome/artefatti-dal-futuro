@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Artefatti dal Futuro — CLab Ca' Foscari</title>
+<meta name="description" content="11 scenari fittizi dal 2030: oggetti digitali che rendono il futuro concreto e discutibile. Workshop CLab Ca' Foscari, 20 febbraio 2026.">
+<meta property="og:title" content="Artefatti dal Futuro — CLab Ca' Foscari">
+<meta property="og:description" content="11 scenari fittizi dal 2030: annunci, articoli, app, chat e pagine web da un futuro plausibile.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8102E;
+    --red-dark: #a00d24;
+    --red-light: #fdf2f3;
+    --warm-bg: #faf8f5;
+    --card-bg: #ffffff;
+    --text: #1c1917;
+    --text-mid: #57534e;
+    --text-light: #a8a29e;
+    --border: #e7e5e4;
+    --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--warm-bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* === HEADER === */
+  .header {
+    background: var(--red);
+    padding: 2rem 1.25rem 2.25rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -20%;
+    width: 140%;
+    height: 180%;
+    background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,0,0,0.12) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 1;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .header-label {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .header h1 .emoji-bolt {
+    display: inline-block;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.12); }
+  }
+
+  .header-sub {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.95rem;
+    font-weight: 400;
+  }
+
+  /* === INTRO === */
+  .intro {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 0.5rem;
+  }
+
+  .intro p {
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  .intro strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* === CARDS === */
+  .cards {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 1rem 1.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.15rem 1rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card:hover, .card:active {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-emoji {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--warm-bg);
+    border-radius: 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    line-height: 1.55;
+    margin-bottom: 0.85rem;
+  }
+
+  .card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--red);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 100px;
+    letter-spacing: 0.01em;
+    transition: background 0.2s;
+  }
+
+  .card:hover .card-btn,
+  .card:active .card-btn {
+    background: var(--red-dark);
+  }
+
+  .card-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s;
+  }
+
+  .card:hover .card-btn svg {
+    transform: translateX(2px);
+  }
+
+  /* === NUMBER BADGE === */
+  .card-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-light);
+    background: var(--warm-bg);
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 1.5rem 1.25rem 2.5rem;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .footer-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--border);
+    margin: 0 auto 1rem;
+    border-radius: 1px;
+  }
+
+  .footer p {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .footer a {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer .bolt-label {
+    display: inline-block;
+    background: var(--red-light);
+    color: var(--red);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 0.75rem;
+  }
+
+  /* === RESPONSIVE === */
+  @media (min-width: 640px) {
+    .header { padding: 2.5rem 2rem 2.75rem; }
+    .header h1 { font-size: 2.4rem; }
+    .intro, .cards, .footer { padding-left: 2rem; padding-right: 2rem; }
+    .card { padding: 1.35rem; }
+  }
+
+  /* === SAFE AREA (notch) === */
+  @supports (padding-top: env(safe-area-inset-top)) {
+    .header { padding-top: calc(2rem + env(safe-area-inset-top)); }
+    .footer { padding-bottom: calc(2.5rem + env(safe-area-inset-bottom)); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-content">
+    <div class="header-label">Workshop CLab Ca' Foscari · 20 febbraio 2026</div>
+    <h1><span class="emoji-bolt">⚡</span> Artefatti dal Futuro</h1>
+    <div class="header-sub">11 scenari fittizi dal 2030</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <p>
+    Quelli che stai per esplorare sono <strong>oggetti digitali fittizi ambientati nel 2030</strong>: annunci, articoli, app, chat, pagine web che <em>esisterebbero</em> in scenari futuri plausibili. Non prevedono il futuro — lo rendono concreto e discutibile. Sfogliali, lasciati sorprendere dai dettagli, e usali come trampolino per immaginare <strong>nuovi temi per i CLab di domani</strong>.
+  </p>
+</div>
+
+<!-- CARDS -->
+<div class="cards">
+
+  <!-- 1 -->
+  <a class="card" href="artefatti/career-service-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">💼</div>
+      <div class="card-title">Career Service Ca' Foscari</div>
+      <div class="card-num">1</div>
+    </div>
+    <div class="card-desc">La pagina del Career Service universitario nel 2030, con annunci di lavoro che rivelano un mercato trasformato: nuovi ruoli, certificazioni AI obbligatorie, salari compressi e un sistema di matching algoritmico tra studenti e aziende.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 2 -->
+  <a class="card" href="artefatti/immobiliare-venezia-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">🏠</div>
+      <div class="card-title">Annuncio Immobiliare.it — Dorsoduro</div>
+      <div class="card-num">2</div>
+    </div>
+    <div class="card-desc">Un bilocale in vendita a Dorsoduro su Immobiliare.it, dove la "Classe di Rischio Climatico" compare accanto alla classe energetica, l'assicurazione alluvionale è nel mutuo, e il Comune ti paga per restare residente.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 3 -->
+  <a class="card" href="artefatti/whatsapp-genitori-3b-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">💬</div>
+      <div class="card-title">Chat WhatsApp — Genitori 3B</div>
+      <div class="card-num">3</div>
+    </div>
+    <div class="card-desc">Il gruppo WhatsApp dei genitori di una classe di scuola media a Mestre nel 2030. Tra circolari, doposcuola e feste, emergono tensioni quotidiane su multiculturalità, conciliazione e fragilità del welfare scolastico.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 4 -->
+  <a class="card" href="artefatti/privacy-feed-milano-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">🔒</div>
+      <div class="card-title">SicuraMI — Annunci Facebook</div>
+      <div class="card-num">4</div>
+    </div>
+    <div class="card-desc">Un feed di annunci sponsorizzati su Facebook per "SicuraMI", servizio di sicurezza urbana predittiva. Riconoscimento facciale, punteggi di rischio, piani premium: la sorveglianza normalizzata in formato pubblicità.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 5 -->
+  <a class="card" href="artefatti/sommersi-festival-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">🎧</div>
+      <div class="card-title">Festival Sommersi</div>
+      <div class="card-num">5</div>
+    </div>
+    <div class="card-desc">La landing page di "Sommersi", un festival culturale dedicato ai podcast e alla narrazione audio, ambientato a Venezia nel 2030. Tra gli eventi: storie di territorio, memoria orale e nuove forme di racconto.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 6 -->
+  <a class="card" href="artefatti/ilpost-abuja-compact-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">📰</div>
+      <div class="card-title">Articolo Il Post — Accordo commerciale</div>
+      <div class="card-num">6</div>
+    </div>
+    <div class="card-desc">Un articolo de Il Post che racconta un nuovo accordo commerciale inatteso e le sue ricadute su Venezia e il Nordest. Geopolitica, logistica e filiere produttive si intrecciano in un pezzo di giornalismo dal 2030.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 7 -->
+  <a class="card" href="artefatti/menu-osteria-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">🍽️</div>
+      <div class="card-title">Menu dell'Osteria</div>
+      <div class="card-num">7</div>
+    </div>
+    <div class="card-desc">Il menu di un'osteria nel 2030, dove ogni piatto racconta qualcosa: ingredienti di filiera corta con codice di tracciabilità, prezzi che riflettono il costo reale del cibo, allergie gestite da AI, e il pesce che non c'è più.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 8 -->
+  <a class="card" href="artefatti/biblioteca-civica-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">📚</div>
+      <div class="card-title">Biblioteca Civica — Eventi e servizi</div>
+      <div class="card-num">8</div>
+    </div>
+    <div class="card-desc">La pagina web di una biblioteca civica del 2030 con il suo calendario eventi. La biblioteca è diventata molto più di un luogo dove prendere libri in prestito: sportelli, laboratori, welfare di quartiere.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 9 -->
+  <a class="card" href="artefatti/instagram-artigiano-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">🔥</div>
+      <div class="card-title">Profilo Instagram — Artigiano del vetro</div>
+      <div class="card-num">9</div>
+    </div>
+    <div class="card-desc">Il profilo Instagram di un maestro vetraio di Murano nel 2030. Tra reel di lavorazione, collaborazioni con designer, e storie sulla crisi energetica delle fornaci, il confine tra artigianato e content creation si dissolve.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 10 -->
+  <a class="card" href="artefatti/app-salute-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">🏥</div>
+      <div class="card-title">App "Salute Serenissima" — ASL Venezia</div>
+      <div class="card-num">10</div>
+    </div>
+    <div class="card-desc">La schermata dell'app sanitaria dell'ASL di Venezia nel 2030. Tra prenotazioni gestite da triage algoritmico, punteggi di prevenzione, e telemedicina obbligatoria per alcune fasce, la salute pubblica ha cambiato interfaccia.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- 11 -->
+  <a class="card" href="artefatti/app-civica-2030.html">
+    <div class="card-top">
+      <div class="card-emoji">🗳️</div>
+      <div class="card-title">App "VeneziaPartecipa" — Notifica</div>
+      <div class="card-num">11</div>
+    </div>
+    <div class="card-desc">Una notifica dall'app civica "VeneziaPartecipa": bilancio partecipativo, consultazioni di quartiere, segnalazioni. Come cambia il rapporto tra cittadini e istituzioni quando la democrazia locale diventa digitale.</div>
+    <div class="card-btn">
+      Esplora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="bolt-label">⚡ Artefatti dal futuro</div>
+  <div class="footer-divider"></div>
+  <p>
+    Scenari fittizi creati per il workshop<br>
+    <strong>Corner sui temi futuri dei CLab</strong><br>
+    Evento celebrativo CLab · Ca' Foscari<br>
+    Auditorium Santa Margherita, Venezia<br>
+    20 febbraio 2026
+  </p>
+</div>
+
+</body>
+</html>

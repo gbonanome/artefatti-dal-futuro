@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'accordo di Abuja, spiegato bene - Il Post</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #1a1a1a;
+    --gray-900: #2c2c2c;
+    --gray-700: #4a4a4a;
+    --gray-500: #7a7a7a;
+    --gray-400: #999;
+    --gray-300: #bbb;
+    --gray-200: #ddd;
+    --gray-100: #f0f0f0;
+    --gray-50: #f8f8f8;
+    --white: #fff;
+    --brand: #18A4C5;
+    --brand-dark: #148a9e;
+    --brand-light: #e8f6fa;
+    --blue-link: #18A4C5;
+    --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Montserrat', -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--white);
+    color: var(--gray-900);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+  .site-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    text-decoration: none;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+  .logo img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .header-right a { color: var(--gray-700); text-decoration: none; }
+  .header-right a:hover { color: var(--black); }
+  .btn-abbonati {
+    background: var(--brand);
+    color: var(--white) !important;
+    padding: 7px 18px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: background 0.2s;
+  }
+  .btn-abbonati:hover { background: var(--brand-dark) !important; }
+  .nav-bar {
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--white);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 24px;
+    white-space: nowrap;
+  }
+  .nav-inner a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-500);
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-inner a:hover { color: var(--black); }
+  .nav-inner a.active { color: var(--black); border-bottom-color: var(--brand); }
+  .article-section-label {
+    max-width: 720px;
+    margin: 32px auto 0;
+    padding: 0 24px;
+  }
+  .article-section-label a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--brand);
+    text-decoration: none;
+  }
+  .article-date {
+    max-width: 720px;
+    margin: 6px auto 0;
+    padding: 0 24px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+  .article-header {
+    max-width: 720px;
+    margin: 24px auto 0;
+    padding: 0 24px;
+  }
+  .article-title {
+    font-family: var(--font-sans);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    color: var(--black);
+  }
+  .article-deck {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--gray-700);
+    margin-bottom: 24px;
+  }
+  .article-meta {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-500);
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .article-meta strong { color: var(--gray-900); font-weight: 600; }
+  .article-body {
+    max-width: 720px;
+    margin: 32px auto 0;
+    padding: 0 24px 80px;
+  }
+  .article-body p {
+    margin-bottom: 28px;
+  }
+  .article-body h2 {
+    font-family: var(--font-sans);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--black);
+    margin: 48px 0 24px;
+    line-height: 1.3;
+  }
+  .article-body strong { font-weight: 600; color: var(--black); }
+  .article-body em { font-style: italic; }
+  .article-body a { color: var(--blue-link); text-decoration: none; border-bottom: 1px solid var(--brand-light); }
+  .article-body a:hover { border-bottom-color: var(--brand); }
+  .highlight-box {
+    background: var(--brand-light);
+    border-left: 4px solid var(--brand);
+    padding: 20px 24px;
+    margin: 32px 0;
+    border-radius: 2px;
+  }
+  .box-label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--brand-dark);
+    margin-bottom: 12px;
+  }
+  .highlight-box p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--gray-900);
+    margin-bottom: 0;
+  }
+  .explainer-box {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    padding: 20px 24px;
+    margin: 32px 0;
+    border-radius: 2px;
+  }
+  .explainer-box p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--gray-700);
+    margin-bottom: 0;
+  }
+  .ilpost-quote {
+    margin: 40px 0;
+    padding-left: 32px;
+    border-left: 4px solid var(--gray-300);
+  }
+  .ilpost-quote p {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--gray-900);
+    margin-bottom: 12px;
+  }
+  .ilpost-quote cite {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-style: normal;
+    color: var(--gray-500);
+  }
+  .article-tags {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px 32px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+  .article-tags a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+  .article-tags a:hover { text-decoration: underline; }
+  .leggi-anche-section {
+    max-width: 720px;
+    margin: 0 auto 48px;
+    padding: 0 24px;
+    border-top: 1px solid var(--gray-200);
+    padding-top: 32px;
+  }
+  .leggi-anche-heading {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-700);
+    margin-bottom: 20px;
+  }
+  .leggi-anche-item {
+    display: block;
+    text-decoration: none;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .leggi-anche-item:last-child { border-bottom: none; }
+  .la-section {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--brand);
+    margin-bottom: 6px;
+  }
+  .la-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .la-desc {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--gray-600);
+  }
+  .altre-storie {
+    background: var(--gray-50);
+    padding: 48px 24px;
+    border-top: 1px solid var(--gray-200);
+  }
+  .altre-heading {
+    max-width: 1200px;
+    margin: 0 auto 24px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-700);
+  }
+  .altre-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .altre-card {
+    background: var(--white);
+    border-radius: 4px;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s;
+    border: 1px solid var(--gray-200);
+  }
+  .altre-card:hover { transform: translateY(-2px); }
+  .altre-card-img {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+  .altre-card-section {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--brand);
+    padding: 16px 16px 0;
+  }
+  .altre-card-title {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--black);
+    padding: 8px 16px 16px;
+  }
+  .site-footer {
+    background: var(--gray-900);
+    color: var(--gray-400);
+    padding: 32px 24px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    text-align: center;
+  }
+  .site-footer > div:first-child {
+    margin-bottom: 16px;
+  }
+  .site-footer a {
+    color: var(--gray-400);
+    text-decoration: none;
+    margin: 0 12px;
+  }
+  .site-footer a:hover { color: var(--white); }
+  .footer-legal {
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+  .artifact-label {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  @media (max-width: 768px) {
+    .article-title { font-size: 26px; }
+    .article-deck { font-size: 18px; }
+    .article-body h2 { font-size: 21px; margin: 36px 0 20px; }
+    .ilpost-quote p { font-size: 19px; }
+    .header-right > a:not(.btn-abbonati) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <svg width="100" height="32" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="32" fill="#18A4C5"/>
+        <text x="50" y="22" font-family="Montserrat, sans-serif" font-size="18" font-weight="800" fill="white" text-anchor="middle">Il Post</text>
+      </svg>
+    </a>
+    <div class="header-right">
+      <a href="#">Podcast</a>
+      <a href="#">Newsletter</a>
+      <a href="#" class="btn-abbonati">Abbonati</a>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <a href="#" class="active">Mondo</a>
+    <a href="#">Italia</a>
+    <a href="#">Economia</a>
+    <a href="#">Tecnologia</a>
+    <a href="#">Cultura</a>
+    <a href="#">Scienza</a>
+    <a href="#">Sport</a>
+  </div>
+</div>
+
+<div class="article-section-label">
+  <a href="#">MONDO</a>
+</div>
+
+<div class="article-date">15 marzo 2030, 11:42</div>
+
+<div class="article-header">
+  <h1 class="article-title">L'accordo di Abuja, spiegato bene</h1>
+  <div class="article-deck">
+    Giovedì sera otto paesi — Nigeria, India, Indonesia, Vietnam, Kenya, Ghana, Bangladesh e Egitto — hanno firmato un trattato commerciale che crea una valuta digitale comune e aggira il sistema finanziario occidentale. È la cosa più importante successa nella geopolitica mondiale dall'inizio dell'anno, e forse dall'inizio del decennio.
+  </div>
+  <div class="article-meta">
+    <strong>di Matteo Bordone</strong>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>Giovedì 13 marzo 2030, alle 22:17 ora nigeriana, otto capi di stato si sono seduti in una sala dell'International Conference Centre di Abuja e hanno firmato un trattato chiamato <strong>Abuja Compact on Trade and Development</strong>. La firma è durata diciassette minuti, seguiti da un brindisi con champagne francese — dettaglio che vari commentatori hanno trovato ironico — e da un discorso del presidente nigeriano che è stato visto più volte nelle prime 48 ore del video di Beyoncé al Super Bowl del 2028.</p>
+
+  <p>Cosa hanno firmato, esattamente? Un accordo commerciale, ma non come quelli a cui siamo abituati. Non ci sono clausole sui dazi doganali, niente liberalizzazioni progressive, niente tavoli tecnici sulla denominazione dei formaggi. L'Abuja Compact è una cosa diversa: è l'infrastruttura di un nuovo sistema.</p>
+
+  <p>Il punto centrale è una <strong>valuta digitale di scambio</strong> chiamata <em>Kaia</em> — dal termine hausa che significa «merci» — che funziona come unità di conto per le transazioni tra i paesi firmatari. Non è una criptovaluta: è emessa e regolata da una banca centrale multilaterale con sede a Lagos, la <strong>Southern Reserve</strong>, ed è ancorata a un paniere di valute e materie prime. In pratica, se un'azienda indiana vuole comprare semiconduttori dal Vietnam, può farlo in Kaia senza convertire in dollari o yuan. Il che, per capirci, è una cosa enorme.</p>
+
+  <div class="highlight-box">
+    <div class="box-label">In breve · Cos'è il Kaia</div>
+    <p>Il <strong>Kaia</strong> è un'unità di conto digitale usata per regolare gli scambi commerciali tra gli otto paesi dell'Abuja Compact. Quando un'azienda bangladese vende tessuti al Kenya, la transazione viene registrata in Kaia dalla Southern Reserve Bank di Lagos, senza passare dal sistema SWIFT né usare dollari. Il valore del Kaia è agganciato a un paniere che comprende oro, petrolio, terre rare e le valute dei quattro paesi fondatori (naira, rupia indiana, rupia indonesiana, dong vietnamita).</p>
+  </div>
+
+  <h2>Come ci siamo arrivati</h2>
+
+  <p>Per capire Abuja bisogna guardare a quello che è successo negli ultimi cinque anni — e qui le cose si fanno complicate, perché sono successe molte cose contemporaneamente, tutte connesse.</p>
+
+  <p>La prima è il <strong>ritiro americano</strong>. Dopo le elezioni del 2028, gli Stati Uniti hanno accelerato un processo che era in corso da anni: la riduzione degli impegni multilaterali. L'uscita dall'Organizzazione Mondiale del Commercio è stata formalizzata nel settembre 2029, ma di fatto Washington aveva smesso di partecipare alle negoziazioni già da tempo. Il «grande ripiegamento», come lo chiamano gli analisti, non è stato un singolo evento ma un accumulo: il ritiro dai trattati sul clima, la rinegoziazione aggressiva del USMCA, il taglio dei fondi alla Banca Mondiale.</p>
+
+  <p>La seconda è la <strong>crisi cinese</strong>. La Cina non è crollata, ma si è ridimensionata. La crisi demografica ha reso insostenibile il modello di crescita basato sull'export, e la Belt and Road Initiative — che nel 2018 sembrava il progetto del secolo — nel 2030 è un archivio di cantieri incompiuti e debiti rinegoziati. La Cina ha drasticamente ridotto i propri investimenti in Africa e Sud America.</p>
+
+  <p>Nel vuoto lasciato da Washington e Pechino, è successa la terza cosa: <strong>i paesi del cosiddetto «Sud Globale» hanno smesso di aspettare</strong>. Un gruppo di economie grandi, in crescita e stufe di giocare con le regole scritte da altri ha deciso di scriverne di proprie.</p>
+
+  <h2>Perché la Nigeria è al centro</h2>
+
+  <p>Di tutti i firmatari, il paese che più colpisce gli osservatori europei è la Nigeria. Se ne parla poco in Italia — incredibilmente poco, considerato che è il paese più popoloso dell'Africa, la prima economia del continente, e il sesto fornitore di gas naturale dell'Unione Europea. Questa ignoranza dice molto su di noi e poco sulla Nigeria.</p>
+
+  <p>Lagos nel 2030 ha 28 milioni di abitanti, il che la rende la terza area metropolitana del mondo dopo Tokyo e Delhi. Ma il dato demografico è solo l'inizio. La Nigeria è il primo produttore africano di petrolio, ma anche — e questo sorprende chi non segue — il paese con il maggior numero di sviluppatori software del continente. L'ecosistema tech di Lagos, cresciuto esponenzialmente dopo il 2025, produce più startup fintech di Londra. Nollywood, l'industria cinematografica nigeriana, è la seconda al mondo per numero di film prodotti, dopo l'India e davanti agli Stati Uniti.</p>
+
+  <p>Il presidente <strong>Chukwuemeka Okonkwo</strong>, eletto nel 2027, è il volto dell'Abuja Compact. Ex economista della Banca Africana di Sviluppo, parla quattro lingue (igbo, inglese, francese, portoghese), ha studiato a Londra e Lagos, e ha una capacità retorica che i media internazionali hanno paragonato a quella di Lula negli anni d'oro. Il suo discorso alla cerimonia di firma — «Non chiediamo un posto al tavolo, ci siamo costruiti il nostro tavolo» — è stato visto 340 milioni di volte in 48 ore.</p>
+
+  <div class="ilpost-quote">
+    <p>«Non chiediamo un posto al tavolo. Ci siamo costruiti il nostro tavolo.»</p>
+    <cite>Chukwuemeka Okonkwo, presidente della Nigeria, 13 marzo 2030, Abuja</cite>
+  </div>
+
+  <h2>E l'Europa?</h2>
+
+  <p>Qui la faccenda diventa dolorosa. L'Unione Europea ha provato ad ottenere un seggio da osservatore nei negoziati di Abuja, e la richiesta è stata respinta. La motivazione ufficiale è stata tecnica — «il framework è riservato a economie con determinate caratteristiche strutturali» — ma la motivazione reale è politica, e l'ha riassunta bene il ministro del commercio indonesiano <strong>Rina Wijaya</strong> in un'intervista al <em>Financial Times</em>: «L'Europa non sa cosa vuole essere. Non è abbastanza ricca per dettare le regole come faceva prima, non è abbastanza agile per adattarsi come facciamo noi. Diciamo che la aspettiamo, ma non la aspettiamo fermi.»</p>
+
+  <p>Per l'Italia il problema è ancora più concreto. Dal completamento del gasdotto Trans-Sahariano nel 2029 — il progetto che collega i giacimenti nigeriani all'Algeria e da lì all'Italia attraverso il Mediterraneo — il gas nigeriano rappresenta circa il 40% dell'approvvigionamento italiano, avendo sostituito in gran parte il gas russo. Che il nostro principale fornitore energetico sia anche il capofila di un blocco commerciale da cui siamo esclusi è, per dirla con le parole di un diplomatico italiano citato da <em>Reuters</em>, «una situazione scomodissima, ma l'abbiamo cercata noi».</p>
+
+  <p>Il Trans-Sahariano — costruito da un consorzio italo-francese-nigeriano con fondi della Banca Africana di Sviluppo — è stato completato dopo 12 anni di cantieri e polemiche ambientali: attraversa aree protette in Niger e ha richiesto il disboscamento di 4.800 ettari di savana. Un paradosso: l'Italia ha sostituito il gas russo con gas africano per «ragioni di sostenibilità geopolitica», ma ha finanziato nuove infrastrutture fossili proprio mentre dichiarava il phase-out dal gas per il 2035.</p>
+
+  <p>Un gruppo di ricercatori del <strong>Dipartimento di Economia di Ca' Foscari</strong> ha pubblicato la settimana scorsa un'analisi sull'impatto dell'Abuja Compact sulle imprese italiane, con un dato che ha fatto discutere: il 23% delle PMI del Nordest che esportano verso i paesi firmatari si troverà a dover accettare transazioni in Kaia entro il 2032, senza che esista ancora un quadro regolatorio europeo per farlo. «Stiamo volando a vista» ha commentato la professoressa <strong>Marta Ferretti</strong>, che ha coordinato lo studio.</p>
+
+  <p>Tra le aziende più esposte ci sono cooperative del tessile di Schio e Thiene che esportano in India, e ceramiche di Nove che lavorano con l'Indonesia. «Per noi il Kaia è già una realtà» ha detto il presidente della cooperativa Lanieri Vicentini in un'intervista a <em>Il Sole 24 Ore</em>, «i nostri buyer indiani ci hanno chiesto di aprire conti sulla piattaforma Southern Reserve. Non sappiamo nemmeno se sia legale».</p>
+
+  <h2>Cosa cambia adesso</h2>
+
+  <p>L'Abuja Compact non è ancora operativo: la Southern Reserve Bank dovrà essere pienamente funzionante entro settembre 2030, e i singoli paesi dovranno ratificare l'accordo nei rispettivi parlamenti. La Nigeria e l'India lo hanno già fatto. Il Vietnam dovrebbe farlo entro maggio. Il Kenya, invece, ha minacciato di bloccare la ratifica se i paesi africani non ottengono almeno il 40% dei seggi nel board della Southern Reserve.</p>
+
+  <p>E infatti non è tutto rose e fiori. I negoziati interni sono stati aspri: l'India vuole quote di voto nella Southern Reserve proporzionali al PIL, il che le darebbe un potere di veto di fatto. Indonesia e Nigeria si oppongono fermamente. Il Bangladesh ha ottenuto una clausola che gli consente di uscire dall'accordo con sei mesi di preavviso se l'India supera il 35% dei voti. «L'accordo c'è, ma potrebbe implodere prima di partire» ha scritto un analista di <em>Bloomberg</em> in un pezzo che ha fatto molto discutere.</p>
+
+  <p>Ma il significato va oltre i dettagli tecnici. Per la prima volta dalla fine della Seconda Guerra Mondiale, un gruppo di paesi ha creato un'infrastruttura commerciale che non dipende né dagli Stati Uniti né dalla Cina. Non è «anti-occidentale» — è <em>post</em>-occidentale. Assume che il mondo abbia più di due o tre centri, e si organizza di conseguenza.</p>
+
+  <p>«Il mondo a cui eravamo abituati — quello in cui le cose importanti si decidevano tra Washington, Pechino e Bruxelles — non esiste più» ha scritto <strong>Ndidi Okafor-Yates</strong>, editorialista del <em>Guardian Nigeria</em>, nel pezzo più condiviso della settimana. «Ne sta nascendo un altro. Non sappiamo ancora come funziona. Ma sappiamo che ad Abuja, giovedì sera, in otto si sono seduti a un tavolo e hanno iniziato a deciderlo.»</p>
+
+  <p>Per l'Europa, la domanda non è se l'Abuja Compact avrà successo — potrebbe anche non averlo, le sfide tecniche e politiche sono enormi. La domanda è cosa significa vivere in un mondo dove il tavolo a cui si decidono le cose non è il tuo, e nessuno ti ha chiesto di sederti.</p>
+
+</div>
+
+<div class="article-tags">
+  <strong>Tag:</strong> <a href="#">abuja compact</a> · <a href="#">nigeria</a> · <a href="#">geopolitica</a> · <a href="#">commercio internazionale</a> · <a href="#">kaia</a> · <a href="#">sud globale</a>
+</div>
+
+<div class="leggi-anche-section">
+  <div class="leggi-anche-heading">Leggi anche</div>
+  <a href="#" class="leggi-anche-item">
+    <div class="la-section">Economia</div>
+    <div class="la-title">Che cos'è il Kaia, la moneta digitale che vogliono usare otto paesi</div>
+    <div class="la-desc">Non è una criptovaluta, non è una moneta vera. È un'unità di conto gestita dalla Southern Reserve Bank di Lagos per regolare gli scambi tra i paesi dell'Abuja Compact. Ecco come funziona, con i limiti e le incognite.</div>
+  </a>
+  <a href="#" class="leggi-anche-item">
+    <div class="la-section">Mondo</div>
+    <div class="la-title">Perché il Brasile ha detto no ad Abuja (e cosa c'entra il Congresso)</div>
+    <div class="la-desc">Il governo Lula voleva firmare, ma il parlamento brasiliano ha bocciato la ratifica. Dietro c'è la pressione degli Stati Uniti, il timore di perdere accesso al mercato americano, e una lobby rurale che esporta soia in dollari e non vuole cambiare.</div>
+  </a>
+  <a href="#" class="leggi-anche-item">
+    <div class="la-section">Italia</div>
+    <div class="la-title">Perché l'Italia dipende dalla Nigeria più di quanto pensi</div>
+    <div class="la-desc">Il gas del Trans-Sahariano, le rimesse, il corridoio migratorio, le importazioni di cacao e cashew. Un rapporto bilaterale enorme che gestiamo come se fosse marginale. Lo studio di Ca' Foscari che ha fatto discutere.</div>
+  </a>
+</div>
+
+<div class="altre-storie">
+  <div class="altre-heading">Altre storie</div>
+  <div class="altre-grid">
+    <a href="#" class="altre-card">
+      <div class="altre-card-img" style="background: linear-gradient(135deg, #2d4a3e 0%, #4a7a65 100%);">🌐</div>
+      <div class="altre-card-section">Mondo</div>
+      <div class="altre-card-title">La fine della NATO come la conoscevamo: cosa resta dell'Alleanza Atlantica nel 2030</div>
+    </a>
+    <a href="#" class="altre-card">
+      <div class="altre-card-img" style="background: linear-gradient(135deg, #4a3a2d 0%, #7a6550 100%);">🎓</div>
+      <div class="altre-card-section">Università</div>
+      <div class="altre-card-title">Le borse di studio Lagos e Mumbai: perché 400 studenti italiani l'anno scelgono il «Sud Globale»</div>
+    </a>
+    <a href="#" class="altre-card">
+      <div class="altre-card-img" style="background: linear-gradient(135deg, #2d3a4a 0%, #506a7a 100%);">🇪🇺</div>
+      <div class="altre-card-section">Europa</div>
+      <div class="altre-card-title">L'Europa a due velocità: il «blocco nordico» guarda a Washington, il Mediterraneo guarda a sud</div>
+    </a>
+    <a href="#" class="altre-card">
+      <div class="altre-card-img" style="background: linear-gradient(135deg, #4a2d3a 0%, #7a5065 100%);">🏦</div>
+      <div class="altre-card-section">Economia</div>
+      <div class="altre-card-title">Cos'è la Southern Reserve Bank e perché Lagos è diventata una capitale finanziaria globale</div>
+    </a>
+  </div>
+</div>
+
+<div class="site-footer">
+  <div>
+    <a href="#">Chi siamo</a>
+    <a href="#">Pubblicità</a>
+    <a href="#">Privacy</a>
+    <a href="#">Condizioni d'uso</a>
+  </div>
+  <div class="footer-legal">Il Post è una testata registrata presso il Tribunale di Milano, 419 del 28 settembre 2009 – ISSN 2610-9980</div>
+</div>
+
+<div class="artifact-label">
+  ⚡ Artefatto dal futuro · Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+</div>
+
+</body>
+</html

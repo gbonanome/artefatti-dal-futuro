@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaluteCAL — App ASP Calabria 2030</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
+    min-height: 100vh;
+    font-family: 'DM Sans', -apple-system, sans-serif;
+  }
+
+  .phone-frame {
+    width: 375px;
+    background: #f5f5f7;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  /* STATUS BAR */
+  .status-bar {
+    background: #1a6b4a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 24px;
+    font-size: 0.75em;
+    font-weight: 600;
+  }
+
+  /* APP HEADER */
+  .app-header {
+    background: linear-gradient(135deg, #1a6b4a, #2a8a5a);
+    color: white;
+    padding: 16px 20px 20px;
+  }
+
+  .app-header .greeting {
+    font-size: 0.78em;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-bottom: 2px;
+  }
+
+  .app-header .user-name {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .quick-stats {
+    display: flex;
+    gap: 8px;
+  }
+
+  .quick-stat {
+    flex: 1;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .quick-stat .qs-value {
+    font-size: 1.1em;
+    font-weight: 700;
+  }
+
+  .quick-stat .qs-label {
+    font-size: 0.6em;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  /* CONTENT */
+  .app-content {
+    padding: 16px;
+  }
+
+  /* NOTIFICATIONS */
+  .notification {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    position: relative;
+  }
+
+  .notification .notif-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .notif-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15em;
+    flex-shrink: 0;
+  }
+
+  .notif-icon.ai { background: #e8e4f8; }
+  .notif-icon.alert { background: #fde8e8; }
+  .notif-icon.booking { background: #e4f0e8; }
+  .notif-icon.info { background: #e4e8f8; }
+  .notif-icon.move { background: #f8f0e4; }
+  .notif-icon.pharma { background: #e8f4f8; }
+
+  .notif-title {
+    font-weight: 600;
+    font-size: 0.85em;
+    color: #1a1a2e;
+    flex: 1;
+  }
+
+  .notif-time {
+    font-size: 0.65em;
+    color: #8e8e8e;
+    flex-shrink: 0;
+  }
+
+  .notif-body {
+    font-size: 0.78em;
+    color: #4a4a5a;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  .notif-body strong {
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .notif-action {
+    display: inline-block;
+    margin-top: 8px;
+    background: #1a6b4a;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.75em;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .notif-action.secondary {
+    background: #efefef;
+    color: #4a4a5a;
+    margin-left: 6px;
+  }
+
+  .notif-tag {
+    display: inline-block;
+    font-size: 0.6em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+
+  .notif-tag.urgent { background: #fde8e8; color: #c44a3f; }
+  .notif-tag.new { background: #e4f0e8; color: #2a6a4a; }
+  .notif-tag.ai-tag { background: #e8e4f8; color: #5a4a8a; }
+  .notif-tag.info-tag { background: #e4e8f8; color: #3a4a8a; }
+
+  /* SECTION HEADER */
+  .section-label {
+    font-size: 0.7em;
+    font-weight: 600;
+    color: #8e8e8e;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 16px 0 8px;
+  }
+
+  /* BOOKING CARD */
+  .booking-card {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .booking-date {
+    background: #1a6b4a;
+    color: white;
+    border-radius: 10px;
+    padding: 8px 10px;
+    text-align: center;
+    min-width: 50px;
+  }
+
+  .booking-date .bd-day {
+    font-size: 1.2em;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .booking-date .bd-month {
+    font-size: 0.6em;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+
+  .booking-info {
+    flex: 1;
+  }
+
+  .booking-info h4 {
+    font-size: 0.82em;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .booking-info p {
+    font-size: 0.7em;
+    color: #8e8e8e;
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .booking-badge {
+    font-size: 0.6em;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .booking-badge.tele {
+    background: #e8e4f8;
+    color: #5a4a8a;
+  }
+
+  .booking-badge.presence {
+    background: #e4f0e8;
+    color: #2a6a4a;
+  }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    background: #f0ece4;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+  }
+
+  .disclaimer p {
+    font-size: 0.68em;
+    color: #6a5a4a;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .disclaimer strong {
+    font-weight: 600;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    background: white;
+    border-top: 1px solid #efefef;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0 24px;
+  }
+
+  .nav-item {
+    text-align: center;
+    font-size: 0.6em;
+    color: #8e8e8e;
+  }
+
+  .nav-item.active {
+    color: #1a6b4a;
+    font-weight: 600;
+  }
+
+  .nav-item .nav-icon {
+    font-size: 1.6em;
+    display: block;
+    margin-bottom: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>09:14</span>
+    <span>5G · 📶 · 🔋 73%</span>
+  </div>
+
+  <!-- App Header -->
+  <div class="app-header">
+    <div class="greeting">Buongiorno,</div>
+    <div class="user-name">Maria Concetta Ferraro, 71 anni</div>
+    <div class="quick-stats">
+      <div class="quick-stat">
+        <div class="qs-value">🟢</div>
+        <div class="qs-label">Profilo salute<br>aggiornato</div>
+      </div>
+      <div class="quick-stat">
+        <div class="qs-value">3</div>
+        <div class="qs-label">Notifiche<br>da leggere</div>
+      </div>
+      <div class="quick-stat">
+        <div class="qs-value">14 feb</div>
+        <div class="qs-label">Prossimo<br>appuntamento</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="app-content">
+
+    <!-- NOTIFICA 1: AI Predictive checkup -->
+    <div class="notification">
+      <div class="notif-header">
+        <div class="notif-icon ai">🧠</div>
+        <div class="notif-title">Check-up predittivo AI</div>
+        <div class="notif-time">Oggi, 08:30</div>
+      </div>
+      <div>
+        <span class="notif-tag ai-tag">Intelligenza Artificiale</span>
+      </div>
+      <div class="notif-body">
+        Il sistema di analisi predittiva ha elaborato i dati del suo Fascicolo Sanitario e dei dispositivi indossabili degli ultimi 90 giorni. <strong>Si suggerisce un controllo cardiologico entro 30 giorni</strong> sulla base di: variabilità della frequenza cardiaca in calo del 12%, pressione arteriosa media in lieve aumento, familiarità per patologia cardiovascolare.
+        <br><br>
+        <em>Questo suggerimento è generato automaticamente dall'algoritmo SaluteCAL-AI v3.2 e NON sostituisce il parere medico. Il suo medico di base, Dott. Catanzaro, è stato informato.</em>
+      </div>
+      <div>
+        <span class="notif-action">Prenota visita cardiologica</span>
+        <span class="notif-action secondary">Ignora per ora</span>
+      </div>
+    </div>
+
+    <!-- NOTIFICA 2: Eco-ansia -->
+    <div class="notification">
+      <div class="notif-header">
+        <div class="notif-icon info">💚</div>
+        <div class="notif-title">Nuovo servizio salute mentale</div>
+        <div class="notif-time">Ieri</div>
+      </div>
+      <div>
+        <span class="notif-tag new">Nuovo</span>
+      </div>
+      <div class="notif-body">
+        <strong>L'eco-ansia è ora riconosciuta come condizione trattabile</strong> dal SSN (aggiornamento LEA 2029). Se avverte preoccupazione persistente legata a eventi climatici, incendi, siccità o catastrofi naturali, può richiedere un percorso di supporto psicologico gratuito (fino a 12 sedute).
+        <br><br>
+        In Calabria il servizio è attivo dal 1° gennaio 2030 presso i Consultori Familiari e online tramite videoconsulto. Tempi di attesa stimati: 45 giorni.
+      </div>
+      <div>
+        <span class="notif-action">Richiedi colloquio</span>
+      </div>
+    </div>
+
+    <!-- NOTIFICA 3: Resistenza antimicrobica -->
+    <div class="notification">
+      <div class="notif-header">
+        <div class="notif-icon alert">⚠️</div>
+        <div class="notif-title">Allerta Sanitaria Regionale</div>
+        <div class="notif-time">2 giorni fa</div>
+      </div>
+      <div>
+        <span class="notif-tag urgent">Importante</span>
+      </div>
+      <div class="notif-body">
+        <strong>Aumento casi di infezioni resistenti agli antibiotici</strong> nella provincia di Cosenza (+23% nel trimestre). L'ASP ricorda che: gli antibiotici vanno assunti SOLO su prescrizione medica, il ciclo va completato anche se i sintomi migliorano, non utilizzare antibiotici avanzati da cure precedenti.
+        <br><br>
+        Il suo Fascicolo indica 3 prescrizioni antibiotiche nell'ultimo anno. Il Dott. Catanzaro suggerisce un colloquio sull'uso responsabile in occasione della prossima visita.
+      </div>
+    </div>
+
+    <!-- SEZIONE PRENOTAZIONI -->
+    <div class="section-label">Le sue prossime prenotazioni</div>
+
+    <div class="booking-card">
+      <div class="booking-date">
+        <div class="bd-day">14</div>
+        <div class="bd-month">Feb</div>
+      </div>
+      <div class="booking-info">
+        <h4>Telemedicina — Dott. Catanzaro (MMG)</h4>
+        <p>Videovisita di controllo trimestrale · 15 min · ore 10:30</p>
+      </div>
+      <div class="booking-badge tele">📹 Video</div>
+    </div>
+
+    <div class="booking-card">
+      <div class="booking-date">
+        <div class="bd-day">28</div>
+        <div class="bd-month">Feb</div>
+      </div>
+      <div class="booking-info">
+        <h4>Visita cardiologica — Ospedale Cosenza</h4>
+        <p>Suggerita da AI · Prenotata automaticamente · ore 09:00</p>
+      </div>
+      <div class="booking-badge presence">🏥 In sede</div>
+    </div>
+
+    <!-- NOTIFICA 4: Movimento prescritto -->
+    <div class="section-label">Programmi attivi</div>
+
+    <div class="notification">
+      <div class="notif-header">
+        <div class="notif-icon move">🏃‍♀️</div>
+        <div class="notif-title">Movimento Prescritto — settimana 6/12</div>
+        <div class="notif-time">Aggiornato oggi</div>
+      </div>
+      <div class="notif-body">
+        Il Dott. Catanzaro le ha prescritto il programma <strong>"Cammino Attivo Over 65"</strong> in collaborazione con il Comune di Rende. Prossime sessioni:
+        <br><br>
+        <strong>Mar 11 feb</strong> · ore 8:30 · Parco Robinson, Rende · Camminata guidata 45 min<br>
+        <strong>Gio 13 feb</strong> · ore 8:30 · Lungomare Cosenza · Ginnastica dolce 30 min<br>
+        <strong>Sab 15 feb</strong> · ore 9:00 · Palestra Comunale — Lezione di equilibrio
+        <br><br>
+        <em>Accesso gratuito con tessera sanitaria. Istruttore qualificato presente. In caso di pioggia, sessione spostata in palestra.</em>
+      </div>
+    </div>
+
+    <!-- NOTIFICA 5: Farmacia mobile -->
+    <div class="notification">
+      <div class="notif-header">
+        <div class="notif-icon pharma">💊</div>
+        <div class="notif-title">Farmacia Mobile — prossimo passaggio</div>
+        <div class="notif-time">Promemoria</div>
+      </div>
+      <div class="notif-body">
+        Il furgone della <strong>Farmacia Mobile ASP</strong> sarà nel suo comune <strong>giovedì 13 febbraio, ore 9:00–12:00</strong>, presso Piazza Municipio, San Giovanni in Fiore.
+        <br><br>
+        Servizi disponibili: ritiro farmaci con ricetta elettronica, misurazione pressione e glicemia, consegna referti, assistenza per prenotazioni CUP.
+        <br><br>
+        <em>Il servizio copre 34 comuni dell'entroterra calabrese senza farmacia attiva. Prossimo passaggio: giovedì 27 febbraio.</em>
+      </div>
+    </div>
+
+    <!-- NOTIFICA 6: Vaccino zoonosi -->
+    <div class="notification">
+      <div class="notif-header">
+        <div class="notif-icon alert">🦟</div>
+        <div class="notif-title">Vaccinazione raccomandata — Febbre Chikungunya</div>
+        <div class="notif-time">5 giorni fa</div>
+      </div>
+      <div>
+        <span class="notif-tag info-tag">Prevenzione</span>
+      </div>
+      <div class="notif-body">
+        A seguito dell'estensione dell'area endemica della zanzara tigre in Calabria (dati ISS 2029), il <strong>vaccino Chikungunya è ora raccomandato per gli over-65 residenti sotto i 500m s.l.m.</strong> Vaccinazione gratuita presso i centri vaccinali ASP o il medico di base.
+        <br><br>
+        <em>Il suo profilo rientra nei criteri: età 71, residenza 210m s.l.m. Nessuna controindicazione nota nel Fascicolo.</em>
+      </div>
+      <div>
+        <span class="notif-action">Prenota vaccinazione</span>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+      <p>
+        <strong>SaluteCAL</strong> — App ufficiale del Servizio Sanitario Regionale Calabria<br>
+        Versione 4.1.2 · Ultimo aggiornamento dati: 09/02/2030<br><br>
+        I suggerimenti generati dall'algoritmo predittivo (contrassegnati con 🧠) sono basati su modelli statistici e <strong>non sostituiscono il giudizio clinico</strong>. L'accuratezza del sistema è del 78% (validazione ISS 2029). In caso di emergenza chiamare il 112.<br><br>
+        <strong>Visita in presenza:</strong> dal 2028, la telemedicina è la modalità predefinita per i controlli di routine. Per richiedere una visita in presenza è necessaria una <em>motivazione clinica documentata</em> o la dichiarazione di impossibilità di accesso alla rete. <strong>Il 23% degli utenti over-70 in Calabria non dispone di connessione adeguata per videoconsulto</strong> (dato ISTAT 2029).<br><br>
+        <em>Questa app è disponibile anche in modalità semplificata (testo grande, contrasto alto, sintesi vocale) nelle impostazioni.</em>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <span class="nav-icon">🏠</span>
+      Home
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">📋</span>
+      Fascicolo
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">📅</span>
+      Prenotazioni
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">💬</span>
+      Chat MMG
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">⚙️</span>
+      Profilo
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

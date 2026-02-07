@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@marco.ferrara.ceramiche — Instagram 2030</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #fafafa;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #262626;
+    max-width: 470px;
+    margin: 0 auto;
+  }
+
+  /* TOP BAR */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid #efefef;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .top-bar .username {
+    font-weight: 700;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .top-bar .verified {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: #3897f0;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .top-bar .verified::after {
+    content: '✓';
+    color: white;
+    font-size: 0.5em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 900;
+  }
+
+  .top-bar .icons {
+    display: flex;
+    gap: 18px;
+    font-size: 1.2em;
+  }
+
+  /* PROFILE HEADER */
+  .profile-header {
+    padding: 16px;
+    background: white;
+  }
+
+  .profile-top {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 14px;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    padding: 3px;
+    flex-shrink: 0;
+  }
+
+  .avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #e8ddd0;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+  }
+
+  .stats {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-weight: 700;
+    font-size: 1.05em;
+  }
+
+  .stat-label {
+    font-size: 0.72em;
+    color: #8e8e8e;
+    font-weight: 400;
+  }
+
+  .bio {
+    margin-bottom: 12px;
+  }
+
+  .bio .name {
+    font-weight: 700;
+    font-size: 0.88em;
+    margin-bottom: 2px;
+  }
+
+  .bio .category {
+    color: #8e8e8e;
+    font-size: 0.78em;
+    margin-bottom: 6px;
+  }
+
+  .bio p {
+    font-size: 0.82em;
+    line-height: 1.45;
+  }
+
+  .bio .link {
+    color: #00376b;
+    font-weight: 600;
+    font-size: 0.82em;
+  }
+
+  .bio .hashtag {
+    color: #00376b;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 7px 0;
+    border-radius: 8px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: #0095f6;
+    color: white;
+  }
+
+  .btn-secondary {
+    background: #efefef;
+    color: #262626;
+  }
+
+  /* STORIES HIGHLIGHTS */
+  .highlights {
+    display: flex;
+    gap: 14px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    background: white;
+    border-bottom: 1px solid #efefef;
+  }
+
+  .highlight-item {
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .highlight-circle {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    border: 1px solid #dbdbdb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    margin-bottom: 4px;
+    background: white;
+  }
+
+  .highlight-label {
+    font-size: 0.65em;
+    color: #262626;
+    max-width: 62px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* GRID TABS */
+  .grid-tabs {
+    display: flex;
+    background: white;
+    border-bottom: 1px solid #efefef;
+  }
+
+  .grid-tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 0.8em;
+    color: #8e8e8e;
+    cursor: pointer;
+  }
+
+  .grid-tab.active {
+    color: #262626;
+    border-bottom: 1px solid #262626;
+  }
+
+  /* POST GRID */
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: white;
+  }
+
+  .grid-post {
+    aspect-ratio: 1;
+    background: #f0e8dd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65em;
+    color: #8a7a6a;
+    text-align: center;
+    padding: 6px;
+    line-height: 1.3;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .grid-post:hover {
+    opacity: 0.85;
+  }
+
+  .grid-post .post-icon {
+    font-size: 2em;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .grid-post.p1 { background: #e8ddd0; }
+  .grid-post.p2 { background: #d4c4b0; }
+  .grid-post.p3 { background: #f0e0d0; }
+  .grid-post.p4 { background: #c8d8c8; }
+  .grid-post.p5 { background: #e0d0c0; }
+  .grid-post.p6 { background: #f5e8d8; }
+  .grid-post.p7 { background: #e8e0d4; }
+  .grid-post.p8 { background: #d8c8b8; }
+  .grid-post.p9 { background: #ecddd0; }
+
+  .grid-post .multi-indicator {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 1em;
+    opacity: 0.6;
+  }
+
+  .grid-post .reel-indicator {
+    position: absolute;
+    bottom: 6px;
+    left: 8px;
+    font-size: 0.85em;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    background: #fafafa;
+    padding: 20px 16px 10px;
+    font-size: 0.72em;
+    color: #8e8e8e;
+    text-align: center;
+    letter-spacing: 0.03em;
+    border-top: 6px solid #fafafa;
+  }
+
+  .section-divider strong {
+    color: #262626;
+    font-weight: 700;
+  }
+
+  /* EXPANDED POST (THE SHITSTORM ONE) */
+  .expanded-post {
+    background: white;
+    border: 1px solid #efefef;
+    margin: 12px 0;
+  }
+
+  .post-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .post-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e8ddd0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    flex-shrink: 0;
+  }
+
+  .post-user {
+    font-weight: 600;
+    font-size: 0.82em;
+    flex: 1;
+  }
+
+  .post-user span {
+    font-weight: 400;
+    color: #8e8e8e;
+    font-size: 0.9em;
+  }
+
+  .post-dots {
+    color: #262626;
+    font-size: 1.1em;
+    cursor: pointer;
+  }
+
+  .post-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #e8ddd0 0%, #d4c4b0 40%, #c8b8a0 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-image .comparison {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  .comparison-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .comparison-side.left {
+    background: #e8ddd0;
+    border-right: 2px solid white;
+  }
+
+  .comparison-side.right {
+    background: #d4e4f0;
+  }
+
+  .comparison-side .comp-icon {
+    font-size: 3em;
+    margin-bottom: 8px;
+  }
+
+  .comparison-side .comp-label {
+    font-size: 0.72em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #5a5a5a;
+  }
+
+  .comparison-side .comp-sub {
+    font-size: 0.62em;
+    color: #8a8a8a;
+    margin-top: 4px;
+    text-align: center;
+  }
+
+  .vs-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #262626;
+    color: white;
+    font-weight: 800;
+    font-size: 0.9em;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 14px 6px;
+  }
+
+  .post-actions .left-actions {
+    display: flex;
+    gap: 16px;
+    font-size: 1.3em;
+  }
+
+  .post-actions .right-action {
+    font-size: 1.3em;
+  }
+
+  .post-likes {
+    padding: 0 14px 6px;
+    font-size: 0.82em;
+    font-weight: 600;
+  }
+
+  .post-caption {
+    padding: 0 14px 10px;
+    font-size: 0.82em;
+    line-height: 1.5;
+  }
+
+  .post-caption .cap-user {
+    font-weight: 700;
+  }
+
+  .post-caption .hashtag {
+    color: #00376b;
+  }
+
+  .post-time {
+    padding: 0 14px 6px;
+    font-size: 0.65em;
+    color: #8e8e8e;
+    text-transform: uppercase;
+  }
+
+  .view-comments {
+    padding: 4px 14px 10px;
+    font-size: 0.82em;
+    color: #8e8e8e;
+    cursor: pointer;
+  }
+
+  /* COMMENTS SECTION */
+  .comments-section {
+    padding: 0 14px 16px;
+    border-top: 1px solid #efefef;
+  }
+
+  .comments-section .comments-title {
+    font-size: 0.72em;
+    color: #8e8e8e;
+    padding: 12px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  .comment {
+    margin-bottom: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .comment-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #efefef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65em;
+    flex-shrink: 0;
+    color: #8e8e8e;
+  }
+
+  .comment-body {
+    flex: 1;
+  }
+
+  .comment-body .comment-user {
+    font-weight: 700;
+    font-size: 0.78em;
+  }
+
+  .comment-body .comment-text {
+    font-size: 0.78em;
+    line-height: 1.45;
+    color: #262626;
+  }
+
+  .comment-body .comment-meta {
+    font-size: 0.65em;
+    color: #8e8e8e;
+    margin-top: 3px;
+    display: flex;
+    gap: 12px;
+  }
+
+  .comment-body .comment-text .mention {
+    color: #00376b;
+    font-weight: 600;
+  }
+
+  .comment-heart {
+    font-size: 0.7em;
+    color: #8e8e8e;
+    padding-top: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .comment-heart.liked {
+    color: #ed4956;
+  }
+
+  .reply {
+    margin-left: 36px;
+    margin-top: 8px;
+  }
+
+  .load-more {
+    font-size: 0.72em;
+    color: #8e8e8e;
+    padding: 8px 0 4px 36px;
+    cursor: pointer;
+  }
+
+  /* PINNED COMMENT */
+  .comment.pinned {
+    background: #fdf8f0;
+    margin: 0 -14px 12px;
+    padding: 10px 14px;
+    border-left: 3px solid #e8a84c;
+  }
+
+  .comment.pinned .pin-label {
+    font-size: 0.6em;
+    color: #e8a84c;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+  }
+
+  .author-badge {
+    display: inline-block;
+    background: #efefef;
+    font-size: 0.8em;
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: #8e8e8e;
+    margin-left: 4px;
+    font-weight: 400;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="username">marco.ferrara.ceramiche <span class="verified"></span></div>
+  <div class="icons">🔔 ✉️</div>
+</div>
+
+<!-- PROFILE -->
+<div class="profile-header">
+  <div class="profile-top">
+    <div class="avatar">
+      <div class="avatar-inner">🏺</div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">847</div>
+        <div class="stat-label">post</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">124K</div>
+        <div class="stat-label">follower</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">412</div>
+        <div class="stat-label">seguiti</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bio">
+    <div class="name">Marco Ferrara — Maestro Ceramista</div>
+    <div class="category">Artista · Caltagirone, Sicilia 🇮🇹</div>
+    <p>
+      4ª generazione · Bottega dal 1923<br>
+      Ceramica tradizionale siciliana + sperimentazione digitale<br>
+      🤖 Prototipazione 3D → cottura a mano<br>
+      🎓 Bottega-scuola accreditata MiC dal 2028<br>
+      🌏 Spedizioni worldwide · Live TikTok ogni giovedì 21:00<br>
+      ⛓ Certificato autenticità NFT su ogni pezzo<br>
+      <span class="hashtag">#CeramicaSiciliana</span> <span class="hashtag">#TradizioneInnovazione</span> <span class="hashtag">#MadeInItaly</span>
+    </p>
+    <div class="link">🔗 shop.marcoferrara.it/catalogo-2030</div>
+  </div>
+
+  <div class="buttons">
+    <button class="btn btn-primary">Segui</button>
+    <button class="btn btn-secondary">Messaggio</button>
+    <button class="btn btn-secondary">📧</button>
+  </div>
+</div>
+
+<!-- HIGHLIGHTS -->
+<div class="highlights">
+  <div class="highlight-item">
+    <div class="highlight-circle">🔥</div>
+    <div class="highlight-label">Fornace</div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-circle">🖨️</div>
+    <div class="highlight-label">3D + Fuoco</div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-circle">🇯🇵</div>
+    <div class="highlight-label">Kyoto 2029</div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-circle">📜</div>
+    <div class="highlight-label">NFT Auth</div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-circle">🎓</div>
+    <div class="highlight-label">Bottega-Scuola</div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-circle">🛒</div>
+    <div class="highlight-label">TikTok Shop</div>
+  </div>
+</div>
+
+<!-- GRID TABS -->
+<div class="grid-tabs">
+  <div class="grid-tab active">📷</div>
+  <div class="grid-tab">🎬</div>
+  <div class="grid-tab">🏷️</div>
+</div>
+
+<!-- POST GRID -->
+<div class="post-grid">
+  <div class="grid-post p1">
+    <span class="post-icon">🏺</span>
+    Vaso "Trinacria" — pezzo unico, cottura 72h
+    <span class="multi-indicator">📐</span>
+  </div>
+  <div class="grid-post p2">
+    <span class="post-icon">🤖</span>
+    ⚡ IL POST DELLA POLEMICA ⚡<br>"L'AI ha fatto meglio di me?"
+  </div>
+  <div class="grid-post p3">
+    <span class="post-icon">🇯🇵</span>
+    Residenza a Kyoto con Maestro Tanaka — kintsugi × maiolica
+    <span class="multi-indicator">📑</span>
+  </div>
+  <div class="grid-post p4">
+    <span class="post-icon">⚡</span>
+    Certificazione energetica fornace: il costo della bellezza
+  </div>
+  <div class="grid-post p5">
+    <span class="post-icon">🖨️</span>
+    Dal file 3D alla terra: prototipo digitale, mani analogiche
+    <span class="reel-indicator">▶ 284K</span>
+  </div>
+  <div class="grid-post p6">
+    <span class="post-icon">📦</span>
+    Live TikTok Shop — 23 pezzi venduti in Cina in 40 minuti
+  </div>
+  <div class="grid-post p7">
+    <span class="post-icon">😤</span>
+    "Cercasi apprendista: nessuno si presenta"
+  </div>
+  <div class="grid-post p8">
+    <span class="post-icon">📜</span>
+    NFT di autenticità — come funziona il nostro certificato blockchain
+    <span class="multi-indicator">📑</span>
+  </div>
+  <div class="grid-post p9">
+    <span class="post-icon">👨‍👩‍👦</span>
+    Mio nonno, mio padre, io. Stessa fornace, tre mondi diversi
+    <span class="reel-indicator">▶ 1,2M</span>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="section-divider">
+  ⬇️ <strong>Post espanso</strong> — il post che ha generato la polemica (18 gennaio 2030) ⬇️
+</div>
+
+<!-- EXPANDED POST: LA SHITSTORM -->
+<div class="expanded-post">
+  <div class="post-header">
+    <div class="post-avatar">🏺</div>
+    <div class="post-user">marco.ferrara.ceramiche <span class="verified" style="display:inline-block; width:12px; height:12px;"></span> <span>· Caltagirone</span></div>
+    <div class="post-dots">⋯</div>
+  </div>
+
+  <!-- Immagine comparativa -->
+  <div class="post-image">
+    <div class="comparison">
+      <div class="comparison-side left">
+        <div class="comp-icon">🏺</div>
+        <div class="comp-label">Il mio vaso</div>
+        <div class="comp-sub">42 ore di lavoro<br>terra di Sicilia<br>smalti tradizionali<br>pezzo unico</div>
+      </div>
+      <div class="comparison-side right">
+        <div class="comp-icon">🤖</div>
+        <div class="comp-label">Il vaso dell'AI</div>
+        <div class="comp-sub">prompt: 3 secondi<br>stampa 3D industriale<br>smalti sintetici<br>riproducibile ∞</div>
+      </div>
+    </div>
+    <div class="vs-badge">VS</div>
+  </div>
+
+  <!-- Actions -->
+  <div class="post-actions">
+    <div class="left-actions">
+      <span>♡</span>
+      <span>💬</span>
+      <span>✈️</span>
+    </div>
+    <div class="right-action">🔖</div>
+  </div>
+
+  <div class="post-likes">18.429 "Mi piace"</div>
+
+  <div class="post-caption">
+    <span class="cap-user">marco.ferrara.ceramiche</span> Ho chiesto a un'AI di progettare un vaso ispirato alla tradizione di Caltagirone. Le ho dato le stesse istruzioni che do ai miei apprendisti: maiolica policroma, motivi vegetali, proporzioni classiche.
+    <br><br>
+    Il risultato è quello a destra. Poi l'ho fatto stampare in 3D e smaltare industrialmente. Costo totale: 8 euro di materiale, 14 minuti di stampa.
+    <br><br>
+    Il mio vaso, a sinistra, mi ha richiesto 42 ore. Terra locale. Smalti che preparo io. Un'imperfezione sul bordo che è la firma del fuoco.
+    <br><br>
+    Ora la domanda vera: se un collezionista a Shanghai li vede uno accanto all'altro su uno schermo da 6 pollici — li distingue? E se non li distingue, perché dovrebbe pagare 10 volte di più il mio?
+    <br><br>
+    Non ho una risposta. Ho solo una fornace accesa e un apprendista che non si è presentato stamattina.
+    <br><br>
+    <span class="hashtag">#CeramicaVsAI</span> <span class="hashtag">#ArtigianatoItaliano</span> <span class="hashtag">#TradizioneInDiscussione</span> <span class="hashtag">#MadeInItalyOGeneratedInItaly</span> <span class="hashtag">#BottegaAperta</span>
+  </div>
+
+  <div class="post-time">18 gennaio 2030</div>
+
+  <!-- COMMENTI (LA SHITSTORM) -->
+  <div class="comments-section">
+    <div class="comments-title">💬 1.247 commenti — più rilevanti</div>
+
+    <!-- PINNED: risposta dell'autore -->
+    <div class="comment pinned">
+      <div class="comment-avatar" style="background:#e8ddd0;">🏺</div>
+      <div class="comment-body">
+        <div class="pin-label">📌 Fissato dall'autore</div>
+        <div class="comment-text">
+          <span class="comment-user">marco.ferrara.ceramiche</span> <span class="author-badge">Autore</span> Per chi arriva ora: non sto dicendo che l'AI è il male. Uso la stampa 3D ogni giorno per i prototipi. Sto chiedendo: quando il risultato visivo è indistinguibile, cosa paga il cliente? Il gesto o l'oggetto? Il tempo o il pixel? È una domanda aperta, non un manifesto. Leggetevi anche il post sulla certificazione energetica della fornace — lì c'è l'altro pezzo del puzzle.
+        </div>
+        <div class="comment-meta">
+          <span>3g</span>
+          <span>❤️ 2.841</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commento 1 -->
+    <div class="comment">
+      <div class="comment-avatar">👨‍🎨</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">bottega_deruta_1920</span> Marco ti capisco ma ti dico: stai facendo il gioco di chi vuole sostituirci. Ogni volta che un artigiano pubblica "guardate come è bravo il robot" noi perdiamo. Il nostro valore non si discute, si DIFENDE. Con tutto il rispetto.
+        </div>
+        <div class="comment-meta">
+          <span>3g</span>
+          <span>❤️ 487</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart">♡</div>
+    </div>
+
+    <!-- Reply -->
+    <div class="comment reply">
+      <div class="comment-avatar">🏺</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">marco.ferrara.ceramiche</span> <span class="author-badge">Autore</span> <span class="mention">@bottega_deruta_1920</span> Rispetto, maestro. Ma difendere non può significare non guardare. Mio nonno non si è messo a discutere con il tornio elettrico — l'ha usato. Il problema non è lo strumento, è chi decide cosa ha valore.
+        </div>
+        <div class="comment-meta">
+          <span>3g</span>
+          <span>❤️ 1.203</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart liked">❤️</div>
+    </div>
+
+    <!-- Commento 2 -->
+    <div class="comment">
+      <div class="comment-avatar">🇨🇳</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">li_wei_collector_sh</span> I buy both. The AI vase for my office, your vase for my home. They are not the same thing. One is decoration, one is culture. But you need to explain this better — we don't all know the difference. That's YOUR job, not ours. ❤️
+        </div>
+        <div class="comment-meta">
+          <span>3g</span>
+          <span>❤️ 891</span>
+          <span>Rispondi · Traduzione disponibile</span>
+        </div>
+      </div>
+      <div class="comment-heart liked">❤️</div>
+    </div>
+
+    <!-- Commento 3 -->
+    <div class="comment">
+      <div class="comment-avatar">🎓</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">prof.mancini.polimi</span> Uso questo post nei miei corsi di design al Politecnico. La domanda di Marco è LA domanda dell'artigianato europeo nel 2030. Non è "AI sì o no". È: come si certifica, si racconta e si remunera il gesto umano quando l'output è visivamente equivalente? Servono nuove categorie, non nuove barricate.
+        </div>
+        <div class="comment-meta">
+          <span>2g</span>
+          <span>❤️ 1.456</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart">♡</div>
+    </div>
+
+    <!-- Commento 4 -->
+    <div class="comment">
+      <div class="comment-avatar">😤</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">artigiani_contro_ai</span> Questo è TRADIMENTO. Sei un maestro ceramista e fai PUBBLICITÀ all'intelligenza artificiale? Vergognati. Poi vi lamentate che non trovate apprendisti — intanto insegnate ai ragazzi che un robot fa meglio di loro. BOICOTTATE chi vende la nostra tradizione.
+        </div>
+        <div class="comment-meta">
+          <span>3g</span>
+          <span>❤️ 234</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart">♡</div>
+    </div>
+
+    <!-- Reply da altro utente -->
+    <div class="comment reply">
+      <div class="comment-avatar">👩‍💻</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">giulia.design.studio</span> <span class="mention">@artigiani_contro_ai</span> Raga, calma. Ha letteralmente scritto che non ha una risposta. Non sta vendendo niente, sta ragionando ad alta voce. Se l'artigianato non riesce neanche a PORSI le domande scomode, è già morto. Io sono designer e lavoro con artigiani ogni giorno — il problema vero è che il MiC non ha ancora una linea chiara su cosa è "artigianato" e cosa è "produzione assistita da AI".
+        </div>
+        <div class="comment-meta">
+          <span>2g</span>
+          <span>❤️ 678</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart liked">❤️</div>
+    </div>
+
+    <!-- Commento 5 -->
+    <div class="comment">
+      <div class="comment-avatar">🇯🇵</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">tanaka_kenji_ceramic</span> Marco-san. In Giappone diciamo 手仕事 (teshigoto) — il lavoro delle mani. Non esiste traduzione, non esiste shortcut. Ma possiamo usare le macchine per mostrare al mondo PERCHÉ le mani sono diverse. Quando vieni in primavera ti faccio vedere una cosa. 🙏
+        </div>
+        <div class="comment-meta">
+          <span>2g</span>
+          <span>❤️ 1.102</span>
+          <span>Rispondi · Traduzione disponibile</span>
+        </div>
+      </div>
+      <div class="comment-heart liked">❤️</div>
+    </div>
+
+    <!-- Commento 6 -->
+    <div class="comment">
+      <div class="comment-avatar">🔌</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">energia_sicilia_news</span> Domanda seria: il vaso AI stampato in 3D consuma meno energia della fornace tradizionale? Perché nel post sulla certificazione energetica hai detto che la tua fornace consuma come 4 appartamenti. Non è una provocazione, è una domanda di sostenibilità reale.
+        </div>
+        <div class="comment-meta">
+          <span>2g</span>
+          <span>❤️ 312</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart">♡</div>
+    </div>
+
+    <!-- Reply dell'autore -->
+    <div class="comment reply">
+      <div class="comment-avatar" style="background:#e8ddd0;">🏺</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">marco.ferrara.ceramiche</span> <span class="author-badge">Autore</span> <span class="mention">@energia_sicilia_news</span> Domanda giusta. La risposta è: sì, la stampa 3D consuma molto meno. Ma la mia fornace è alimentata da solare + accumulo dal 2028. E io scaldo UN pezzo unico con una storia, non una linea di produzione. Il confronto energetico non è così semplice come sembra. Ne parlo nel post dedicato — scorri indietro di 3 settimane.
+        </div>
+        <div class="comment-meta">
+          <span>2g</span>
+          <span>❤️ 445</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart">♡</div>
+    </div>
+
+    <!-- Commento 7 -->
+    <div class="comment">
+      <div class="comment-avatar">🏛️</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">confartigianato.sicilia</span> Caro Marco, stiamo organizzando un tavolo di lavoro regionale su AI e artigianato per marzo. Ti va di partecipare come testimonial? Il tema è esattamente questo: certificazione, formazione, tutela del gesto. Scrivici in DM.
+        </div>
+        <div class="comment-meta">
+          <span>1g</span>
+          <span>❤️ 156</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart">♡</div>
+    </div>
+
+    <!-- Commento 8 -->
+    <div class="comment">
+      <div class="comment-avatar">🧑‍🎓</div>
+      <div class="comment-body">
+        <div class="comment-text">
+          <span class="comment-user">sara_ied_catania</span> Io sarei l'apprendista che non si è presentata stamattina. Scherzo. Ma no, non scherzo del tutto: ho 24 anni, laurea in design, e VOGLIO fare ceramica. Però la bottega-scuola offre 600€/mese per 2 anni e a Caltagirone un affitto ne costa 500. Non è che non ci interessa. È che non ce lo possiamo permettere.
+        </div>
+        <div class="comment-meta">
+          <span>1g</span>
+          <span>❤️ 3.267</span>
+          <span>Rispondi</span>
+        </div>
+      </div>
+      <div class="comment-heart liked">❤️</div>
+    </div>
+
+    <div class="load-more">
+      ——— Carica altri 1.238 commenti ———
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

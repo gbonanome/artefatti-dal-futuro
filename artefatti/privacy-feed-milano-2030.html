@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SicuraMI — Facebook Feed 2030</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fb-blue: #1877F2;
+    --fb-blue-dark: #1464d0;
+    --fb-bg: #f0f2f5;
+    --fb-card: #ffffff;
+    --fb-text: #050505;
+    --fb-text-secondary: #65676b;
+    --fb-text-light: #8a8d91;
+    --fb-border: #ced0d4;
+    --fb-border-light: #e4e6eb;
+    --fb-hover: #f2f2f2;
+    --fb-green: #42b72a;
+    --fb-red: #e4405f;
+    --fb-react-like: #1877F2;
+    --fb-react-love: #e4405f;
+    --fb-react-haha: #f7b928;
+    --fb-react-wow: #f7b928;
+    --fb-react-angry: #e9710f;
+    --font: 'DM Sans', Helvetica, Arial, sans-serif;
+    --radius: 8px;
+    --shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--fb-bg);
+    font-family: var(--font);
+    color: var(--fb-text);
+    max-width: 680px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* Top bar */
+  .topbar {
+    background: var(--fb-card);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--fb-blue);
+    letter-spacing: -0.04em;
+  }
+  .topbar-search {
+    flex: 1;
+    max-width: 240px;
+    margin: 0 12px;
+    background: var(--fb-border-light);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 14px;
+    color: var(--fb-text-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .topbar-icons {
+    display: flex;
+    gap: 8px;
+  }
+  .topbar-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--fb-border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  /* Post card */
+  .post {
+    background: var(--fb-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin: 16px 16px;
+  }
+  @media (max-width: 500px) { .post { margin: 10px 0; border-radius: 0; } }
+
+  .post-header {
+    padding: 12px 16px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .post-user-info { flex: 1; }
+  .post-username {
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1.2;
+  }
+  .verified-fb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    background: var(--fb-blue);
+    border-radius: 50%;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+  }
+  .post-meta {
+    font-size: 13px;
+    color: var(--fb-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 1px;
+  }
+  .post-meta .dot { font-size: 3px; vertical-align: middle; }
+  .sponsored-badge { font-size: 12px; color: var(--fb-text-secondary); }
+  .post-dots {
+    font-size: 20px;
+    color: var(--fb-text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .post-dots:hover { background: var(--fb-hover); }
+
+  /* Post text */
+  .post-text {
+    padding: 8px 16px 0;
+    font-size: 15px;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+  .hashtag { color: var(--fb-blue); }
+
+  /* Post image */
+  .post-image {
+    margin-top: 12px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .post-image-inner {
+    width: 100%;
+    aspect-ratio: 1.2 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    text-align: center;
+    color: white;
+    position: relative;
+  }
+
+  .img-sicurami {
+    background: linear-gradient(160deg, #0a1628 0%, #1a2d4a 40%, #0d3b66 70%, #14506e 100%);
+  }
+  .img-sicurami::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(24,119,242,0.12) 0%, transparent 70%);
+  }
+  .img-icon { font-size: 52px; margin-bottom: 16px; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3)); position: relative; }
+  .img-headline { font-size: 26px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; position: relative; }
+  .img-sub { font-size: 14px; opacity: 0.8; font-weight: 300; line-height: 1.5; position: relative; }
+
+  .img-premium {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+  .img-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 70% 30%, rgba(212,175,55,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 20% 70%, rgba(212,175,55,0.06) 0%, transparent 40%);
+  }
+  .premium-badge {
+    background: linear-gradient(135deg, #d4af37, #f0d060, #d4af37);
+    color: #1a1a2e;
+    padding: 5px 18px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .img-carousel {
+    background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+    color: var(--fb-text);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+  }
+  .feature-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 14px;
+    text-align: left;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .feature-card .fc-icon { font-size: 22px; margin-bottom: 6px; }
+  .feature-card .fc-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .feature-card .fc-desc { font-size: 12px; color: var(--fb-text-secondary); line-height: 1.4; }
+  .carousel-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fb-text-secondary);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+  }
+
+  .img-counter {
+    background: #111;
+    color: #e0e0e0;
+  }
+  .img-counter::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+  }
+  .counter-logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #ff4444;
+    margin-bottom: 12px;
+    padding: 4px 14px;
+    border: 1px solid #ff4444;
+    position: relative;
+  }
+
+  /* CTA bar under image (Facebook ad style) */
+  .post-cta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid var(--fb-border-light);
+    border-bottom: 1px solid var(--fb-border-light);
+    background: var(--fb-bg);
+  }
+  .cta-info { flex: 1; min-width: 0; }
+  .cta-domain { font-size: 12px; color: var(--fb-text-secondary); text-transform: uppercase; letter-spacing: 0.02em; }
+  .cta-title { font-size: 15px; font-weight: 600; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cta-desc { font-size: 13px; color: var(--fb-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cta-btn {
+    background: var(--fb-border-light);
+    color: var(--fb-text);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+  .cta-btn:hover { background: var(--fb-border); }
+
+  /* Reactions bar */
+  .post-reactions-summary {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    color: var(--fb-text-secondary);
+  }
+  .reactions-icons { display: flex; align-items: center; }
+  .reaction-bubble {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    margin-right: -3px;
+    border: 2px solid white;
+    position: relative;
+  }
+  .reaction-bubble.r-like { background: var(--fb-react-like); }
+  .reaction-bubble.r-love { background: var(--fb-react-love); }
+  .reaction-bubble.r-angry { background: var(--fb-react-angry); }
+  .reaction-bubble.r-wow { background: var(--fb-react-wow); }
+  .reactions-count { margin-left: 6px; }
+  .reactions-right { display: flex; gap: 12px; }
+  .reactions-right span { cursor: pointer; }
+  .reactions-right span:hover { text-decoration: underline; }
+
+  /* Action buttons */
+  .post-action-bar {
+    display: flex;
+    border-top: 1px solid var(--fb-border-light);
+    margin: 0 16px;
+    padding: 4px 0;
+  }
+  .action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fb-text-secondary);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .action-btn:hover { background: var(--fb-hover); }
+  .action-btn .a-icon { font-size: 18px; }
+  .action-btn.liked { color: var(--fb-blue); }
+
+  /* Comments section */
+  .post-comments {
+    padding: 4px 16px 12px;
+    border-top: 1px solid var(--fb-border-light);
+  }
+  .comment {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    align-items: flex-start;
+  }
+  .comment-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .comment-bubble {
+    background: var(--fb-border-light);
+    border-radius: 18px;
+    padding: 8px 14px;
+    flex: 1;
+    min-width: 0;
+  }
+  .comment-user { font-size: 13px; font-weight: 600; line-height: 1.2; }
+  .comment-text { font-size: 15px; line-height: 1.4; }
+  .comment-actions {
+    display: flex;
+    gap: 12px;
+    padding-left: 14px;
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fb-text-secondary);
+  }
+  .comment-actions span { cursor: pointer; }
+  .comment-actions .c-likes { font-weight: 400; }
+  .comment-reply { margin-left: 0; margin-top: 6px; }
+
+  .view-more {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fb-text-secondary);
+    cursor: pointer;
+    padding: 8px 0 2px;
+  }
+  .view-more:hover { text-decoration: underline; }
+
+  /* Suggested box */
+  .suggested-box {
+    background: var(--fb-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin: 16px;
+    padding: 16px;
+  }
+  .suggested-box-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+  .suggested-page {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .sp-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .sp-info { flex: 1; }
+  .sp-name { font-size: 15px; font-weight: 600; }
+  .sp-desc { font-size: 13px; color: var(--fb-text-secondary); }
+  .sp-btn {
+    background: #e7f3ff;
+    color: var(--fb-blue);
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .workshop-footer {
+    background: #1a1a1a;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 24px 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-logo">facebook</div>
+  <div class="topbar-search">🔍 Cerca su Facebook</div>
+  <div class="topbar-icons">
+    <div class="topbar-icon">🏠</div>
+    <div class="topbar-icon">👥</div>
+    <div class="topbar-icon">🔔</div>
+    <div class="topbar-icon">☰</div>
+  </div>
+</div>
+
+<!-- POST 1: Annuncio principale SicuraMI -->
+<div class="post">
+  <div class="post-header">
+    <div class="post-avatar" style="background:linear-gradient(135deg,#0d3b66,#14506e);color:white;font-size:13px;font-weight:700;">SM</div>
+    <div class="post-user-info">
+      <div class="post-username">SicuraMI <span class="verified-fb">✓</span></div>
+      <div class="post-meta">
+        <span class="sponsored-badge">Sponsorizzata</span>
+        <span class="dot">⬤</span>
+        <span>🌐</span>
+      </div>
+    </div>
+    <div class="post-dots">⋯</div>
+  </div>
+  <div class="post-text">Vivi a Milano? Meriti di sapere prima. 🛡️
+
+SicuraMI analizza i dati pubblici della tua zona — furti, degrado, movimenti anomali — e ti avvisa in tempo reale su dove andare e dove non andare. Nessuna telecamera in più: usiamo quelle che ci sono già. È solo una questione di leggere meglio quello che la città già sa.
+
+Attiva il piano base gratuito con SPID ↓
+
+<span class="hashtag">#SicuraMI</span> <span class="hashtag">#MilanoSicura</span> <span class="hashtag">#SmartCity</span> <span class="hashtag">#SicurezzaPredittiva</span></div>
+  <div class="post-image">
+    <div class="post-image-inner img-sicurami">
+      <div class="img-icon">🛡️</div>
+      <div class="img-headline">La tua città.<br>I tuoi dati.<br>La tua sicurezza.</div>
+      <div class="img-sub">Il primo servizio di sicurezza predittiva<br>per residenti dell'Area Metropolitana di Milano.</div>
+    </div>
+  </div>
+  <div class="post-cta-bar">
+    <div class="cta-info">
+      <div class="cta-domain">sicurami.it</div>
+      <div class="cta-title">Attiva SicuraMI — Piano base gratuito</div>
+      <div class="cta-desc">Sicurezza predittiva per la tua zona. Basta lo SPID.</div>
+    </div>
+    <button class="cta-btn">Iscriviti</button>
+  </div>
+  <div class="post-reactions-summary">
+    <div style="display:flex;align-items:center;">
+      <span class="reaction-bubble r-like">👍</span>
+      <span class="reaction-bubble r-love">❤️</span>
+      <span class="reaction-bubble r-angry" style="font-size:10px;">😡</span>
+      <span class="reactions-count">14.832</span>
+    </div>
+    <div class="reactions-right">
+      <span>347 commenti</span>
+      <span>1.203 condivisioni</span>
+    </div>
+  </div>
+  <div class="post-action-bar">
+    <div class="action-btn liked"><span class="a-icon">👍</span> Mi piace</div>
+    <div class="action-btn"><span class="a-icon">💬</span> Commenta</div>
+    <div class="action-btn"><span class="a-icon">↗</span> Condividi</div>
+  </div>
+  <div class="post-comments">
+    <div class="view-more">Vedi i commenti più pertinenti ▾</div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#e3f2fd;">👤</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Marco Brera</div>
+          <div class="comment-text">Io l'ho attivato per la zona Corvetto. Tre notifiche in una settimana, tutte azzeccate. Non torno indietro.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">42</span> · 2h</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#fce4ec;">👩‍💻</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Chiara Penati</div>
+          <div class="comment-text">Ma avete letto i termini d'uso? Cedete TUTTI i dati di geolocalizzazione a terze parti. Questo non è un servizio, è un baratto.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">118</span> · 1h</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#e8f5e9;">👩‍👧</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Silvia Padovani</div>
+          <div class="comment-text">mia mamma 74 anni lo usa e si sente finalmente tranquilla a uscire la sera. A voi sembra poco?</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">89</span> · 47min</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 2: Carosello funzionalità -->
+<div class="post">
+  <div class="post-header">
+    <div class="post-avatar" style="background:linear-gradient(135deg,#0d3b66,#14506e);color:white;font-size:13px;font-weight:700;">SM</div>
+    <div class="post-user-info">
+      <div class="post-username">SicuraMI <span class="verified-fb">✓</span></div>
+      <div class="post-meta">
+        <span class="sponsored-badge">Sponsorizzata</span>
+        <span class="dot">⬤</span>
+        <span>🌐</span>
+      </div>
+    </div>
+    <div class="post-dots">⋯</div>
+  </div>
+  <div class="post-text">Quattro funzionalità, un unico obiettivo: restituirti la città. 🏙️
+Il piano base è gratuito per tutti i residenti del Comune di Milano — basta lo SPID.
+
+<span class="hashtag">#SicuraMI</span> <span class="hashtag">#VivereMeglio</span></div>
+  <div class="post-image">
+    <div class="post-image-inner img-carousel">
+      <div class="carousel-header">Cosa fa SicuraMI per te</div>
+      <div class="card-grid">
+        <div class="feature-card">
+          <div class="fc-icon">📍</div>
+          <div class="fc-title">Zone Alert</div>
+          <div class="fc-desc">Notifiche in tempo reale sulla sicurezza della tua zona e del tuo percorso casa-lavoro.</div>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">👤</div>
+          <div class="fc-title">Face Pass</div>
+          <div class="fc-desc">Salta le code in metro, musei e uffici pubblici con il riconoscimento facciale volontario.</div>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">🔔</div>
+          <div class="fc-title">Crowd Radar</div>
+          <div class="fc-desc">Evita assembramenti e zone ad alta densità. Ideale per famiglie con bambini.</div>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">🏠</div>
+          <div class="fc-title">Home Watch</div>
+          <div class="fc-desc">Monitoraggio del tuo quartiere quando sei in vacanza. Zero hardware aggiuntivo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="post-cta-bar">
+    <div class="cta-info">
+      <div class="cta-domain">sicurami.it</div>
+      <div class="cta-title">Scopri tutte le funzionalità</div>
+      <div class="cta-desc">Sicurezza predittiva per Milano e hinterland</div>
+    </div>
+    <button class="cta-btn">Scopri di più</button>
+  </div>
+  <div class="post-reactions-summary">
+    <div style="display:flex;align-items:center;">
+      <span class="reaction-bubble r-like">👍</span>
+      <span class="reaction-bubble r-wow" style="font-size:10px;">😮</span>
+      <span class="reactions-count">8.204</span>
+    </div>
+    <div class="reactions-right">
+      <span>156 commenti</span>
+      <span>412 condivisioni</span>
+    </div>
+  </div>
+  <div class="post-action-bar">
+    <div class="action-btn"><span class="a-icon">👍</span> Mi piace</div>
+    <div class="action-btn"><span class="a-icon">💬</span> Commenta</div>
+    <div class="action-btn"><span class="a-icon">↗</span> Condividi</div>
+  </div>
+  <div class="post-comments">
+    <div class="view-more">Vedi i commenti più pertinenti ▾</div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#fff3e0;">⚖️</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Avv. Giulia Montanari</div>
+          <div class="comment-text">"Riconoscimento facciale volontario" è un ossimoro. Se tutti lo usano, chi non lo usa diventa sospetto. L'opt-in è un'illusione.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">203</span> · 16h</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#e8f5e9;">🏙️</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Federica Navigli</div>
+          <div class="comment-text">Home Watch è pazzesco, quando sono andata a Lisbona mi arrivavano le notifiche in tempo reale. Tranquillità totale</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">34</span> · 14h</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#e3f2fd;">🎓</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Luca Rizzoli</div>
+          <div class="comment-text">Domanda seria: se la app ti dice "non andare in zona X" e tu ci vai lo stesso, cosa succede ai fini assicurativi? Qualcuno ha letto la clausola 11.3?</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">167</span> · 12h</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Suggeriti -->
+<div class="suggested-box">
+  <div class="suggested-box-title">Pagine che potrebbero piacerti</div>
+  <div class="suggested-page">
+    <div class="sp-avatar" style="background:#e8f0fe;">🏛️</div>
+    <div class="sp-info">
+      <div class="sp-name">Comune di Milano</div>
+      <div class="sp-desc">Ente governativo · 1,2M follower</div>
+    </div>
+    <button class="sp-btn">Mi piace 👍</button>
+  </div>
+  <div class="suggested-page">
+    <div class="sp-avatar" style="background:#fff3e0;">🔐</div>
+    <div class="sp-info">
+      <div class="sp-name">Privacy Network Italia</div>
+      <div class="sp-desc">Organizzazione non profit · 87.400 follower</div>
+    </div>
+    <button class="sp-btn">Mi piace 👍</button>
+  </div>
+  <div class="suggested-page">
+    <div class="sp-avatar" style="background:#fce4ec;">⚡</div>
+    <div class="sp-info">
+      <div class="sp-name">Hermes Center</div>
+      <div class="sp-desc">Diritti digitali · 45.200 follower</div>
+    </div>
+    <button class="sp-btn">Mi piace 👍</button>
+  </div>
+</div>
+
+<!-- POST 3: Piano Premium -->
+<div class="post">
+  <div class="post-header">
+    <div class="post-avatar" style="background:linear-gradient(135deg,#0d3b66,#14506e);color:white;font-size:13px;font-weight:700;">SM</div>
+    <div class="post-user-info">
+      <div class="post-username">SicuraMI <span class="verified-fb">✓</span></div>
+      <div class="post-meta">
+        <span class="sponsored-badge">Sponsorizzata</span>
+        <span class="dot">⬤</span>
+        <span>🌐</span>
+      </div>
+    </div>
+    <div class="post-dots">⋯</div>
+  </div>
+  <div class="post-text">La privacy non è un diritto astratto. È un servizio. 🔐
+
+Con Premium Invisibile i tuoi dati biometrici escono dal sistema di rilevamento urbano del Comune di Milano. Nessun tracciamento, nessuna profilazione, nessun archivio. Per chi vuole vivere in città senza essere letto.
+
+<span class="hashtag">#PremiumInvisibile</span> <span class="hashtag">#PrivacyReale</span></div>
+  <div class="post-image">
+    <div class="post-image-inner img-premium">
+      <div class="premium-badge">✦ Premium Invisibile</div>
+      <div class="img-headline" style="font-size:22px;">Chi ha detto che sicurezza<br>vuol dire essere visti?</div>
+      <div class="img-sub" style="max-width:380px;">Con il piano <strong>Premium Invisibile</strong> i tuoi dati biometrici vengono rimossi da tutti i database pubblici comunali. Nessuna telecamera ti riconoscerà. Nessun algoritmo ti profilerà.</div>
+      <div style="margin-top:18px;font-size:28px;font-weight:700;color:#d4af37;position:relative;">€ 34,90<span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.6);"> /mese</span></div>
+    </div>
+  </div>
+  <div class="post-cta-bar">
+    <div class="cta-info">
+      <div class="cta-domain">sicurami.it/premium</div>
+      <div class="cta-title">Premium Invisibile — Invisibilità totale</div>
+      <div class="cta-desc">Rimozione dati biometrici da tutti i database comunali</div>
+    </div>
+    <button class="cta-btn">Attiva ora</button>
+  </div>
+  <div class="post-reactions-summary">
+    <div style="display:flex;align-items:center;">
+      <span class="reaction-bubble r-angry" style="font-size:10px;">😡</span>
+      <span class="reaction-bubble r-like">👍</span>
+      <span class="reaction-bubble r-wow" style="font-size:10px;">😮</span>
+      <span class="reactions-count">6.711</span>
+    </div>
+    <div class="reactions-right">
+      <span>891 commenti</span>
+      <span>4.302 condivisioni</span>
+    </div>
+  </div>
+  <div class="post-action-bar">
+    <div class="action-btn"><span class="a-icon">👍</span> Mi piace</div>
+    <div class="action-btn"><span class="a-icon">💬</span> Commenta</div>
+    <div class="action-btn"><span class="a-icon">↗</span> Condividi</div>
+  </div>
+  <div class="post-comments">
+    <div class="view-more">Commenti più pertinenti ▾</div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#e3f2fd;">📊</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Dati Bene Comune</div>
+          <div class="comment-text">Ripetiamolo: stanno vendendo come servizio premium un diritto fondamentale sancito dalla Carta dei Diritti UE (art. 8). La privacy non è un upgrade.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">2.340</span> · 1g</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#fff8e1;">🎓</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Alessandro Bocconi</div>
+          <div class="comment-text">È geniale dal punto di vista di business. Crei il problema (sorveglianza di massa) e poi vendi la soluzione (opt-out a pagamento). Caso da manuale.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">876</span> · 22h</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#fce4ec;">👩‍👧‍👦</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Marta Colombo</div>
+          <div class="comment-text">cioè se non pago 35€/mese i miei figli vengono tracciati nelle telecamere comunali? Ma è legale?</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">1.203</span> · 20h</div>
+
+        <div class="comment comment-reply">
+          <div class="comment-avatar" style="background:linear-gradient(135deg,#0d3b66,#14506e);color:white;font-size:10px;font-weight:700;width:28px;height:28px;">SM</div>
+          <div>
+            <div class="comment-bubble">
+              <div class="comment-user">SicuraMI <span style="font-size:10px;color:var(--fb-blue);">✓</span></div>
+              <div class="comment-text">Marta, il sistema di rilevamento urbano è gestito dal Comune di Milano, non da SicuraMI. Noi offriamo solo il servizio di rimozione. Per info sulla raccolta dati pubblici: comune.milano.it/smartcity</div>
+            </div>
+            <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">12</span> · 19h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#e8eaf6;">⚖️</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Gianluca Ferretti</div>
+          <div class="comment-text">La risposta di SicuraMI è interessante: scaricano la responsabilità sul Comune. Ma chi ha il contratto di trattamento dati con ATM per il Face Pass? Spoiler: SicuraMI Srl, controllata al 60% da Clearview Europe.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">1.876</span> · 18h</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 4: Contro-pubblicità Privacy Network -->
+<div class="post">
+  <div class="post-header">
+    <div class="post-avatar" style="background:#1a1a1a;color:white;font-size:17px;">⚡</div>
+    <div class="post-user-info">
+      <div class="post-username">Privacy Network Italia <span class="verified-fb">✓</span></div>
+      <div class="post-meta">
+        <span>3 giorni fa</span>
+        <span class="dot">⬤</span>
+        <span>🌐</span>
+      </div>
+    </div>
+    <div class="post-dots">⋯</div>
+  </div>
+  <div class="post-text">SicuraMI non è un'app. È un modello di società. Un modello in cui la tua faccia è un dato commerciale, il tuo percorso casa-lavoro un asset, e la tua privacy un abbonamento mensile.
+
+Abbiamo depositato un ricorso al Garante e un esposto alla Procura.
+
+📌 Sabato 22 marzo, Piazza Duomo, ore 15:00.
+Portate le maschere. 🎭
+
+Link in bio per firmare →
+
+<span class="hashtag">#NoFacePass</span> <span class="hashtag">#LaPrivacyNonÈUnAbbonamento</span> <span class="hashtag">#MilanoSorvegliata</span></div>
+  <div class="post-image">
+    <div class="post-image-inner img-counter">
+      <div class="counter-logo">⚡ NO FACE PASS</div>
+      <div class="img-headline" style="font-size:22px;max-width:400px;position:relative;">
+        Nel 2019 ti scandalizzavi<br>per i cookie.<br><br>
+        <span style="color:#ff4444;">Nel 2030 ti scansionano la faccia<br>per prendere la metro.</span>
+      </div>
+      <div class="img-sub" style="color:#888;margin-top:16px;font-size:13px;position:relative;">
+        2.847 telecamere a riconoscimento facciale attive a Milano.<br>
+        0 referendum. 0 consultazioni pubbliche. 0 dibattiti in consiglio comunale.
+      </div>
+    </div>
+  </div>
+  <div class="post-reactions-summary">
+    <div style="display:flex;align-items:center;">
+      <span class="reaction-bubble r-angry" style="font-size:10px;">😡</span>
+      <span class="reaction-bubble r-like">👍</span>
+      <span class="reaction-bubble r-love">❤️</span>
+      <span class="reactions-count">23.445</span>
+    </div>
+    <div class="reactions-right">
+      <span>1.204 commenti</span>
+      <span>8.901 condivisioni</span>
+    </div>
+  </div>
+  <div class="post-action-bar">
+    <div class="action-btn liked"><span class="a-icon">👍</span> Mi piace</div>
+    <div class="action-btn"><span class="a-icon">💬</span> Commenta</div>
+    <div class="action-btn"><span class="a-icon">↗</span> Condividi</div>
+  </div>
+  <div class="post-comments">
+    <div class="view-more">Commenti più pertinenti ▾</div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#e3f2fd;">👤</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Marco Brera</div>
+          <div class="comment-text">Facile protestare, io abito in Corvetto e prima di SicuraMI avevo paura a uscire dopo le 21. Voi dove vivete, in CityLife?</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">234</span> · 3g</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#f3e5f5;">🎓</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Sara Bonetti</div>
+          <div class="comment-text">La mia tesi al Politecnico è su questo: il bias algoritmico di SicuraMI segnala come "anomali" il 340% in più di spostamenti in zone ad alta percentuale di residenti non-UE. Non è sicurezza, è profilazione etnica automatizzata.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">3.102</span> · 3g</div>
+
+        <div class="comment comment-reply">
+          <div class="comment-avatar" style="background:linear-gradient(135deg,#0d3b66,#14506e);color:white;font-size:10px;font-weight:700;width:28px;height:28px;">SM</div>
+          <div>
+            <div class="comment-bubble">
+              <div class="comment-user">SicuraMI <span style="font-size:10px;color:var(--fb-blue);">✓</span></div>
+              <div class="comment-text">Sara, i nostri algoritmi sono sottoposti ad audit indipendente trimestrale (PwC). I report sono pubblici sul nostro sito. Ti invitiamo a consultarli.</div>
+            </div>
+            <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">8</span> · 3g</div>
+          </div>
+        </div>
+
+        <div class="comment comment-reply">
+          <div class="comment-avatar" style="background:#fce4ec;font-size:12px;width:28px;height:28px;">⚡</div>
+          <div>
+            <div class="comment-bubble">
+              <div class="comment-user">Hermes Center</div>
+              <div class="comment-text">@SicuraMI L'ultimo audit PwC che trovate sul sito è di settembre 2029. Sei mesi fa. E non copre Face Pass né il modulo Crowd Radar. Volete pubblicare quello di dicembre? 🧐</div>
+            </div>
+            <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">1.456</span> · 2g</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 5: Testimonianza utente -->
+<div class="post">
+  <div class="post-header">
+    <div class="post-avatar" style="background:#e8f5e9;font-size:16px;">👩‍👧</div>
+    <div class="post-user-info">
+      <div class="post-username">Silvia Padovani</div>
+      <div class="post-meta">
+        <span>2 giorni fa</span>
+        <span class="dot">⬤</span>
+        <span>🌐</span>
+      </div>
+    </div>
+    <div class="post-dots">⋯</div>
+  </div>
+  <div class="post-text">Lo riscrivo qui perché sotto il post di Privacy Network mi hanno dato della "complice del capitalismo della sorveglianza" 😅
+
+Ho installato SicuraMI a novembre per mia mamma che vive da sola in Bande Nere. Ha 74 anni e non usciva più dopo le 18. Ora controlla l'app, vede che la zona è "verde" e fa la sua passeggiata. Non mi ha più chiamata in panico alle 7 di sera.
+
+Lo so che c'è un dibattito sulla privacy. Ma io ho risolto un problema concreto. Forse chi protesta non ha una madre anziana sola a Milano.
+
+Io sono un'insegnante di Padova con una mamma sola a Milano. Tutto qui.
+
+<span class="hashtag">#SicuraMI</span></div>
+  <div class="post-reactions-summary">
+    <div style="display:flex;align-items:center;">
+      <span class="reaction-bubble r-love">❤️</span>
+      <span class="reaction-bubble r-like">👍</span>
+      <span class="reactions-count">4.221</span>
+    </div>
+    <div class="reactions-right">
+      <span>89 commenti</span>
+      <span>203 condivisioni</span>
+    </div>
+  </div>
+  <div class="post-action-bar">
+    <div class="action-btn liked" style="color:var(--fb-red);"><span class="a-icon">❤️</span> Love</div>
+    <div class="action-btn"><span class="a-icon">💬</span> Commenta</div>
+    <div class="action-btn"><span class="a-icon">↗</span> Condividi</div>
+  </div>
+  <div class="post-comments">
+    <div class="view-more">Commenti più pertinenti ▾</div>
+    <div class="comment">
+      <div class="comment-avatar" style="background:#1a1a1a;color:white;font-size:13px;">⚡</div>
+      <div>
+        <div class="comment-bubble">
+          <div class="comment-user">Privacy Network Italia <span style="font-size:10px;color:var(--fb-blue);">✓</span></div>
+          <div class="comment-text">Silvia, nessuno mette in dubbio la tua esperienza. Il problema è sistemico: chi decide quali zone sono "verdi" e quali "rosse"? Con quali dati? Con quale supervisione? Il tuo bisogno è legittimo. La risposta non deve essere la sorveglianza di massa.</div>
+        </div>
+        <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">567</span> · 2g</div>
+
+        <div class="comment comment-reply">
+          <div class="comment-avatar" style="background:#e8f5e9;font-size:12px;width:28px;height:28px;">👩‍👧</div>
+          <div>
+            <div class="comment-bubble">
+              <div class="comment-user">Silvia Padovani</div>
+              <div class="comment-text">ok ma nell'attesa della risposta giusta mia mamma resta chiusa in casa?</div>
+            </div>
+            <div class="comment-actions"><span>Mi piace</span> <span>Rispondi</span> <span class="c-likes">892</span> · 2g</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="workshop-footer">
+  ⚡ Artefatto dal futuro · Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+</div>
+
+</body>
+</html>

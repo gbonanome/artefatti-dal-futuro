@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BolognaCivica — App Partecipazione 2030</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0f0f1a;
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
+    min-height: 100vh;
+    font-family: 'DM Sans', -apple-system, sans-serif;
+  }
+
+  .phone-frame {
+    width: 375px;
+    background: #f8f8fa;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* STATUS BAR */
+  .status-bar {
+    background: #2a1a4a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 24px;
+    font-size: 0.75em;
+    font-weight: 600;
+  }
+
+  /* APP HEADER */
+  .app-header {
+    background: linear-gradient(135deg, #2a1a4a, #4a2a6a, #3a2a5a);
+    color: white;
+    padding: 16px 20px 20px;
+  }
+
+  .app-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .app-logo .logo-symbol {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+  }
+
+  .app-logo .logo-name {
+    font-weight: 700;
+    font-size: 0.95em;
+  }
+
+  .app-logo .logo-name span {
+    font-weight: 300;
+    font-size: 0.85em;
+    opacity: 0.75;
+  }
+
+  .user-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .user-bar .ub-left {
+    font-size: 0.78em;
+  }
+
+  .user-bar .ub-left strong {
+    font-weight: 600;
+  }
+
+  .user-bar .ub-left .quartiere {
+    font-size: 0.85em;
+    opacity: 0.75;
+    font-weight: 300;
+  }
+
+  .user-bar .ub-right {
+    text-align: right;
+  }
+
+  .user-bar .ub-right .score {
+    font-size: 1.1em;
+    font-weight: 700;
+  }
+
+  .user-bar .ub-right .score-label {
+    font-size: 0.6em;
+    opacity: 0.7;
+    font-weight: 300;
+  }
+
+  /* CONTENT */
+  .app-content {
+    padding: 14px 16px;
+  }
+
+  /* ACTIVE POLL */
+  .poll-card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border-left: 4px solid #4a2a6a;
+  }
+
+  .poll-card .poll-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .poll-card .poll-type {
+    font-size: 0.6em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .poll-type.vote { background: #e8e4f8; color: #4a2a6a; }
+  .poll-type.survey { background: #e4f0e8; color: #2a6a4a; }
+  .poll-type.assembly { background: #f8e8e4; color: #8a3a2a; }
+  .poll-type.alert { background: #fde8e8; color: #c44a3f; }
+  .poll-type.call { background: #f8f0e4; color: #8a6a2a; }
+  .poll-type.info { background: #e4e8f8; color: #3a4a8a; }
+
+  .poll-card .poll-deadline {
+    font-size: 0.65em;
+    color: #8e8e8e;
+  }
+
+  .poll-card h3 {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .poll-card p {
+    font-size: 0.78em;
+    color: #5a5a6a;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .poll-card .poll-progress {
+    margin-top: 10px;
+  }
+
+  .poll-card .poll-progress .prog-bar {
+    height: 6px;
+    background: #efefef;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .poll-card .poll-progress .prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #4a2a6a, #6a4a8a);
+  }
+
+  .poll-card .poll-progress .prog-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65em;
+    color: #8e8e8e;
+    margin-top: 4px;
+  }
+
+  .poll-action {
+    display: inline-block;
+    margin-top: 10px;
+    background: #4a2a6a;
+    color: white;
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 0.78em;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .poll-action.secondary {
+    background: #efefef;
+    color: #4a4a5a;
+    margin-left: 6px;
+  }
+
+  /* WARNING BOX */
+  .warning-box {
+    background: #fdf6ea;
+    border: 1px solid #e8d4a0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  .warning-box p {
+    font-size: 0.72em;
+    color: #7a6a3a;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .warning-box .wb-icon {
+    font-size: 0.9em;
+    margin-right: 4px;
+  }
+
+  /* SECTION HEADER */
+  .section-label {
+    font-size: 0.7em;
+    font-weight: 600;
+    color: #8e8e8e;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 14px 0 8px;
+  }
+
+  /* NOTIFICATION CARDS */
+  .notif-card {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .notif-card .nc-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .nc-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    flex-shrink: 0;
+  }
+
+  .nc-icon.emergency { background: #fde8e8; }
+  .nc-icon.energy { background: #e4f0e8; }
+  .nc-icon.assembly { background: #e8e4f8; }
+  .nc-icon.algo { background: #f0ece4; }
+
+  .nc-title {
+    font-weight: 600;
+    font-size: 0.82em;
+    color: #1a1a2e;
+    flex: 1;
+  }
+
+  .nc-time {
+    font-size: 0.62em;
+    color: #8e8e8e;
+    flex-shrink: 0;
+  }
+
+  .nc-body {
+    font-size: 0.78em;
+    color: #5a5a6a;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  .nc-body strong {
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  /* TAG LIST */
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .tag-list .tag {
+    font-size: 0.62em;
+    background: #efefef;
+    color: #5a5a6a;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  /* RESIDENTIALITY EXPLAINER */
+  .explainer-box {
+    background: #f0ecf8;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 8px;
+  }
+
+  .explainer-box p {
+    font-size: 0.7em;
+    color: #4a3a6a;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .explainer-box strong {
+    font-weight: 600;
+  }
+
+  .explainer-box .score-breakdown {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .score-item {
+    font-size: 0.65em;
+    color: #5a4a7a;
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 8px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 4px;
+  }
+
+  /* ALGORITHM TRANSPARENCY */
+  .algo-card {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px dashed #d4d0e4;
+  }
+
+  .algo-card h4 {
+    font-size: 0.82em;
+    font-weight: 600;
+    color: #4a3a6a;
+    margin-bottom: 6px;
+  }
+
+  .algo-card p {
+    font-size: 0.72em;
+    color: #6a5a8a;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* FOOTER DISCLAIMER */
+  .footer-disclaimer {
+    background: #e8e4f0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 12px 0 4px;
+  }
+
+  .footer-disclaimer p {
+    font-size: 0.65em;
+    color: #5a4a6a;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  .footer-disclaimer strong {
+    font-weight: 600;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    background: white;
+    border-top: 1px solid #efefef;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0 24px;
+  }
+
+  .nav-item {
+    text-align: center;
+    font-size: 0.58em;
+    color: #8e8e8e;
+  }
+
+  .nav-item.active {
+    color: #4a2a6a;
+    font-weight: 600;
+  }
+
+  .nav-item .nav-icon {
+    font-size: 1.6em;
+    display: block;
+    margin-bottom: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>10:42</span>
+    <span>WiFi · 📶 · 🔋 58%</span>
+  </div>
+
+  <!-- App Header -->
+  <div class="app-header">
+    <div class="app-logo">
+      <div class="logo-symbol">🏛️</div>
+      <div class="logo-name">BolognaCivica <span>· piattaforma di partecipazione</span></div>
+    </div>
+    <div class="user-bar">
+      <div class="ub-left">
+        <strong>Alessandro Ferretti</strong>
+        <div class="quartiere">📍 Quartiere Savena · Residente dal 2019</div>
+      </div>
+      <div class="ub-right">
+        <div class="score">7,2</div>
+        <div class="score-label">Indice di<br>Residenzialità</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="app-content">
+
+    <!-- VOTO ATTIVO 1: Bilancio Partecipativo -->
+    <div class="poll-card">
+      <div class="poll-header">
+        <span class="poll-type vote">🗳️ Voto attivo</span>
+        <span class="poll-deadline">Scade: 20 feb 2030</span>
+      </div>
+      <h3>Bilancio Partecipativo 2030 — Quartiere Savena</h3>
+      <p>
+        Budget disponibile: <strong>€ 180.000</strong>. Vota fino a 3 progetti. I più votati ricevono i fondi.<br><br>
+        🅰️ Pista ciclabile Via Toscana–Centro (€ 95.000) — 847 voti<br>
+        🅱️ Orti urbani Parco Pasolini (€ 40.000) — 623 voti<br>
+        🅲 Colonnine di ricarica elettrica (€ 55.000) — 512 voti<br>
+        🅳 Illuminazione Parco dei Cedri (€ 38.000) — 489 voti<br>
+        🅴 Spazio coworking biblioteca Savena (€ 60.000) — 401 voti
+      </p>
+      <div class="poll-progress">
+        <div class="prog-bar"><div class="prog-fill" style="width: 64%;"></div></div>
+        <div class="prog-text">
+          <span>2.872 voti espressi su 4.500 aventi diritto</span>
+          <span>64%</span>
+        </div>
+      </div>
+      <div class="warning-box">
+        <p><span class="wb-icon">⚖️</span> <strong>Peso del tuo voto: 0,72x</strong>. Il tuo Indice di Residenzialità (7,2/10) determina il peso del tuo voto. Residenti continuativi da più di 10 anni hanno peso 1,0x. I proprietari non residenti hanno peso 0,3x. <a href="#" style="color:#4a2a6a;">Come funziona →</a></p>
+      </div>
+      <div>
+        <span class="poll-action">Esprimi il tuo voto</span>
+        <span class="poll-action secondary">Dettagli progetti</span>
+      </div>
+    </div>
+
+    <!-- VOTO ATTIVO 2: Regolamentazione droni -->
+    <div class="poll-card">
+      <div class="poll-header">
+        <span class="poll-type survey">📊 Consultazione</span>
+        <span class="poll-deadline">Scade: 28 feb 2030</span>
+      </div>
+      <h3>Regolamentazione consegne con droni nel centro storico</h3>
+      <p>
+        Il Comune chiede il parere dei residenti sulla proposta di Amazon e Poste Italiane di attivare un servizio di consegna con droni nella ZTL. La sperimentazione durerebbe 12 mesi.
+        <br><br>
+        Temi: rumore, sicurezza, impatto sul paesaggio UNESCO, effetto su commercio locale, fasce orarie, altezza di volo, zone escluse.
+      </p>
+      <div>
+        <span class="poll-action">Compila il questionario (8 min)</span>
+      </div>
+    </div>
+
+    <!-- ALLERTA EMERGENZA -->
+    <div class="section-label">Avvisi</div>
+
+    <div class="notif-card">
+      <div class="nc-header">
+        <div class="nc-icon emergency">🌊</div>
+        <div class="nc-title">Allerta Meteo Arancione</div>
+        <div class="nc-time">Oggi, 07:15</div>
+      </div>
+      <div class="nc-body">
+        <strong>Rischio idraulico per i quartieri sud</strong> (Savena, San Donato). Attivato il protocollo di protezione civile. Canale di Savena sotto monitoraggio. <strong>Chiusura preventiva sottopasso Via Emilia ore 14:00.</strong>
+        <br><br>
+        L'app ha automaticamente aumentato la priorità di questa notifica sulla base della tua posizione e dello storico alluvionale del quartiere (indice rischio: medio-alto dal 2024).
+      </div>
+      <div class="tag-list">
+        <span class="tag">📍 Savena</span>
+        <span class="tag">⚠️ Priorità alta</span>
+        <span class="tag">🤖 Notifica AI-prioritizzata</span>
+      </div>
+    </div>
+
+    <!-- ASSEMBLEA CITTADINA -->
+    <div class="notif-card">
+      <div class="nc-header">
+        <div class="nc-icon assembly">🎤</div>
+        <div class="nc-title">Assemblea Cittadina — Mobilità 2035</div>
+        <div class="nc-time">3 giorni fa</div>
+      </div>
+      <div class="nc-body">
+        Convocata assemblea cittadina estratta a sorte su: <strong>"Quale mobilità per Bologna nel 2035?"</strong> 50 cittadini estratti dal registro ANPR, bilanciati per età, genere, quartiere e reddito.
+        <br><br>
+        <strong>Non sei stato estratto questa volta.</strong> Puoi seguire i lavori in diretta streaming o inviare contributi scritti entro il 25 febbraio. L'assemblea precedente (su consumo di suolo) ha generato 3 raccomandazioni vincolanti per la Giunta.
+      </div>
+      <div>
+        <span class="poll-action">Invia un contributo</span>
+        <span class="poll-action secondary">Segui in streaming</span>
+      </div>
+    </div>
+
+    <!-- COOPERATIVE ENERGETICHE -->
+    <div class="notif-card">
+      <div class="nc-header">
+        <div class="nc-icon energy">⚡</div>
+        <div class="nc-title">Bando — Cooperative Energetiche di Vicinato</div>
+        <div class="nc-time">5 giorni fa</div>
+      </div>
+      <div class="nc-body">
+        Il Comune apre le candidature per <strong>10 nuove Comunità Energetiche Rinnovabili (CER)</strong> di quartiere. I condomini possono associarsi per installare pannelli condivisi, accumulatori di vicinato e punti di ricarica. Incentivi: contributo fondo perduto fino al 40% + tariffa incentivante GSE.
+        <br><br>
+        Il tuo condominio (Via Bellaria 22) ha già 12 adesioni su 18 necessarie. Mancano 6 firme.
+      </div>
+      <div>
+        <span class="poll-action">Aderisci alla CER</span>
+        <span class="poll-action secondary">Calcola il risparmio</span>
+      </div>
+    </div>
+
+    <!-- INDICE DI RESIDENZIALITÀ EXPLAINER -->
+    <div class="section-label">Il tuo profilo civico</div>
+
+    <div class="algo-card">
+      <h4>📊 Come viene calcolato il tuo Indice di Residenzialità</h4>
+      <p>L'Indice determina il peso del tuo voto nelle consultazioni e la priorità di accesso ad alcuni servizi (es. posti asilo nido, contributi affitto). È calcolato su dati ANPR e Agenzia delle Entrate.</p>
+      <div class="explainer-box">
+        <div class="score-breakdown">
+          <div class="score-item"><span>Anni di residenza continuativa</span><span>+2,5</span></div>
+          <div class="score-item"><span>Lavoro nel comune</span><span>+1,5</span></div>
+          <div class="score-item"><span>Figli iscritti a scuole comunali</span><span>+1,2</span></div>
+          <div class="score-item"><span>Partecipazione ad assemblee (2/5)</span><span>+0,8</span></div>
+          <div class="score-item"><span>Proprietario non residente</span><span>n/a</span></div>
+          <div class="score-item"><span>Iscrizione AIRE (residenti estero)</span><span>n/a</span></div>
+          <div class="score-item"><span>Bonus: volontariato civico certificato</span><span>+0,4</span></div>
+          <div class="score-item"><span>Malus: tributi non in regola</span><span>-0,2</span></div>
+        </div>
+        <p style="margin-top: 10px;"><strong>Il tuo punteggio: 7,2 / 10</strong>. I residenti con punteggio inferiore a 3,0 possono partecipare alle consultazioni ma il loro voto ha peso ridotto (0,3x). Il sistema è stato approvato con referendum locale nel 2028 (62% favorevoli, affluenza 34%).</p>
+      </div>
+    </div>
+
+    <!-- FOOTER DISCLAIMER -->
+    <div class="footer-disclaimer">
+      <p>
+        <strong>BolognaCivica</strong> · Piattaforma ufficiale del Comune di Bologna per la partecipazione democratica<br>
+        Versione 5.0.1 · Autenticazione: SPID / CIE livello 2<br><br>
+        <strong>Algoritmo di prioritizzazione notifiche:</strong> le notifiche sono ordinate da un sistema AI che considera: prossimità geografica, storico di partecipazione, interessi dichiarati, urgenza oggettiva. È possibile disattivare la personalizzazione nelle impostazioni. Il codice dell'algoritmo è pubblicato su <em>github.com/comunebologna/civica-algo</em> (licenza open source).<br><br>
+        <strong>Accessibilità:</strong> questa app è conforme alle linee guida WCAG 2.2 AA. Per segnalazioni: accessibilita@comune.bologna.it<br><br>
+        <em>Nel 2029, il 28% delle consultazioni su BolognaCivica ha raggiunto il quorum. Il 41% dei residenti tra 18 e 30 anni non ha mai effettuato l'accesso alla piattaforma (dato Osservatorio Partecipazione, UniBO).</em>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <span class="nav-icon">🏠</span>
+      Home
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">🗳️</span>
+      Vota
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">🎤</span>
+      Assemblee
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">📍</span>
+      Quartiere
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">⚙️</span>
+      Profilo
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

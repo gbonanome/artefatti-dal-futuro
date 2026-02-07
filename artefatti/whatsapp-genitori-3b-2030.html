@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genitori 3B Gramsci 📚 — WhatsApp</title>
+<style>
+  :root {
+    --wa-green: #00a884;
+    --wa-header: #1f2c34;
+    --wa-bg: #0b141a;
+    --wa-bubble-in: #202c33;
+    --wa-text: #e9edef;
+    --wa-text-secondary: #8696a0;
+    --wa-text-time: rgba(255,255,255,0.45);
+    --wa-link: #53bdeb;
+    --wa-name-1: #e06c75;
+    --wa-name-2: #61afef;
+    --wa-name-3: #c678dd;
+    --wa-name-4: #e5c07b;
+    --wa-name-5: #56b6c2;
+    --wa-name-6: #98c379;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; background: #111b21; color: var(--wa-text); display: flex; justify-content: center; min-height: 100vh; }
+  .phone-frame { width: 100%; max-width: 480px; background: var(--wa-bg); min-height: 100vh; display: flex; flex-direction: column; }
+  .status-bar { background: var(--wa-header); padding: 4px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--wa-text-secondary); }
+  .status-bar .time { font-weight: 600; color: var(--wa-text); }
+  .chat-header { background: var(--wa-header); padding: 8px 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 10; }
+  .back-arrow { font-size: 1.2rem; color: var(--wa-text-secondary); }
+  .group-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #2a5b6b, #1a4a5a); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .group-info { flex: 1; min-width: 0; }
+  .group-name { font-size: 0.95rem; font-weight: 600; color: var(--wa-text); }
+  .group-members { font-size: 0.72rem; color: var(--wa-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .header-icons { display: flex; gap: 16px; color: var(--wa-text-secondary); font-size: 1.1rem; }
+  .chat-area { flex: 1; padding: 6px 14px 20px; overflow-y: auto; display: flex; flex-direction: column; background: var(--wa-bg); }
+  .date-divider { text-align: center; margin: 14px 0 10px; }
+  .date-divider span { background: #1a2730; color: var(--wa-text-secondary); font-size: 0.7rem; padding: 5px 14px; border-radius: 8px; display: inline-block; }
+  .message { max-width: 82%; margin-bottom: 3px; display: flex; flex-direction: column; }
+  .message.incoming { align-self: flex-start; }
+  .bubble { padding: 5px 8px 2px; border-radius: 8px; position: relative; line-height: 1.45; font-size: 0.88rem; word-wrap: break-word; background: var(--wa-bubble-in); border-top-left-radius: 2px; }
+  .sender-name { font-size: 0.78rem; font-weight: 600; margin-bottom: 1px; display: block; }
+  .n-michela { color: var(--wa-name-1); }
+  .n-ahmed { color: var(--wa-name-2); }
+  .n-valentina { color: var(--wa-name-3); }
+  .n-luca { color: var(--wa-name-4); }
+  .n-fatima { color: var(--wa-name-5); }
+  .n-davide { color: var(--wa-name-6); }
+  .msg-text { color: var(--wa-text); }
+  .msg-meta { display: flex; justify-content: flex-end; align-items: center; gap: 3px; margin-top: 1px; padding-bottom: 2px; }
+  .msg-time { font-size: 0.65rem; color: var(--wa-text-time); }
+  .new-sender { margin-top: 10px; }
+  .voice-msg { display: flex; align-items: center; gap: 8px; padding: 6px 4px; }
+  .voice-play { width: 28px; height: 28px; border-radius: 50%; background: var(--wa-green); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; color: #fff; }
+  .voice-wave { flex: 1; height: 20px; display: flex; align-items: center; gap: 1.5px; }
+  .voice-bar { width: 2.5px; border-radius: 2px; background: var(--wa-text-secondary); }
+  .voice-dur { font-size: 0.68rem; color: var(--wa-text-secondary); white-space: nowrap; }
+  .link-preview { background: rgba(0,0,0,0.15); border-radius: 6px; padding: 10px; margin: 4px 0; border-left: 3px solid var(--wa-green); }
+  .link-preview .lp-domain { font-size: 0.68rem; color: var(--wa-text-secondary); text-transform: uppercase; letter-spacing: 0.03em; }
+  .link-preview .lp-title { font-size: 0.82rem; font-weight: 600; color: var(--wa-text); margin: 2px 0; line-height: 1.3; }
+  .link-preview .lp-desc { font-size: 0.72rem; color: var(--wa-text-secondary); line-height: 1.3; }
+  .msg-image { background: linear-gradient(135deg, #1a2e35, #1a2530); border-radius: 6px; padding: 30px 16px; text-align: center; color: var(--wa-text-secondary); font-size: 0.72rem; margin: 4px 0; border: 1px solid rgba(255,255,255,0.05); line-height: 1.4; }
+  .input-bar { background: var(--wa-header); padding: 6px 10px; display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .input-field { flex: 1; background: var(--wa-bubble-in); border: none; border-radius: 22px; padding: 8px 16px; color: var(--wa-text); font-size: 0.88rem; font-family: inherit; }
+  .input-icons { display: flex; gap: 10px; color: var(--wa-text-secondary); font-size: 1.1rem; }
+  .mic-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--wa-green); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .workshop-label { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 0.7rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); text-align: center; line-height: 1.4; max-width: 280px; }
+  .workshop-label strong { color: var(--wa-green); display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span class="time">21:14</span><div>📶 🔋 58%</div></div>
+  <div class="chat-header">
+    <span class="back-arrow">←</span>
+    <div class="group-avatar">📚</div>
+    <div class="group-info">
+      <div class="group-name">Genitori 3B Gramsci 📚</div>
+      <div class="group-members">Michela, Ahmed, Valentina, Luca, Fatima, Davide e altri 14</div>
+    </div>
+    <div class="header-icons"><span>📞</span><span>⋮</span></div>
+  </div>
+  <div class="chat-area">
+
+    <div class="date-divider"><span>11 marzo 2030</span></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Buonasera a tutti. Oggi la preside ha comunicato che da settembre il tempo pieno viene ridotto da 40 a 30 ore settimanali. Il Comune non riesce più a coprire i costi del servizio mensa per tutte le scuole del territorio e ha deciso di mantenere il tempo pieno solo nelle primarie</span><div class="msg-meta"><span class="msg-time">18:02</span></div></div></div>
+
+    <div class="message incoming"><div class="bubble"><span class="msg-text">In pratica i ragazzi escono alle 13:30 tutti i giorni tranne il mercoledì. Allego la circolare</span><div class="msg-meta"><span class="msg-time">18:02</span></div></div></div>
+
+    <div class="message incoming"><div class="bubble"><div class="msg-image">📄 Circolare_n.47_riduzione_orario_2030-31.pdf<br>234 KB</div><div class="msg-meta"><span class="msg-time">18:03</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:78%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Ma scherziamo???? E chi li tiene i figli dalle 13:30 alle 18? Chi non lavora??</span><div class="msg-meta"><span class="msg-time">18:10</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:80%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">In realtà è un trend nazionale. Il rapporto ISTAT 2029 dice che il 40% dei comuni ha già ridotto il tempo pieno nelle medie. È un problema strutturale di finanza locale, non una scelta della scuola</span><div class="msg-meta"><span class="msg-time">18:14</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:72%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Davide grazie del report ISTAT ma io devo risolvere un problema pratico, non scrivere una tesi</span><div class="msg-meta"><span class="msg-time">18:16</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:80%;"><div class="bubble"><span class="sender-name n-ahmed">Ahmed</span><span class="msg-text">Io lavoro fino 17. Mia moglie anche. Non abbiamo nessuno che può prendere Ibrahim</span><div class="msg-meta"><span class="msg-time">18:22</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">La preside ha detto che la cooperativa San Martino proporrebbe un doposcuola dalle 14 alle 17 nei locali della scuola. Però è a carico delle famiglie</span><div class="msg-meta"><span class="msg-time">18:28</span></div></div></div>
+
+    <div class="message incoming" style="max-width:55%;"><div class="bubble"><span class="msg-text">Costo: 180€ al mese a figlio</span><div class="msg-meta"><span class="msg-time">18:28</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:52%;"><div class="bubble"><span class="sender-name n-ahmed">Ahmed</span><span class="msg-text">180 euro è molto per noi</span><div class="msg-meta"><span class="msg-time">18:32</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:78%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Per tutti è molto! Sono 1.800€ all'anno che prima erano coperti dal servizio pubblico. Questo è un altro pezzo di welfare che scaricano sulle famiglie</span><div class="msg-meta"><span class="msg-time">18:35</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-luca">Luca</span><span class="msg-text">Scusate leggo solo ora. Per me è un disastro, io i turni non li posso cambiare. Il mercoledì che era l'unico giorno che andavo a prenderla a scuola adesso diventa il giorno in cui finisce tardi. Perfetto</span><div class="msg-meta"><span class="msg-time">20:45</span></div></div></div>
+
+    <div class="message incoming" style="max-width:78%;"><div class="bubble"><span class="msg-text">Chiara me lo chiede sempre perché non vengo ai colloqui. Non è che non voglio, è che non posso. Ma questo non lo capisce nessuno</span><div class="msg-meta"><span class="msg-time">20:46</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Luca i prossimi colloqui sono anche di sera, ho chiesto io alla prof. E per il doposcuola: sento la cooperativa se ci sono tariffe ridotte per chi ha ISEE basso. Vediamo</span><div class="msg-meta"><span class="msg-time">20:52</span></div></div></div>
+
+    <!-- GIORNO 2 -->
+    <div class="date-divider"><span>13 marzo 2030</span></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Ho parlato con la cooperativa San Martino. Per ISEE sotto 15.000€ la tariffa è 90€ al mese. Ma i posti a tariffa ridotta sono solo 8 su 25 e c'è già lista d'attesa</span><div class="msg-meta"><span class="msg-time">12:40</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">Ho controllato: il Comune ha un bando per "patti educativi di comunità" che finanzia doposcuola gestiti in rete tra scuole, associazioni e famiglie. Scade a giugno. Potremmo proporre qualcosa</span><div class="msg-meta"><span class="msg-time">13:15</span></div></div></div>
+
+    <div class="message incoming"><div class="bubble"><div class="link-preview"><div class="lp-domain">comune.venezia.it</div><div class="lp-title">Patti Educativi di Comunità 2030 — Avviso pubblico</div><div class="lp-desc">Finanziamento di reti territoriali tra istituzioni scolastiche, enti del terzo settore, famiglie e associazioni per il contrasto alla povertà educativa...</div></div><div class="msg-meta"><span class="msg-time">13:16</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:72%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Bello ma chi lo scrive? A giugno manca poco, serve qualcuno che sappia fare queste cose</span><div class="msg-meta"><span class="msg-time">13:20</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:80%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">La cooperativa San Martino potrebbe essere il soggetto capofila. Lo fanno di mestiere. Noi come comitato genitori potremmo essere partner</span><div class="msg-meta"><span class="msg-time">13:22</span></div></div></div>
+
+    <!-- Festa di primavera -->
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Altra cosa. La prof Zanetti mi ha chiesto di organizzare la festa di primavera. L'anno scorso abbiamo fatto la cena multiculturale che era venuta benissimo. Pensavo di rifarla, ogni famiglia porta un piatto del proprio paese. Che dite?</span><div class="msg-meta"><span class="msg-time">17:30</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:62%;"><div class="bubble"><span class="sender-name n-ahmed">Ahmed</span><span class="msg-text">Bella idea. Io posso portare il koshari 👍</span><div class="msg-meta"><span class="msg-time">17:38</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Sì carina ma non facciamo solo cibo dai. L'anno scorso è sembrata una sagra. Potremmo fare qualcosa di più strutturato, tipo un laboratorio, qualcosa di educativo</span><div class="msg-meta"><span class="msg-time">17:45</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-fatima">Fatima</span><div class="voice-msg"><div class="voice-play">▶</div><div class="voice-wave"><div class="voice-bar" style="height:5px"></div><div class="voice-bar" style="height:12px"></div><div class="voice-bar" style="height:8px"></div><div class="voice-bar" style="height:15px"></div><div class="voice-bar" style="height:10px"></div><div class="voice-bar" style="height:18px"></div><div class="voice-bar" style="height:14px"></div><div class="voice-bar" style="height:7px"></div><div class="voice-bar" style="height:16px"></div><div class="voice-bar" style="height:11px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:13px"></div><div class="voice-bar" style="height:9px"></div><div class="voice-bar" style="height:17px"></div><div class="voice-bar" style="height:12px"></div><div class="voice-bar" style="height:5px"></div><div class="voice-bar" style="height:10px"></div><div class="voice-bar" style="height:14px"></div><div class="voice-bar" style="height:8px"></div><div class="voice-bar" style="height:4px"></div></div><span class="voice-dur">0:47</span></div><div class="msg-meta"><span class="msg-time">18:02</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Per chi non può ascoltare il vocale: Fatima dice che a lei il cibo piace come idea perché cucinare insieme è un modo di conoscersi, e che l'anno scorso suo figlio Youssef era molto contento di far assaggiare ai compagni le cose che si mangiano a casa sua. Dice che non ha bisogno di essere "educativo" per avere valore</span><div class="msg-meta"><span class="msg-time">18:08</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:65%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Sì ok ma non volevo dire che il cibo non ha valore, volevo dire che potremmo fare di più</span><div class="msg-meta"><span class="msg-time">18:12</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:58%;"><div class="bubble"><span class="sender-name n-ahmed">Ahmed</span><span class="msg-text">Si possono fare tutte e due le cose no?</span><div class="msg-meta"><span class="msg-time">18:15</span></div></div></div>
+
+    <!-- GIORNO 3: Compleanni -->
+    <div class="date-divider"><span>15 marzo 2030</span></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-luca">Luca</span><span class="msg-text">Ciao scusate devo chiedere una cosa un po' delicata. Chiara ieri è tornata a casa e mi ha detto che Matteo festeggia il compleanno sabato e ha invitato tutta la classe tranne lei e tranne Youssef e Ling. Non so come gestirla</span><div class="msg-meta"><span class="msg-time">19:20</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:65%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Ne sei sicuro? "Tutta la classe tranne tre" è pesante</span><div class="msg-meta"><span class="msg-time">19:24</span></div></div></div>
+
+    <div class="message incoming" style="max-width:78%;"><div class="bubble"><span class="sender-name n-luca">Luca</span><span class="msg-text">Chiara dice che Matteo le ha detto "il mio papà ha detto che siamo già troppi". Ma poi lei ha visto che gli inviti li hanno avuti tutti gli altri</span><div class="msg-meta"><span class="msg-time">19:26</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Guarda Luca io non so se è il caso di portare queste cose nel gruppo. I compleanni li organizza chi vuole come vuole, non è compito nostro decidere chi invitare</span><div class="msg-meta"><span class="msg-time">19:30</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:80%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">Valentina un conto è non invitare 2-3 amici stretti, un conto è escludere esattamente gli unici tre bambini che... come dire</span><div class="msg-meta"><span class="msg-time">19:34</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:55%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Che intendi Davide? Dillo chiaramente</span><div class="msg-meta"><span class="msg-time">19:36</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Ok fermi tutti. Non litighiamo qui sopra. Il punto è che tre ragazzini si sentono esclusi e questo è un problema della classe, non di un compleanno. Io ne parlo con la prof Zanetti lunedì</span><div class="msg-meta"><span class="msg-time">19:40</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-ahmed">Ahmed</span><span class="msg-text">Io non voglio fare polemiche. Youssef non ha detto niente a casa, forse non gli importa. Ma forse non dice niente perchè è abituato</span><div class="msg-meta"><span class="msg-time">19:55</span></div></div></div>
+
+    <div class="message incoming" style="max-width:72%;"><div class="bubble"><span class="msg-text">Scusate devo andare a lavorare, turno di sera. Buonanotte</span><div class="msg-meta"><span class="msg-time">19:56</span></div></div></div>
+
+    <!-- GIORNO 4 -->
+    <div class="date-divider"><span>18 marzo 2030</span></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Aggiornamento. Ho parlato con la prof Zanetti. Sulla questione del compleanno farà un lavoro in classe sul tema dell'inclusione, senza fare nomi. Però mi ha detto una cosa che mi ha colpito: non è un caso isolato, succede spesso, e la scuola non ha strumenti per intervenire perché "succede fuori"</span><div class="msg-meta"><span class="msg-time">14:10</span></div></div></div>
+
+    <div class="message incoming" style="max-width:82%;"><div class="bubble"><span class="msg-text">Le ho chiesto della mediatrice culturale. Viene il giovedì mattina, 4 ore, ed è condivisa con la Galilei, la Colombo, la Einaudi e la Foscolo. In pratica per la Gramsci è mezza giornata alla settimana per tutta la scuola</span><div class="msg-meta"><span class="msg-time">14:12</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:75%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">Una mediatrice per cinque scuole. Sono circa 3.000 studenti, di cui quasi il 30% con background migratorio. I numeri non tornano</span><div class="msg-meta"><span class="msg-time">14:18</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Altra cosa. Ho chiesto dello sportello psicologico per i ragazzi. Esiste, è finanziato dalla ASL. Apre il MARTEDÌ dalle 10 alle 13. Tre ore. Per tutta la scuola. E i ragazzi possono andarci solo se un genitore firma l'autorizzazione. Fatima mi ha detto che lei non l'ha mai firmata perché non ha capito bene di cosa si trattava, il foglio era solo in italiano</span><div class="msg-meta"><span class="msg-time">14:15</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-fatima">Fatima</span><div class="voice-msg"><div class="voice-play">▶</div><div class="voice-wave"><div class="voice-bar" style="height:8px"></div><div class="voice-bar" style="height:14px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:11px"></div><div class="voice-bar" style="height:16px"></div><div class="voice-bar" style="height:9px"></div><div class="voice-bar" style="height:13px"></div><div class="voice-bar" style="height:5px"></div><div class="voice-bar" style="height:17px"></div><div class="voice-bar" style="height:12px"></div><div class="voice-bar" style="height:7px"></div><div class="voice-bar" style="height:15px"></div><div class="voice-bar" style="height:10px"></div><div class="voice-bar" style="height:4px"></div><div class="voice-bar" style="height:9px"></div><div class="voice-bar" style="height:13px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:11px"></div><div class="voice-bar" style="height:8px"></div><div class="voice-bar" style="height:3px"></div></div><span class="voice-dur">1:12</span></div><div class="msg-meta"><span class="msg-time">14:30</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Trascrivo il vocale di Fatima: dice che non è solo il foglio in italiano. Dice che nel suo paese andare dallo psicologo è una vergogna e che tanti genitori come lei non firmano per quello, non perché non gli importa dei figli. Dice che servirebbe qualcuno che spiega alle famiglie straniere cos'è lo sportello e perché non è una cosa brutta. E dice che questo qualcuno non può essere un foglio di carta</span><div class="msg-meta"><span class="msg-time">14:38</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Ha ragione Fatima. E vale anche per le famiglie italiane eh. Io lo sportello psicologico l'ho scoperto per caso, non ce l'ha detto nessuno. Mia figlia ci è andata e le ha fatto bene ma se non avessi chiesto io non l'avrei mai saputo</span><div class="msg-meta"><span class="msg-time">14:45</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:72%;"><div class="bubble"><span class="sender-name n-luca">Luca</span><span class="msg-text">Io nemmeno sapevo che esistesse. E avrei voluto saperlo prima</span><div class="msg-meta"><span class="msg-time">16:30</span></div></div></div>
+
+    <!-- GIORNO 5 -->
+    <div class="date-divider"><span>20 marzo 2030</span></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Dunque, riepilogo della settimana. Ho parlato con la preside, la cooperativa, la prof. Provo a mettere in fila le cose:</span><div class="msg-meta"><span class="msg-time">09:00</span></div></div></div>
+
+    <div class="message incoming" style="max-width:82%;"><div class="bubble"><span class="msg-text">1) Tempo pieno: il taglio è confermato. La cooperativa San Martino attiva il doposcuola a settembre ma i posti agevolati sono pochi. Davide ha trovato il bando per i patti educativi, potremmo provare a costruire un progetto con la cooperativa e la scuola</span><div class="msg-meta"><span class="msg-time">09:01</span></div></div></div>
+
+    <div class="message incoming" style="max-width:82%;"><div class="bubble"><span class="msg-text">2) Mediatrice culturale: una per 5 scuole è insufficiente. La preside dice che se le famiglie chiedono formalmente si può provare a ottenere più ore dal Comune. Servirebbe una lettera del comitato genitori</span><div class="msg-meta"><span class="msg-time">09:02</span></div></div></div>
+
+    <div class="message incoming" style="max-width:82%;"><div class="bubble"><span class="msg-text">3) Sportello psicologico: 3 ore a settimana, materiali solo in italiano, poca comunicazione alle famiglie. Fatima ha ragione: serve un ponte tra il servizio e le famiglie che non sanno cos'è o ne hanno paura</span><div class="msg-meta"><span class="msg-time">09:03</span></div></div></div>
+
+    <div class="message incoming" style="max-width:82%;"><div class="bubble"><span class="msg-text">4) Festa di primavera: facciamo la cena multiculturale E qualcosa in più. Idee benvenute</span><div class="msg-meta"><span class="msg-time">09:03</span></div></div></div>
+
+    <div class="message incoming" style="max-width:82%;"><div class="bubble"><span class="msg-text">Il punto vero è che nessuno di noi da solo può fare qualcosa su queste cose. Ma forse mettendo in rete quello che c'è — la scuola, la cooperativa, la ASL, il Comune, noi genitori — qualcosa si riesce a combinare. Anche se non risolve tutto</span><div class="msg-meta"><span class="msg-time">09:05</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:70%;"><div class="bubble"><span class="sender-name n-ahmed">Ahmed</span><span class="msg-text">Michela io non so come fai a fare tutte queste cose. Grazie veramente</span><div class="msg-meta"><span class="msg-time">09:20</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Veramente non lo so neanche io 😅 Faccio la rappresentante di classe e sembro l'assistente sociale, la mediatrice, la segretaria e la psicologa. A titolo gratuito ovviamente</span><div class="msg-meta"><span class="msg-time">09:22</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:80%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Per la festa: e se chiedessimo all'associazione di volontariato della parrocchia di darci una mano? Hanno i tavoli, le sedie, e la Rita che fa animazione per i bambini</span><div class="msg-meta"><span class="msg-time">09:30</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">Anche la biblioteca civica di Via Miranese fa laboratori per ragazzi. Potremmo chiedere se fanno qualcosa nella nostra scuola. Per il bando del patto educativo sarebbero un partner perfetto</span><div class="msg-meta"><span class="msg-time">09:35</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-fatima">Fatima</span><div class="voice-msg"><div class="voice-play">▶</div><div class="voice-wave"><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:10px"></div><div class="voice-bar" style="height:14px"></div><div class="voice-bar" style="height:8px"></div><div class="voice-bar" style="height:12px"></div><div class="voice-bar" style="height:5px"></div><div class="voice-bar" style="height:16px"></div><div class="voice-bar" style="height:9px"></div><div class="voice-bar" style="height:7px"></div><div class="voice-bar" style="height:13px"></div><div class="voice-bar" style="height:4px"></div><div class="voice-bar" style="height:11px"></div></div><span class="voice-dur">0:28</span></div><div class="msg-meta"><span class="msg-time">09:50</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Fatima dice che alla moschea di Via Piave c'è un gruppo di mamme che si aiutano tra loro con i figli. Dice che se la scuola le invita sarebbero contente di partecipare alla festa e anche al doposcuola come volontarie. Però nessuno le ha mai invitate</span><div class="msg-meta"><span class="msg-time">09:55</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-luca">Luca</span><span class="msg-text">Nessuno le ha mai invitate. Questa frase dice tutto</span><div class="msg-meta"><span class="msg-time">12:10</span></div></div></div>
+
+    <div style="height: 60px;"></div>
+  </div>
+
+  <div class="input-bar">
+    <div class="input-icons"><span>😊</span></div>
+    <input class="input-field" type="text" placeholder="Messaggio" disabled>
+    <div class="input-icons"><span>📎</span><span>📷</span></div>
+    <div class="mic-btn">🎤</div>
+  </div>
+</div>
+
+<div class="workshop-label">
+  <strong>⚡ Artefatto dal futuro</strong>
+  Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+</div>
+</body>
+</html>

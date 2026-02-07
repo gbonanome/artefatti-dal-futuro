@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Service — Ca' Foscari 2030</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cf-red: #be1622;
+    --cf-dark: #8b0d15;
+    --cf-burgundy: #6a0f18;
+    --bg-warm: #f7f5f2;
+    --bg-card: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #5a5a5a;
+    --text-light: #8a8a8a;
+    --border: #e8e4df;
+    --accent-blue: #1a6fb5;
+    --accent-green: #2a8f5c;
+    --tag-bg: #f0ece7;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', -apple-system, sans-serif;
+    background: var(--bg-warm);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* TOP BAR */
+  .top-bar {
+    background: var(--cf-burgundy);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.75rem;
+    padding: 6px 0;
+    letter-spacing: 0.02em;
+  }
+  .top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-bar a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    margin-left: 16px;
+    transition: color 0.2s;
+  }
+  .top-bar a:hover { color: #fff; }
+  .top-bar .lang-switch {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .top-bar .lang-switch span.active { color: #fff; font-weight: 600; }
+
+  /* HEADER */
+  header {
+    background: var(--cf-red);
+    padding: 0;
+    box-shadow: 0 2px 12px rgba(139,13,21,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+  }
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--cf-red);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .logo-text {
+    color: #fff;
+  }
+  .logo-text .university {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    font-weight: 300;
+  }
+  .logo-text .service {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  .header-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .header-nav a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .header-nav a:hover { color: #fff; }
+  .header-nav .btn-profile {
+    background: rgba(255,255,255,0.15);
+    padding: 7px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .header-nav .btn-profile:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* NOTIFICATION BANNER */
+  .notification-banner {
+    background: linear-gradient(135deg, #1a3a5c 0%, #1a5276 100%);
+    color: #fff;
+    padding: 14px 0;
+    font-size: 0.88rem;
+  }
+  .notification-banner .container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .notif-icon {
+    background: rgba(255,255,255,0.15);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+  .notif-text strong { font-weight: 600; }
+  .notif-text a {
+    color: #7ec8e3;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 16px 0 0;
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  .breadcrumb a {
+    color: var(--text-light);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover { color: var(--cf-red); }
+  .breadcrumb span { margin: 0 6px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .page-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  .page-header .results-meta {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .results-count {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  .results-count strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .filter-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-tag:hover { border-color: var(--cf-red); color: var(--cf-red); }
+  .filter-tag.active {
+    background: var(--cf-red);
+    color: #fff;
+    border-color: var(--cf-red);
+  }
+
+  /* AI MATCH BANNER */
+  .ai-match-banner {
+    background: linear-gradient(135deg, #f8f4ff 0%, #f0f4ff 100%);
+    border: 1px solid #e0d8f0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.88rem;
+  }
+  .ai-badge {
+    background: linear-gradient(135deg, #6c5ce7, #4a69bd);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .ai-match-text { color: var(--text-secondary); }
+  .ai-match-text strong { color: var(--text-primary); }
+
+  /* JOB CARDS */
+  .job-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .job-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: #d0ccc7;
+  }
+
+  .job-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .job-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .job-company {
+    font-size: 0.95rem;
+    color: var(--cf-red);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .job-meta {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .job-meta-item {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .job-meta-item .icon {
+    font-size: 0.9rem;
+    opacity: 0.6;
+  }
+
+  .match-score {
+    background: #f0f9f0;
+    border: 1px solid #c8e6c9;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .match-score .score {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-green);
+  }
+  .match-score .label {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .job-description {
+    margin-top: 14px;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .job-requirements {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f0ece7;
+  }
+  .job-requirements h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .req-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .req-tag {
+    background: var(--tag-bg);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+  .req-tag.highlight {
+    background: #fff3e0;
+    color: #e65100;
+    font-weight: 600;
+  }
+
+  .job-footer {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid #f0ece7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .job-salary {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .job-salary .period {
+    font-weight: 400;
+    color: var(--text-light);
+    font-size: 0.82rem;
+  }
+  .job-contract {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    background: #f5f5f5;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .job-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .btn-apply {
+    background: var(--cf-red);
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+  }
+  .btn-apply:hover { background: var(--cf-dark); }
+  .btn-save {
+    background: none;
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-save:hover { border-color: var(--cf-red); color: var(--cf-red); }
+
+  /* NEW badge */
+  .badge-new {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--cf-red);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .badge-featured {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cf-red), #e85d68);
+    border-radius: 10px 10px 0 0;
+  }
+
+  /* PROFILE ALERT */
+  .profile-alert {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-top: 8px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.88rem;
+  }
+  .alert-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+  .alert-text { color: var(--text-secondary); }
+  .alert-text strong { color: #e65100; }
+  .alert-text a {
+    color: var(--cf-red);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* SIDEBAR INFO */
+  .page-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .sidebar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 16px;
+  }
+  .sidebar-card h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+  .sidebar-card p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .sidebar-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f2ee;
+    font-size: 0.82rem;
+  }
+  .sidebar-stat:last-child { border-bottom: none; }
+  .sidebar-stat .label { color: var(--text-secondary); }
+  .sidebar-stat .value { font-weight: 600; color: var(--text-primary); }
+  .sidebar-stat .value.red { color: var(--cf-red); }
+
+  .cert-reminder {
+    background: linear-gradient(135deg, #fce4ec, #f8e8ee);
+    border: 1px solid #f8bbd0;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 0.8rem;
+    color: #880e4f;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+  .cert-reminder strong { display: block; margin-bottom: 4px; }
+  .cert-link {
+    display: inline-block;
+    margin-top: 6px;
+    color: var(--cf-red);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 48px;
+    background: #2c2320;
+    color: rgba(255,255,255,0.6);
+    padding: 32px 0;
+    font-size: 0.78rem;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    margin-right: 16px;
+  }
+  footer a:hover { color: #fff; }
+  .footer-legal { font-size: 0.72rem; opacity: 0.5; margin-top: 4px; }
+
+  /* WORKSHOP LABEL */
+  .workshop-label {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    max-width: 220px;
+    line-height: 1.4;
+  }
+  .workshop-label strong {
+    color: var(--cf-red);
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    .page-layout { grid-template-columns: 1fr; }
+    .header-nav { display: none; }
+    .page-header h1 { font-size: 1.5rem; }
+    .job-card { padding: 20px; }
+    .job-card-header { flex-direction: column; }
+    .top-bar .container { flex-direction: column; gap: 4px; }
+    .notification-banner .container { flex-direction: column; text-align: center; }
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .job-card {
+    animation: fadeInUp 0.4s ease both;
+  }
+  .job-card:nth-child(1) { animation-delay: 0.05s; }
+  .job-card:nth-child(2) { animation-delay: 0.12s; }
+  .job-card:nth-child(3) { animation-delay: 0.19s; }
+</style>
+</head>
+<body>
+
+<!-- Top utility bar -->
+<div class="top-bar">
+  <div class="container">
+    <div>unive.it · Career Service · Studenti · Aziende partner</div>
+    <div class="lang-switch">
+      <span class="active">IT</span> · <a href="#">EN</a> · <a href="#">中文</a>
+      <span style="margin-left: 12px; opacity: 0.5;">|</span>
+      <a href="#" style="margin-left: 12px;">Area personale</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-mark">CF</div>
+        <div class="logo-text">
+          <div class="university">Università Ca' Foscari Venezia</div>
+          <div class="service">Career Service</div>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <a href="#">Offerte</a>
+        <a href="#">Skill Lab</a>
+        <a href="#">Certificazioni AI</a>
+        <a href="#">Mentoring</a>
+        <a href="#">Transizioni</a>
+        <a href="#" class="btn-profile">👤 Il mio profilo</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Notification banner -->
+<div class="notification-banner">
+  <div class="container">
+    <div class="notif-icon">🎓</div>
+    <div class="notif-text">
+      <strong>Nuova normativa EU:</strong> dal 1° gennaio 2030 le certificazioni AI Framework sono obbligatorie per accedere alle posizioni in aziende con più di 50 dipendenti. 
+      <a href="#">Scopri i corsi gratuiti Ca' Foscari →</a>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="#">Home</a> <span>›</span> <a href="#">Offerte di lavoro</a> <span>›</span> Risultati ricerca
+  </div>
+
+  <!-- Page header -->
+  <div class="page-header">
+    <h1>Offerte di lavoro</h1>
+    <p class="subtitle">Posizioni compatibili con il tuo profilo accademico e le tue certificazioni</p>
+    <div class="results-meta">
+      <span class="results-count">Trovate <strong>847</strong> posizioni · Filtro attivo: <strong>Veneto + Remote</strong></span>
+      <div class="filter-tags">
+        <span class="filter-tag active">Tutti i settori</span>
+        <span class="filter-tag">Team ibridi umano-AI</span>
+        <span class="filter-tag">Transizione ecologica</span>
+        <span class="filter-tag">Pubblica amministrazione</span>
+        <span class="filter-tag">Media & Informazione</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile alert -->
+  <div class="profile-alert">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-text">
+      <strong>Il tuo profilo è incompleto.</strong> 
+      Non hai ancora caricato la <strong>Certificazione Prompt Design (livello B2)</strong>. 
+      Il 73% delle aziende partner filtra automaticamente i CV senza certificazioni digitali verificate. 
+      <a href="#">Aggiorna il profilo →</a>
+    </div>
+  </div>
+
+  <!-- AI match banner -->
+  <div class="ai-match-banner">
+    <span class="ai-badge">AI Match</span>
+    <span class="ai-match-text">
+      Il sistema ha analizzato il tuo profilo, le tue competenze e i tuoi obiettivi. 
+      Le offerte sono ordinate per <strong>compatibilità predittiva</strong>. 
+      <em style="opacity: 0.7;">Powered by Ca' Foscari Placement AI v3.2</em>
+    </span>
+  </div>
+
+  <div class="page-layout">
+
+    <!-- Main content -->
+    <div class="jobs-list">
+
+      <!-- JOB 1 -->
+      <div class="job-card">
+        <div class="badge-featured"></div>
+        <span class="badge-new">Nuova</span>
+        <div class="job-card-header">
+          <div>
+            <div class="job-title">Junior AI Relationship Manager</div>
+            <div class="job-company">Umana S.r.l. — Mestre (VE)</div>
+            <div class="job-meta">
+              <span class="job-meta-item"><span class="icon">📍</span> Mestre · ibrido (3gg sede / 2gg remoto)</span>
+              <span class="job-meta-item"><span class="icon">📅</span> Pubblicata il 12 marzo 2030</span>
+            </div>
+          </div>
+          <div class="match-score">
+            <div class="score">87%</div>
+            <div class="label">Match</div>
+          </div>
+        </div>
+
+        <div class="job-description">
+          Cerchiamo una figura che faccia da ponte tra i team umani e i sistemi decisionali automatizzati dell'azienda. 
+          Il/la candidato/a ideale sa tradurre le raccomandazioni algoritmiche in linguaggio comprensibile, 
+          gestire le obiezioni emotive dei colleghi e mediare i conflitti tra indicazioni AI e intuito professionale.
+          Sarai il punto di riferimento per 4 team operativi che lavorano quotidianamente con sistemi di supporto decisionale.
+        </div>
+
+        <div class="job-requirements">
+          <h4>Competenze richieste</h4>
+          <div class="req-tags">
+            <span class="req-tag">Laurea discipline umanistiche o sociali</span>
+            <span class="req-tag highlight">Certificazione Prompt Design ≥ B2</span>
+            <span class="req-tag">Esperienza 6+ mesi team ibridi umano-AI</span>
+            <span class="req-tag">AI Act 2.0 — conoscenza base</span>
+            <span class="req-tag">Mediazione e facilitazione</span>
+          </div>
+        </div>
+
+        <div class="job-footer">
+          <div>
+            <div class="job-salary">€24.000 – €28.000 <span class="period">RAL</span></div>
+            <span class="job-contract">Collaborazione a progetto · rinnovabile ogni 8 mesi</span>
+          </div>
+          <div class="job-actions">
+            <button class="btn-save">☆ Salva</button>
+            <button class="btn-apply">Candidati</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOB 2 -->
+      <div class="job-card">
+        <div class="job-card-header">
+          <div>
+            <div class="job-title">Operatore di Reskilling Territoriale</div>
+            <div class="job-company">Comune di Venezia — Centro di Transizione Professionale</div>
+            <div class="job-meta">
+              <span class="job-meta-item"><span class="icon">📍</span> Marghera, Chioggia, Jesolo (sedi decentrate)</span>
+              <span class="job-meta-item"><span class="icon">📅</span> Pubblicata l'8 marzo 2030</span>
+            </div>
+          </div>
+          <div class="match-score">
+            <div class="score">72%</div>
+            <div class="label">Match</div>
+          </div>
+        </div>
+
+        <div class="job-description">
+          I Centri di Transizione Professionale (CTP) sono stati istituiti dal Comune di Venezia nel 2029, 
+          dopo la chiusura dei call center automatizzati della zona industriale di Marghera. 
+          Cerchiamo operatori per l'accompagnamento di ex-lavoratori over 45 nella riqualificazione verso mansioni non automatizzabili. 
+          Il ruolo prevede colloqui individuali, progettazione di percorsi formativi personalizzati e coordinamento con le imprese del territorio.
+        </div>
+
+        <div class="job-requirements">
+          <h4>Competenze richieste</h4>
+          <div class="req-tags">
+            <span class="req-tag">Laurea magistrale</span>
+            <span class="req-tag">Master in Transizioni Professionali o equivalente</span>
+            <span class="req-tag">Esperienza con utenza fragile</span>
+            <span class="req-tag">Bilancio di competenze</span>
+            <span class="req-tag">Disponibilità sedi decentrate</span>
+          </div>
+        </div>
+
+        <div class="job-footer">
+          <div>
+            <div class="job-salary">€22.000 <span class="period">RAL</span></div>
+            <span class="job-contract">Tempo determinato 12 mesi · Fondi PNRR-3</span>
+          </div>
+          <div class="job-actions">
+            <button class="btn-save">☆ Salva</button>
+            <button class="btn-apply">Candidati</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOB 3 -->
+      <div class="job-card">
+        <span class="badge-new">Nuova</span>
+        <div class="job-card-header">
+          <div>
+            <div class="job-title">Content Authenticity Analyst</div>
+            <div class="job-company">ANSA — Redazione Nazionale</div>
+            <div class="job-meta">
+              <span class="job-meta-item"><span class="icon">📍</span> Roma · full remote disponibile</span>
+              <span class="job-meta-item"><span class="icon">📅</span> Pubblicata il 14 marzo 2030</span>
+            </div>
+          </div>
+          <div class="match-score">
+            <div class="score">91%</div>
+            <div class="label">Match</div>
+          </div>
+        </div>
+
+        <div class="job-description">
+          La redazione ANSA cerca analisti per il nuovo desk di verifica dei contenuti sintetici. 
+          Il ruolo prevede l'uso quotidiano di strumenti forensi per distinguere contenuti generati da AI da contenuti originali, 
+          e la classificazione secondo il Protocollo Europeo di Trasparenza Informativa (PETI). 
+          Lavorerai in un team di 12 analisti che processano mediamente 2.000 contenuti al giorno tra testi, immagini e video.
+        </div>
+
+        <div class="job-requirements">
+          <h4>Competenze richieste</h4>
+          <div class="req-tags">
+            <span class="req-tag">Laurea in Comunicazione, Informatica o Giornalismo</span>
+            <span class="req-tag highlight">Certificazione PETI</span>
+            <span class="req-tag">2+ tool AI forensics</span>
+            <span class="req-tag">Lavoro sotto deadline</span>
+            <span class="req-tag">Inglese C1</span>
+          </div>
+        </div>
+
+        <div class="job-footer">
+          <div>
+            <div class="job-salary">€30.000 <span class="period">RAL</span></div>
+            <span class="job-contract">Apprendistato 24 mesi</span>
+          </div>
+          <div class="job-actions">
+            <button class="btn-save">☆ Salva</button>
+            <button class="btn-apply">Candidati</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sidebar -->
+    <aside>
+      <div class="sidebar-card">
+        <h3>📊 Mercato del lavoro Veneto — marzo 2030</h3>
+        <div class="sidebar-stat">
+          <span class="label">Tasso disoccupazione giovanile</span>
+          <span class="value red">31.2%</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="label">Posizioni AI-related (Veneto)</span>
+          <span class="value">+340% vs 2025</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="label">RAL media under 30</span>
+          <span class="value">€23.400</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="label">Contratti stabili under 30</span>
+          <span class="value red">18%</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="label">Ruoli chiusi per automazione (2028-30)</span>
+          <span class="value red">42.000</span>
+        </div>
+        <p style="font-size: 0.72rem; color: var(--text-light); margin-top: 8px;">
+          Fonte: Veneto Lavoro · ISTAT · Osservatorio AI Italia · Aggiornamento: 1 marzo 2030
+        </p>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>🎯 Il tuo profilo</h3>
+        <div class="sidebar-stat">
+          <span class="label">Completamento</span>
+          <span class="value red">64%</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="label">Certificazioni verificate</span>
+          <span class="value">1 di 3 richieste</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="label">Candidature inviate (mese)</span>
+          <span class="value">12</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="label">Risposte ricevute</span>
+          <span class="value red">0</span>
+        </div>
+
+        <div class="cert-reminder">
+          <strong>⏰ Certificazione AI obbligatoria dal 01/01/2030</strong>
+          Il tuo profilo è attualmente escluso dal 73% delle ricerche aziendali. 
+          Completa il percorso gratuito Ca' Foscari Digital Skills.
+          <br>
+          <span class="cert-link">Inizia il percorso →</span>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>🔄 Centri di Transizione Professionale</h3>
+        <p>
+          I CTP del Comune di Venezia offrono percorsi gratuiti di riqualificazione 
+          per lavoratori impattati dall'automazione. 
+          Oltre 6.200 persone accompagnate nel 2029.
+        </p>
+        <p style="font-size: 0.78rem;">
+          <a href="#" style="color: var(--cf-red); font-weight: 600; text-decoration: underline;">
+            Scopri i servizi CTP →
+          </a>
+        </p>
+      </div>
+    </aside>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div>
+          <a href="#">Privacy</a>
+          <a href="#">Cookie</a>
+          <a href="#">Accessibilità</a>
+          <a href="#">Regolamento AI Act 2.0</a>
+          <a href="#">Trasparenza algoritmica</a>
+        </div>
+        <div class="footer-legal">
+          © 2030 Università Ca' Foscari Venezia · Dorsoduro 3246, 30123 Venezia · P.IVA 00816350276
+          <br>
+          Il sistema di matching è conforme al Regolamento EU 2028/1689 sull'intelligenza artificiale. 
+          <a href="#" style="text-decoration: underline;">Documentazione algoritmica</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Workshop provenance label -->
+<div class="workshop-label">
+  <strong>⚡ Artefatto dal futuro</strong>
+  Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+</div>
+
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca Civica "Ada Ferrante" — Bacheca Febbraio 2030</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f2f0ec;
+    font-family: 'DM Sans', sans-serif;
+    color: #2d2d2d;
+    line-height: 1.5;
+  }
+
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* HEADER ISTITUZIONALE */
+  .site-header {
+    background: #1a3a4a;
+    color: white;
+    padding: 14px 20px;
+    margin: 0 -20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .site-header .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .site-header .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: #e8a84c;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+  }
+
+  .site-header .logo-text {
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+
+  .site-header .logo-text span {
+    display: block;
+    font-weight: 300;
+    font-size: 0.85em;
+    opacity: 0.8;
+  }
+
+  .site-header nav {
+    display: flex;
+    gap: 18px;
+    font-size: 0.78em;
+    font-weight: 300;
+  }
+
+  .site-header nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+  }
+
+  /* BANNER */
+  .alert-banner {
+    background: #e8a84c;
+    color: #1a3a4a;
+    padding: 10px 20px;
+    margin: 0 -20px 25px;
+    font-size: 0.82em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .alert-banner .tag {
+    background: #1a3a4a;
+    color: #e8a84c;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  /* PAGE TITLE */
+  .page-title {
+    margin: 30px 0 25px;
+  }
+
+  .page-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.7em;
+    color: #1a3a4a;
+    margin-bottom: 4px;
+  }
+
+  .page-title .breadcrumb {
+    font-size: 0.75em;
+    color: #8a8a7a;
+    font-weight: 300;
+  }
+
+  /* SEZIONE SERVIZI ATTIVI */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .service-card {
+    background: white;
+    border-radius: 6px;
+    padding: 16px;
+    border-left: 3px solid #e8a84c;
+  }
+
+  .service-card h3 {
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1a3a4a;
+  }
+
+  .service-card p {
+    font-size: 0.75em;
+    color: #5a5a5a;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .service-card .schedule {
+    font-size: 0.7em;
+    color: #8a8a7a;
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .service-card.highlight {
+    border-left-color: #c44a3f;
+  }
+
+  .service-card.new {
+    border-left-color: #4a8a6a;
+    position: relative;
+  }
+
+  .service-card.new::after {
+    content: 'NUOVO';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #4a8a6a;
+    color: white;
+    font-size: 0.55em;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+  }
+
+  /* CALENDARIO EVENTI */
+  .events-section {
+    margin-bottom: 30px;
+  }
+
+  .section-header {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.15em;
+    color: #1a3a4a;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e8a84c;
+  }
+
+  .event-item {
+    background: white;
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .event-date {
+    background: #1a3a4a;
+    color: white;
+    border-radius: 4px;
+    padding: 8px 10px;
+    text-align: center;
+    min-width: 54px;
+    flex-shrink: 0;
+  }
+
+  .event-date .day {
+    font-size: 1.3em;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .event-date .month {
+    font-size: 0.65em;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .event-date .time {
+    font-size: 0.65em;
+    font-weight: 400;
+    margin-top: 2px;
+    opacity: 0.8;
+  }
+
+  .event-content h4 {
+    font-size: 0.92em;
+    font-weight: 600;
+    color: #2d2d2d;
+    margin-bottom: 3px;
+  }
+
+  .event-content .event-type {
+    display: inline-block;
+    font-size: 0.62em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-bottom: 5px;
+  }
+
+  .event-type.workshop { background: #e8e4f8; color: #5a4a8a; }
+  .event-type.community { background: #e4f0e8; color: #3a6a4a; }
+  .event-type.talk { background: #f8e8e4; color: #8a4a3a; }
+  .event-type.corso { background: #e4e8f0; color: #3a4a8a; }
+  .event-type.bambini { background: #f8f0e4; color: #8a6a3a; }
+
+  .event-content p {
+    font-size: 0.78em;
+    color: #5a5a5a;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .event-content .event-meta {
+    font-size: 0.7em;
+    color: #8a8a7a;
+    margin-top: 5px;
+  }
+
+  .event-content .event-meta .lang {
+    display: inline-block;
+    background: #f0ece4;
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-size: 0.9em;
+    margin-left: 4px;
+  }
+
+  .event-content .full {
+    display: inline-block;
+    background: #c44a3f;
+    color: white;
+    font-size: 0.65em;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+
+  .event-content .waiting {
+    display: inline-block;
+    background: #e8a84c;
+    color: white;
+    font-size: 0.65em;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-left: 4px;
+  }
+
+  /* AVVISO RICERCA VOLONTARI */
+  .volunteer-banner {
+    background: #fdf6ea;
+    border: 1px dashed #d4b87a;
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin-bottom: 25px;
+  }
+
+  .volunteer-banner h3 {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #8a6a2a;
+    margin-bottom: 6px;
+  }
+
+  .volunteer-banner p {
+    font-size: 0.78em;
+    color: #6a5a3a;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .volunteer-banner .roles {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .volunteer-banner .role-tag {
+    background: white;
+    border: 1px solid #d4b87a;
+    border-radius: 3px;
+    padding: 3px 10px;
+    font-size: 0.72em;
+    font-weight: 500;
+    color: #6a5a3a;
+  }
+
+  /* NUMERI */
+  .stats-bar {
+    background: #1a3a4a;
+    color: white;
+    border-radius: 6px;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .stat-item .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #e8a84c;
+  }
+
+  .stat-item .stat-label {
+    font-size: 0.65em;
+    font-weight: 300;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+
+  /* FOOTER */
+  .site-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #d4d0c8;
+    font-size: 0.7em;
+    color: #8a8a7a;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .site-footer strong {
+    font-weight: 500;
+    color: #5a5a5a;
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .site-header nav { display: none; }
+    .stats-bar { flex-wrap: wrap; gap: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-container">
+
+  <div class="site-header">
+    <div class="logo-area">
+      <div class="logo-icon">📚</div>
+      <div class="logo-text">
+        Biblioteca Civica "Ada Ferrante"
+        <span>Comune di Bergamo · Sistema Bibliotecario Urbano</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Catalogo</a>
+      <a href="#">Servizi</a>
+      <a href="#">Eventi</a>
+      <a href="#">Spazi</a>
+      <a href="#">Contatti</a>
+    </nav>
+  </div>
+
+  <div class="alert-banner">
+    <span class="tag">Avviso</span>
+    Martedì 11 febbraio la Sala Lettura Adulti chiude alle 14:00 per intervento di manutenzione al sistema di climatizzazione. Il Maker Space e la Sala Ragazzi restano aperti regolarmente.
+  </div>
+
+  <div class="page-title">
+    <div class="breadcrumb">Home → Eventi e attività → Bacheca febbraio 2030</div>
+    <h1>Bacheca della comunità — Febbraio 2030</h1>
+  </div>
+
+  <!-- SERVIZI PERMANENTI -->
+  <div class="section-header">Servizi attivi</div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <h3>🔧 Repair Café + Maker Space</h3>
+      <p>Porta oggetti da riparare: elettronica, piccoli elettrodomestici, vestiti. I nostri volontari ti aiutano a ripararli invece di buttarli. Stampante 3D e laser cutter disponibili su prenotazione.</p>
+      <div class="schedule">Ogni sabato 10:00–13:00 · Piano -1 · Ingresso libero</div>
+    </div>
+
+    <div class="service-card highlight">
+      <h3>📱 Sportello Digitale per Over 65</h3>
+      <p>Assistenza individuale per: SPID, Fascicolo Sanitario, app di telemedicina, videochiamate con familiari, riconoscimento truffe online. <strong>Nessuna prenotazione necessaria.</strong></p>
+      <div class="schedule">Lun–Ven 9:30–12:30 · Sala C · Con mediatori linguistici lun e mer</div>
+    </div>
+
+    <div class="service-card new">
+      <h3>🌱 Biblioteca dei Semi</h3>
+      <p>Prendi semi, pianta, riporta i semi a fine stagione. Catalogo: oltre 180 varietà orticole locali e antiche. In collaborazione con Orto Botanico di Bergamo e rete Civiltà Contadina.</p>
+      <div class="schedule">Disponibile in sala ingresso · Guida alla semina disponibile anche in arabo e urdu</div>
+    </div>
+
+    <div class="service-card new">
+      <h3>🧠 Angolo AI — Prova e Chiedi</h3>
+      <p>Postazione assistita per provare strumenti di intelligenza artificiale: chatbot, generazione immagini, traduzione automatica. Un bibliotecario ti accompagna e ti aiuta a capire cosa è affidabile e cosa no.</p>
+      <div class="schedule">Mar e Gio 15:00–18:00 · Sala Digitale · Max 4 persone per turno</div>
+    </div>
+  </div>
+
+  <!-- NUMERI -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number">47</div>
+      <div class="stat-label">lingue parlate<br>dai nostri utenti</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">12.400</div>
+      <div class="stat-label">tessere attive<br>nel 2029</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">38%</div>
+      <div class="stat-label">utenti over 65<br>(+14% dal 2025)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2.100</div>
+      <div class="stat-label">ore di volontariato<br>nel 2029</div>
+    </div>
+  </div>
+
+  <!-- EVENTI FEBBRAIO -->
+  <div class="events-section">
+    <div class="section-header">Prossimi eventi — Febbraio 2030</div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">8</div>
+        <div class="month">Feb</div>
+        <div class="time">10:00</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type corso">Corso · 6 incontri</span>
+        <h4>Alfabetizzazione AI per Over 70 — "Non è magia, è statistica"</h4>
+        <p>Corso base in 6 sabati. Cosa fa davvero l'intelligenza artificiale, come riconoscere un contenuto generato, come usare un assistente vocale senza farsi fregare. Nessuna competenza tecnica richiesta.</p>
+        <div class="event-meta">Sala Digitale · Docente: Prof.ssa Ferraro (UniBG) + 2 studenti tutor · Posti: 15 <span class="full">COMPLETO</span> <span class="waiting">lista d'attesa</span></div>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">10</div>
+        <div class="month">Feb</div>
+        <div class="time">17:30</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type community">Comunità</span>
+        <h4>Tandem Linguistico — Bangla ↔ Italiano</h4>
+        <p>Conversazione libera a coppie: 30 min in bangla, 30 min in italiano. Merenda offerta dall'associazione Desh Bangla Bergamo. Aperto a tutti i livelli.</p>
+        <div class="event-meta">Sala Ragazzi · Ogni lunedì · Iscrizione in loco · <span class="lang">🇧🇩 বাংলা</span> <span class="lang">🇮🇹 Italiano</span></div>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">12</div>
+        <div class="month">Feb</div>
+        <div class="time">16:00</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type bambini">Bambini 6–11</span>
+        <h4>Doposcuola Intergenerazionale "Nonni & Ingegneri"</h4>
+        <p>Compiti assistiti + laboratorio STEM. I bambini fanno i compiti con l'aiuto di volontari pensionati (ex insegnanti, ingegneri, commercialisti) e studenti universitari del Politecnico. Merenda inclusa.</p>
+        <div class="event-meta">Sala Ragazzi · Ogni mer e ven · Gratuito · Posti: 25 — <strong>rimangono 3 posti</strong></div>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">14</div>
+        <div class="month">Feb</div>
+        <div class="time">18:30</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type talk">Incontro</span>
+        <h4>Human Library — "Prestami la tua storia"</h4>
+        <p>Invece di prendere in prestito un libro, prendi in prestito una persona. 30 minuti di conversazione individuale con uno dei nostri "libri umani": un rifugiato siriano, una ex detenuta, un ragazzo autistico, un'infermiera in burnout, un prete che ha lasciato l'abito. Scegli la storia che vuoi ascoltare.</p>
+        <div class="event-meta">Sala Conferenze · Prenotazione obbligatoria · 8 "libri" disponibili · <span class="full">COMPLETO</span> <span class="waiting">prossima data: 28 feb</span></div>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">15</div>
+        <div class="month">Feb</div>
+        <div class="time">10:00</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type community">Comunità</span>
+        <h4>Caffè Ucraino — conversazione e supporto</h4>
+        <p>Spazio di incontro per la comunità ucraina di Bergamo e per chi vuole praticare la lingua. Collegamento video con la biblioteca di Chernivtsi (gemellaggio attivo dal 2023). Interprete presente.</p>
+        <div class="event-meta">Caffetteria · Ogni sabato · Aperto a tutti · <span class="lang">🇺🇦 Українська</span> <span class="lang">🇮🇹 Italiano</span></div>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">18</div>
+        <div class="month">Feb</div>
+        <div class="time">20:30</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type workshop">Club di lettura</span>
+        <h4>Letti di Carta — Club "Digital Detox"</h4>
+        <p>Il club di lettura dove i telefoni restano in un cesto all'ingresso. Questo mese: "Le città invisibili" di Calvino. Discussione facilitata, vino e formaggi offerti dalla Latteria Sociale. <em>Per adolescenti 15–19 anni.</em></p>
+        <div class="event-meta">Sala Lettura Serale · Iscrizione: 12 partecipanti · Posti disponibili: 4</div>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">22</div>
+        <div class="month">Feb</div>
+        <div class="time">9:30</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type corso">Corso · 3 incontri</span>
+        <h4>Italiano L2 per Genitori — "Capire la scuola dei tuoi figli"</h4>
+        <p>Corso pratico di italiano focalizzato sul linguaggio scolastico: capire le circolari, parlare con gli insegnanti, compilare i moduli. Con mediatrice culturale. Servizio di babysitting in Sala Ragazzi durante il corso.</p>
+        <div class="event-meta">Sala C · 3 sabati · Gratuito · Finanziato da Fondazione Comunità Bergamasca · <span class="lang">🇮🇹 + mediazione 🇧🇩 🇺🇦 🇲🇦 🇵🇰</span></div>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-date">
+        <div class="day">25</div>
+        <div class="month">Feb</div>
+        <div class="time">17:00</div>
+      </div>
+      <div class="event-content">
+        <span class="event-type talk">Incontro pubblico</span>
+        <h4>Assemblea dei lettori — "Che biblioteca vogliamo nel 2035?"</h4>
+        <p>Incontro partecipativo aperto a tutta la cittadinanza per definire le priorità del prossimo piano quinquennale della biblioteca. Si discuterà di: ampliamento orari serali, apertura domenicale, nuovi servizi per adolescenti, spazio coworking, accessibilità per persone con disabilità sensoriali.</p>
+        <div class="event-meta">Sala Conferenze · Servizio di traduzione simultanea in LIS · Streaming su YouTube · Modera: Associazione Amici della Biblioteca</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CERCASI VOLONTARI -->
+  <div class="volunteer-banner">
+    <h3>🙋 Cerchiamo volontari — Unisciti a noi!</h3>
+    <p>La biblioteca funziona grazie a 85 volontari attivi. Ne cerchiamo altri. Non serve esperienza: offriamo formazione, assicurazione, e un pranzo sociale al mese. Cerchiamo in particolare:</p>
+    <div class="roles">
+      <span class="role-tag">🧑‍💻 Tutor digitale per anziani</span>
+      <span class="role-tag">📖 Lettori ad alta voce (anche in lingua madre)</span>
+      <span class="role-tag">🔧 Riparatori per il Repair Café</span>
+      <span class="role-tag">🌱 Referente Biblioteca dei Semi</span>
+      <span class="role-tag">🧒 Aiuto compiti doposcuola</span>
+      <span class="role-tag">🗣️ "Libro umano" per Human Library</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <strong>Biblioteca Civica "Ada Ferrante"</strong> · Via Tasso 4, 24121 Bergamo · Tel. 035 399 411 · biblioteca@comune.bergamo.it<br>
+    Orari: Lun–Ven 9:00–21:00 · Sab 9:00–18:00 · Dom chiuso (apertura domenicale in fase di valutazione — dicci la tua all'assemblea del 25/02!)<br>
+    <br>
+    <strong>La Biblioteca Ada Ferrante è intitolata dal 2027 alla bibliotecaria bergamasca che negli anni '70 aprì la prima sala lettura per bambini in città.</strong><br>
+    <br>
+    Sistema Bibliotecario Urbano di Bergamo · Assessorato alla Cultura · Finanziamenti: Comune di Bergamo, Fondazione Comunità Bergamasca, PNRR M1C3 "Cultura 4.0", Bando Cariplo "Biblioteca Vivente 2028".<br>
+    <br>
+    <em>Questa pagina è disponibile anche in: <span style="color: #5a5a5a;">English · বাংলা · Українська · العربية · اردو · Shqip · Español</span></em>
+  </div>
+
+</div>
+</body>
+</html>
