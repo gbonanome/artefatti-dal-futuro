@@ -756,27 +756,29 @@
   .footer-links { margin-bottom: 10px; }
   .footer-legal { font-size: 0.76rem; opacity: 0.7; line-height: 1.5; }
 
-  /* WORKSHOP LABEL */
-  .workshop-label {
+  .artifact-label {
     position: fixed;
-    bottom: 16px;
-    right: 16px;
-    background: rgba(15,23,42,0.9);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.85);
     color: #fff;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    z-index: 1000;
+    text-align: center;
+    padding: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    max-width: 200px;
-    line-height: 1.4;
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
-  .workshop-label strong {
-    color: #60a5fa;
-    display: block;
-    margin-bottom: 2px;
-    font-size: 0.78rem;
+  .artifact-label a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .artifact-label a:hover {
+    text-decoration: underline;
   }
 
   /* ANIMATIONS */
@@ -870,11 +872,6 @@
 
     .breadcrumb { font-size: 0.7rem; padding: 8px 0; }
 
-    .workshop-label {
-      font-size: 0.7rem;
-      padding: 6px 12px;
-      max-width: 240px;
-    }
   }
 
   /* TOOLTIP-LIKE INFO ICONS */
@@ -1446,10 +1443,8 @@
   </div>
 </footer>
 
-<!-- Workshop label -->
-<div class="workshop-label">
-  <strong>⚡ Artefatto dal futuro</strong>
-  Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+<div class="artifact-label">
+  <a href="../index.html">← ⚡ Artefatto dal futuro</a> · Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
 </div>
 
 </body>

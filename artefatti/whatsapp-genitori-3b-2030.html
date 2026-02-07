@@ -20,6 +20,7 @@
     --wa-name-4: #e5c07b;
     --wa-name-5: #56b6c2;
     --wa-name-6: #98c379;
+    --wa-name-7: #d19a66;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--wa-bg); color: var(--wa-text); min-height: 100vh; }
@@ -46,6 +47,7 @@
   .n-luca { color: var(--wa-name-4); }
   .n-fatima { color: var(--wa-name-5); }
   .n-davide { color: var(--wa-name-6); }
+  .n-patrizia { color: var(--wa-name-7); }
   .msg-text { color: var(--wa-text); }
   .msg-meta { display: flex; justify-content: flex-end; align-items: center; gap: 3px; margin-top: 1px; padding-bottom: 2px; }
   .msg-time { font-size: 0.65rem; color: var(--wa-text-time); }
@@ -64,8 +66,9 @@
   .input-field { flex: 1; background: var(--wa-bubble-in); border: none; border-radius: 22px; padding: 8px 16px; color: var(--wa-text); font-size: 0.88rem; font-family: inherit; }
   .input-icons { display: flex; gap: 10px; color: var(--wa-text-secondary); font-size: 1.1rem; }
   .mic-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--wa-green); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-  .workshop-label { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 0.7rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); text-align: center; line-height: 1.4; max-width: 280px; }
-  .workshop-label strong { color: var(--wa-green); display: block; margin-bottom: 2px; }
+  .artifact-label { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.85); color: #fff; text-align: center; padding: 8px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; border-top: 1px solid rgba(255,255,255,0.1); }
+  .artifact-label a { color: #fff; text-decoration: none; }
+  .artifact-label a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -76,7 +79,7 @@
     <div class="group-avatar">📚</div>
     <div class="group-info">
       <div class="group-name">Genitori 3B Gramsci 📚</div>
-      <div class="group-members">Michela, Ahmed, Valentina, Luca, Fatima, Davide e altri 14</div>
+      <div class="group-members">Michela, Ahmed, Valentina, Luca, Fatima, Davide, Patrizia e altri 13</div>
     </div>
     <div class="header-icons"><span>📞</span><span>⋮</span></div>
   </div>
@@ -106,6 +109,8 @@
 
     <div class="message incoming new-sender" style="max-width:78%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Per tutti è molto! Sono 1.800€ all'anno che prima erano coperti dal servizio pubblico. Questo è un altro pezzo di welfare che scaricano sulle famiglie</span><div class="msg-meta"><span class="msg-time">18:35</span></div></div></div>
 
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-patrizia">Patrizia</span><span class="msg-text">MA IO LO DICO DA ANNI CHE QUESTA SCUOLA È ALLO SBANDO!!! Ho scritto alla preside a ottobre per la porta del bagno rotta e non mi ha NEANCHE RISPOSTO. Adesso tagliano le ore?? Io faccio denuncia all'USR, chi mi segue??</span><div class="msg-meta"><span class="msg-time">18:41</span></div></div></div>
+
     <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-luca">Luca</span><span class="msg-text">Scusate leggo solo ora. Per me è un disastro, io i turni non li posso cambiare. Il mercoledì che era l'unico giorno che andavo a prenderla a scuola adesso diventa il giorno in cui finisce tardi. Perfetto</span><div class="msg-meta"><span class="msg-time">20:45</span></div></div></div>
 
     <div class="message incoming" style="max-width:78%;"><div class="bubble"><span class="msg-text">Chiara me lo chiede sempre perché non vengo ai colloqui. Non è che non voglio, è che non posso. Ma questo non lo capisce nessuno</span><div class="msg-meta"><span class="msg-time">20:46</span></div></div></div>
@@ -124,6 +129,16 @@
     <div class="message incoming new-sender" style="max-width:72%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Bello ma chi lo scrive? A giugno manca poco, serve qualcuno che sappia fare queste cose</span><div class="msg-meta"><span class="msg-time">13:20</span></div></div></div>
 
     <div class="message incoming new-sender" style="max-width:80%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">La cooperativa San Martino potrebbe essere il soggetto capofila. Lo fanno di mestiere. Noi come comitato genitori potremmo essere partner</span><div class="msg-meta"><span class="msg-time">13:22</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-valentina">Valentina</span><span class="msg-text">Intanto comunque i prof hanno già iniziato a dare più compiti "per compensare". Marco ieri aveva 3 esercizi di matematica, 2 pagine di storia e il riassunto di scienze. Il martedì e il giovedì ha calcio, quando li fa?</span><div class="msg-meta"><span class="msg-time">15:10</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-patrizia">Patrizia</span><span class="msg-text">Valentina ha ragione al 100%!!!! Mio figlio ieri sera alle 22 era ancora sui compiti. La prof di matematica ne dà il DOPPIO delle altre. Ho mandato una mail alla preside ma tanto lo sappiamo che non legge le mail. Io li ritiro i compiti se va avanti così, non è normale che un ragazzino di 13 anni non dorma</span><div class="msg-meta"><span class="msg-time">15:18</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">Il doposcuola della cooperativa prevede anche aiuto compiti in realtà. Quindi per chi ci va il problema si risolve, i compiti li fanno lì. Ma sì, solo per chi può permetterselo</span><div class="msg-meta"><span class="msg-time">15:25</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-ahmed">Ahmed</span><span class="msg-text">Ibrahim non fa sport, non possiamo pagare iscrizione. Per lui il problema è diverso: dalle 13:30 sta a casa da solo perché noi lavoriamo. Il doposcuola sarebbe perfetto ma 180 euro non ce li abbiamo</span><div class="msg-meta"><span class="msg-time">15:40</span></div></div></div>
+
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-luca">Luca</span><span class="msg-text">Chiara ha smesso danza quest'anno. Non è che non possiamo pagarla, è che non riesco ad accompagnarla. Lunedì e mercoledì alle 16 io sono in turno. Non è solo una questione di soldi, è di tempo che non c'è</span><div class="msg-meta"><span class="msg-time">21:15</span></div></div></div>
 
     <!-- Festa di primavera -->
     <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Altra cosa. La prof Zanetti mi ha chiesto di organizzare la festa di primavera. L'anno scorso abbiamo fatto la cena multiculturale che era venuta benissimo. Pensavo di rifarla, ogni famiglia porta un piatto del proprio paese. Che dite?</span><div class="msg-meta"><span class="msg-time">17:30</span></div></div></div>
@@ -164,9 +179,7 @@
     <!-- GIORNO 4 -->
     <div class="date-divider"><span>18 marzo 2030</span></div>
 
-    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Aggiornamento. Ho parlato con la prof Zanetti. Sulla questione del compleanno farà un lavoro in classe sul tema dell'inclusione, senza fare nomi. Però mi ha detto una cosa che mi ha colpito: non è un caso isolato, succede spesso, e la scuola non ha strumenti per intervenire perché "succede fuori"</span><div class="msg-meta"><span class="msg-time">14:10</span></div></div></div>
-
-    <div class="message incoming" style="max-width:82%;"><div class="bubble"><span class="msg-text">Le ho chiesto della mediatrice culturale. Viene il giovedì mattina, 4 ore, ed è condivisa con la Galilei, la Colombo, la Einaudi e la Foscolo. In pratica per la Gramsci è mezza giornata alla settimana per tutta la scuola</span><div class="msg-meta"><span class="msg-time">14:12</span></div></div></div>
+    <div class="message incoming new-sender" style="max-width:82%;"><div class="bubble"><span class="sender-name n-michela">Michela</span><span class="msg-text">Aggiornamento. Sono riuscita a parlare con la preside. Le ho chiesto della mediatrice culturale. Viene il giovedì mattina, 4 ore, ed è condivisa con la Galilei, la Colombo, la Einaudi e la Foscolo. In pratica per la Gramsci è mezza giornata alla settimana per tutta la scuola</span><div class="msg-meta"><span class="msg-time">14:10</span></div></div></div>
 
     <div class="message incoming new-sender" style="max-width:75%;"><div class="bubble"><span class="sender-name n-davide">Davide</span><span class="msg-text">Una mediatrice per cinque scuole. Sono circa 3.000 studenti, di cui quasi il 30% con background migratorio. I numeri non tornano</span><div class="msg-meta"><span class="msg-time">14:18</span></div></div></div>
 
@@ -220,9 +233,8 @@
   </div>
 </div>
 
-<div class="workshop-label">
-  <strong>⚡ Artefatto dal futuro</strong>
-  Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+<div class="artifact-label">
+  <a href="../index.html">← ⚡ Artefatto dal futuro</a> · Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
 </div>
 </body>
 </html>

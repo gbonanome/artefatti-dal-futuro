@@ -293,6 +293,30 @@
     line-height: 1.65;
     margin-bottom: 5px;
   }
+  .artifact-label {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .artifact-label a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .artifact-label a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
@@ -517,5 +541,10 @@
   </div>
 
 </div>
+
+<div class="artifact-label">
+  <a href="../index.html">← ⚡ Artefatto dal futuro</a> · Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
+</div>
+
 </body>
 </html>

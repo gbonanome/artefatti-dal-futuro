@@ -744,19 +744,29 @@
     letter-spacing: 0.06em;
   }
 
-  /* ===== ARTEFATTO FOOTER ===== */
-  .artefatto-footer {
+  .artifact-label {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
     text-align: center;
-    padding: 24px 20px;
-    background: #1e1b4b;
-    color: rgba(255,255,255,0.65);
-    font-size: 12px;
-    line-height: 1.6;
+    padding: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
-
-  .artefatto-footer .label {
-    color: rgba(255,255,255,0.85);
-    font-weight: 600;
+  .artifact-label a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .artifact-label a:hover {
+    text-decoration: underline;
   }
 </style>
 </head>
@@ -1203,12 +1213,8 @@
 
 </div>
 
-<!-- ARTEFATTO FOOTER -->
-<div class="artefatto-footer">
-  <span class="label">⚡ Artefatto dal futuro</span><br>
-  Questo documento è un oggetto di finzione ambientato nel 2030.<br>
-  Pellegrini Eyewear S.r.l. non esiste. I dati e le persone sono immaginari.<br>
-  Creato per il CLab Ca' Foscari · Febbraio 2026
+<div class="artifact-label">
+  <a href="../index.html">← ⚡ Artefatto dal futuro</a> · Scenario fittizio · Workshop CLab Ca' Foscari · 20 febbraio 2026
 </div>
 
 </body>
